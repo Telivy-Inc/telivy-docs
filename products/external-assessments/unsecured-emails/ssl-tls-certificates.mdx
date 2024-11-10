@@ -7,6 +7,8 @@ SSL certificates, now more commonly referred to as TLS certificates, act as digi
 
 These CAs verify the ownership and legitimacy of a website before issuing a certificate. They are essential for all websites, especially those that handle sensitive data. They are critical for building trust, protecting user data, and improving search engine ranking.
 
+## Certificates Serve Two Primary Purposes
+
 <Tabs>
   <Tab title="Authentication">
     An SSL certificate verifies the identity of a website, similar to how ID cards verify individual identities. This is crucial for building trust with users, especially when sensitive information like login credentials or credit card details are involved.
@@ -29,7 +31,7 @@ Imagine you're sending a confidential letter. You put it in a locked container (
     Telivy checks if your certificate has expired or is about to expire (expires within 30 days).
   </Accordion>
 
-  <Accordion title="Checks For Self-Signed Certificates" icon="alien-8bit">
+  <Accordion title="Checks For Self-Signed Certificates">
     Self-signed certificates are generally not recommended as they don't provide the same level of trust and security as certificates issued by trusted CAs. Browsers generally don't trust self-signed certificates by default. Users encounter security warnings and may not proceed, damaging site credibility and traffic. Self-signed certificates won't be recognized by search engines, hindering your website's ranking and search visibility.
 
     Telivy checks if your certificate is self signed or not and flags them under a Medium Severity finding.
