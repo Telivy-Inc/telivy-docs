@@ -1,0 +1,50 @@
+---
+title: Identity and Access Management
+description: 'Use Telivy to Create and Manage Passwords'
+---
+
+## Password Management
+
+In today's hyper-connected world, passwords are the keys to our digital kingdom. Yet, just like a rusty lock weakens a fortress, weak passwords expose our personal and professional lives to an ever-evolving landscape of cyber threats. That's where password analysis becomes our digital sentinel, standing guard against malicious actors and ensuring our data remains secure.
+
+## Password Capture 
+
+The Telivy platform captures passwords from users to analyse them for weaknesses (next section). When deploying the Telivy executable, a password analysis capture tool is deployed to securely analyse the passwords stored in the user's chromium based browsers. Because of how chromium encrypts passwords, a user has to be logged to capture the passwords or the capture will be triggered once the user(s) log in.
+
+To reduce any liability for you, we perform password analysis on the device and the clear text passwords are never stored in our servers. Telivy however stores the hash of the password. Hashes cannot be reverse engineered to generate the password.
+
+If the executable is deployed as an admin, the executable will schedule password capture for most of the users that are present on the asset. The list of users is determined by the folder structure, Microsoft Azure AD user setup, local and global users configured on the system and a few different heuristics. In some cases, not all users are covered for password analysis. The assets table should show you the list of users the password analysis is scheduled for.
+
+<img src="/images/identity-and-access-management/identity-and-access-management-1.jpg" />
+
+## Why Analyze Passwords? It's More Than Just "123456"
+
+Think of password analysis as an X-ray for your digital security. It delves into the complex architecture of passwords, exposing vulnerabilities that might otherwise lurk in the shadows. Here's why it's crucial:
+
+<AccordionGroup>
+  <Accordion title="Identifying Leaked Credentials">
+    Hackers often sell stolen username and passwords on the dark web. Telivy password analysis tool scans your passwords against these databases, alerting you to potentially compromised credentials before attackers can exploit them. The password analysis table shows you the number of hits a password or username have been found on the dark web. Hackers generally start brute forcing by using leaked credentials. It is advised to not use any password that has been found on the dark web.
+
+    For example, the first entry has been leaked 9.65 million times on the dark web. This includes the password "p******d", and the username cool_dude.
+
+    <img src="/images/identity-and-access-management/identity-and-access-management-2.jpg" />
+  </Accordion>
+
+  <Accordion title="Unmasking Weak Links">
+    Not all passwords are created equal. Some, like dictionary words or simple numerical sequences, are easily cracked. Telivy password analysis tool assess password complexity, length, and character diversity, highlighting passwords that need urgent replacement.
+
+For example, **qwerty** is a Weak password. **G00dPassw0rd?!**  is a Moderate password and **V3ryG00dPassw0rd?!**  is a Strong password. For more interested users, Telivy analysis tool uses this library to determine the strength of a password.
+  </Accordion>
+
+  <Accordion title="Reused Passwords">
+    We're creatures of habit, often recycling passwords across multiple accounts. This creates a domino effect – one compromised password could grant access to a multitude of accounts. Telivy password analysis tools detect reused passwords, urging you to diversify your digital keys.
+
+    <img src="/images/identity-and-access-management/identity-and-access-management-3.jpg" />
+
+    In the above table, click on the Show All and the previous table will filter to show the instances where the password has been used.
+  </Accordion>
+</AccordionGroup>
+
+## Building A Fortress, Not A Cardboard Castle
+
+In the face of sophisticated cyber threats, relying on flimsy passwords is akin to building a sandcastle against a tidal wave. Password analysis equips us with the tools and knowledge to construct fortresses of digital security. By proactively identifying and addressing vulnerabilities, we can safeguard our precious data and maintain control over our online lives

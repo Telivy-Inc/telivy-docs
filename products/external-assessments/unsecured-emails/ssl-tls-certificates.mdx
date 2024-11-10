@@ -1,0 +1,56 @@
+---
+title: SSL/TLS Certificates
+description: 'Verify Ownership and Legitimacy of Sites'
+---
+
+SSL certificates, now more commonly referred to as TLS certificates, act as digital trust seals for websites. They are issued by trusted third-party organizations called Certificate Authorities (CAs).
+
+These CAs verify the ownership and legitimacy of a website before issuing a certificate. They are essential for all websites, especially those that handle sensitive data. They are critical for building trust, protecting user data, and improving search engine ranking.
+
+<Tabs>
+  <Tab title="Authentication">
+    An SSL certificate verifies the identity of a website, similar to how ID cards verify individual identities. This is crucial for building trust with users, especially when sensitive information like login credentials or credit card details are involved.
+  </Tab>
+  <Tab title="Encryption">
+    SSL certificates enable the encryption of data sent between a website and its visitors. This scrambling process makes information unreadable to anyone intercepting it, protecting sensitive data from being stolen or tampered with.
+  </Tab>
+</Tabs>
+
+### Illustrative Example
+
+Imagine you're sending a confidential letter. You put it in a locked container (encryption) and then address it to the recipient with a verified seal (authentication) to ensure it reaches the right person. This is essentially what an SSL certificate does in the digital world.
+
+## Managing SSL/TLS Certificates With Telivy
+
+<AccordionGroup>
+  <Accordion title="Expired Certificates And Certificates About To Expire">
+    Expired certificates trigger browser warnings and distrust, potentially deterring users. Moreover, attackers can exploit expired certificates to launch man-in-the-the-middle attacks and intercept sensitive data. Automated renewal mechanisms help, but still require setup and monitoring.
+
+    Telivy checks if your certificate has expired or is about to expire (expires within 30 days).
+  </Accordion>
+
+  <Accordion title="Checks For Self-Signed Certificates" icon="alien-8bit">
+    Self-signed certificates are generally not recommended as they don't provide the same level of trust and security as certificates issued by trusted CAs. Browsers generally don't trust self-signed certificates by default. Users encounter security warnings and may not proceed, damaging site credibility and traffic. Self-signed certificates won't be recognized by search engines, hindering your website's ranking and search visibility.
+
+    Telivy checks if your certificate is self signed or not and flags them under a Medium Severity finding.
+  </Accordion>
+
+  <Accordion title="Why Weak Algorithms Pose A Threat">
+    Different types of certificates offer varying levels of validation and encryption strength. Choose a certificate that meets your security needs and budget. Cryptographic algorithms like MD5 and SHA-1 are considered weak and susceptible to collision attacks. Exploiting these weaknesses, attackers can potentially forge certificates and impersonate your website, leading to security breaches. Using weak algorithms puts you at risk of non-compliance and potential penalties.
+
+    Telivy checks if you certificate is signed using a weak algorithm across your domains and sub domains. Make sure that your certificates are signed using a strong algorithm to avoid such hassles.
+  </Accordion>
+
+  <Accordion title="Certificate Issuer Not Found">
+    SSL certificates rely on a "chain of trust" to establish legitimacy. Your browser trusts a root certificate authority (CA) like Let's Encrypt or DigiCert. This root CA then signs intermediate certificates (if used) and ultimately signs your website's SSL certificate. If the issuer (typically an intermediate CA) cannot be found, the chain of trust breaks. Your browser cannot verify the validity of your website's certificate, leading to security warnings and distrust.
+
+    Telivy verifies if your certificates issuer is found or not and helps you prevent security vulnerabilities to the website users.
+  </Accordion>
+
+  <Accordion title="Certificate Life Higher Than Standard">
+    While it might seem convenient to have a long certificate expiration time to minimize renewal frequency, it's generally not recommended and can even be detrimental to your website's security and user experience. Longer validity periods mean vulnerabilities in the cryptographic algorithms or private keys have more time to be discovered and exploited by attackers. Browsers and security best practices constantly evolve, and longer validity periods might indicate outdated security practices, raising concerns for users. Some browsers might display warnings for certificates with excessively long validity periods, deterring users and impacting traffic.
+
+    Telivy verifies if your certificates have longer than usual expiration dates and provides you more details in the findings. 
+  </Accordion>
+</AccordionGroup>
+

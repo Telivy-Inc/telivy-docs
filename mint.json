@@ -1,0 +1,125 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Telivy",
+  "logo": {
+    "dark": "/logo/logo.svg",
+    "light": "/logo/logo.svg"
+  },
+  "favicon": "/logo/favicon.png",
+  "colors": {
+    "primary": "#516AE7",
+    "light": "#516AE7",
+    "dark": "#516AE7",
+    "anchors": {
+      "from": "#516AE7",
+      "to": "#516AE7"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Contact Us",
+      "url": "https://www.telivy.com/contact-us"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Log In",
+    "url": "https://portal.telivy.com/log-in"
+  },
+  "anchors": [
+    {
+      "name": "Website",
+      "icon": "globe",
+      "url": "https://www.telivy.com/"
+    }
+  ],
+  "navigation": [
+  {
+    "group": "Getting Started",
+    "pages": [
+      "getting-started/introduction",
+      "getting-started/welcome",
+      {
+        "group": "Set Up Telivy Account",
+        "pages": [
+          "getting-started/set-up-telivy-account/overview",
+          "getting-started/set-up-telivy-account/multi-factor-authentication"
+        ]
+      }
+    ]
+  },
+  {
+    "group": "Learning Center",
+    "pages": [
+      "learning-center/dark-web-scans",
+      "learning-center/typo-squatting",
+      "learning-center/open-ports",
+      "learning-center/ssl-tls-misconfigurations"
+    ]
+  },
+  {
+    "group": "Products",
+    "pages": [
+      {
+        "group": "External Assessments",
+        "pages": [
+          "products/external-assessments/overview",
+          "products/external-assessments/start-an-external-assessment",
+          "products/external-assessments/add-domains-and-ips",
+          "products/external-assessments/close-open-ports",
+          {
+            "group": "Unsecured Emails",
+            "pages": [
+              "products/external-assessments/unsecured-emails/overview",
+              "products/external-assessments/unsecured-emails/create-and-export-in-bulk",
+              "products/external-assessments/unsecured-emails/ssl-tls-certificates"
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Risk Assessments",
+        "pages": [
+          "products/risk-assessments/overview",
+          "products/risk-assessments/start-a-new-risk-assessment",
+          "products/risk-assessments/whitelist-telivy-with-av-edr",
+          "products/risk-assessments/install-telivy-agent-windows",
+          "products/risk-assessments/what-happens-under-the-hood",
+          "products/risk-assessments/identity-and-access-management",
+          "products/risk-assessments/microsoft-365-security",
+          "products/risk-assessments/google-workspace-security",
+          "products/risk-assessments/grading-criteria",
+          "products/risk-assessments/uninstall-telivy-agent-windows"
+        ]
+      },
+      {
+        "group": "Lead Magnet",
+        "pages": [
+          "products/lead-magnet/configure-with-easy-go-link",
+          "products/lead-magnet/configure-with-custom-form",
+          "products/lead-magnet/track-submissions-with-utm-source"
+        ]
+      }
+    ]
+  },
+  {
+    "group": "Frequently Asked Questions",
+    "pages": [
+      "frequently-asked-questions/getting-started",
+      "frequently-asked-questions/risk-assessments-and-external-scans",
+      "frequently-asked-questions/telivy-accounts-and-platforms",
+      "frequently-asked-questions/installation-and-troubleshooting",
+      "frequently-asked-questions/threatlocker-and-telivy-policy-during-installation"
+    ]
+  },
+  {
+    "group": "Additional Information",
+    "pages": [
+      "additional-information/release-notes"
+    ]
+  }
+  ],
+  "footerSocials": {
+    "facebook": "https://www.facebook.com/profile.php?id=100078018562649",
+    "linkedin": "https://www.linkedin.com/company/telivy/"
+  }
+}

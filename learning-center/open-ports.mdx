@@ -1,0 +1,62 @@
+---
+title: Open Ports
+description: 'A Guide to Identifying and Securing Open Ports'
+---
+import {Frame} from 'mintlify/components'
+
+A port is a virtual or physical entry or exit point on a computer that allows communication or peripheral devices to connect. Ports are managed by a computer's operating system and are software based. Each port is associated with a specific process or service. To easily differentiate between different kinds of traffic computers use ports. The problem arises when ports are left exposed due to improper configuration or lack of protection.
+
+## Threats
+
+High severity open ports represent a significant cyber risk for several reasons:
+1. **Vulnerability Exploitation**: Open ports that are associated with high severity vulnerabilities provide potential entry points for attackers to exploit. Cybercriminals can target these ports to gain unauthorized access to systems, networks, or applications, leading to data breaches, system compromise, or disruption of services.
+2. **Malware Infection**: Attackers often scan for open ports associated with known vulnerabilities and exploit them to deliver malware payloads. Malware can be deployed to compromise systems, steal sensitive information, or perform malicious activities such as launching distributed denial-of-service (DDoS) attacks or crypto jacking.
+3. **Unauthorized Access**: Open ports can serve as gateways for unauthorized access to critical systems or sensitive data. Attackers may exploit high severity vulnerabilities to bypass authentication mechanisms, gain privileged access, or escalate privileges, allowing them to take control of systems and perform malicious actions.
+4. **Data Breaches**: High severity open ports can facilitate data breaches by providing attackers with access to sensitive information stored on compromised systems or networks. This can result in the theft of confidential data, financial losses, regulatory fines, and damage to reputation and trust.
+5. **Service Disruption**: Attackers may exploit high severity vulnerabilities in open ports to launch denial-of-service attacks or other disruptive activities. By exploiting weaknesses in network protocols or software applications, attackers can disrupt services, degrade system performance, or cause system outages, leading to financial losses and operational downtime.
+6. **Propagation of Threats**: Once attackers gain access to systems through high severity open ports, they can use compromised systems as launch pads to propagate threats within the network or to other external targets. This can result in the spread of malware, ransomware, or other malicious activities, amplifying the impact of the initial breach.
+7. **Compliance Violations**: Failure to address high severity open ports and vulnerabilities may lead to non-compliance with industry regulations, data protection laws, or cybersecurity standards. Organizations that fail to secure their systems and networks adequately may face regulatory fines, legal liabilities, and reputational damage.
+
+To mitigate the cyber risks associated with high severity open ports, organizations should implement robust cybersecurity measures, including regular vulnerability assessments, patch management, network segmentation, access controls, intrusion detection systems, and security monitoring. By identifying and addressing vulnerabilities promptly, organizations can reduce their attack surface and enhance their overall cybersecurity posture.
+
+## How can it be exploited?
+
+- Finding Weaknesses: Open ports are like unlocked doors in your network. Hackers use port scanning tools (Like NMap) to identify open ports and the services running on them. 
+- Exploiting Vulnerabilities: Once they discover an open port with a known vulnerability (unpatched software or misconfiguration), they can use that vulnerability to gain unauthorized access to your network.
+
+<Frame caption="Example of Port Scanning">
+<img src="/images/open-ports.jpg" />
+</Frame>
+
+## Security Impact
+Having misconfigured open ports can have several security impacts, varying in severity. Here are some Implications: 
+- Unauthorized Access
+- Increased Attack Surface
+- Malware Delivery
+- Denial-of-Service (DoS) Attacks
+- Man-in-the-Middle Attacks
+- Lateral Movement and Persistence
+
+## Remediation Action Plan
+To mitigate the risk of having open ports, website owners and brands often employ the following strategies:
+- **Discover Open Ports**: Access the list of open ports that are visible to the outside world by running a Telivy External Assessment or a Risk Assessment.
+- **Prioritize and Analyze Open Ports**: Review the list of open ports and identify the services associated with them. Prioritize the ports based on their criticality. Ports associated with essential services should be addressed first.
+- **Mitigate Risks**: Close unnecessary ports, update software, and restrict access
+- **Verification and Documentation**: After implementing mitigation strategies, re-scan your system or network to verify that unnecessary ports are closed and security measures are functioning properly. Document the process, including the identified open ports, actions taken, and the rationale behind them. This documentation will be helpful for future reference and security audits.
+- **Continuous Monitoring and Improvement**: Regularly review open ports and update your mitigation strategies as needed. Stay informed about new vulnerabilities and emerging threats related to open ports.
+
+**Note: Here is a list of some common high-risk ports** (close unless absolutely necessary)
+
+```
+FTP (20, 21)
+
+Telnet (23)
+
+NetBIOS (135, 137, 139)
+
+Remote Desktop (3389)
+
+SMTP (25)
+
+Database ports (MySQL - 3306, PostgreSQL - 5432 )
+```

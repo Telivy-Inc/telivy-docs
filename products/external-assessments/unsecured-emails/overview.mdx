@@ -1,0 +1,52 @@
+---
+title: Overview
+description: 'Keep Your Email Secure'
+---
+
+In today's digital world, communication is more important than ever, and email remains a central player. But while we might trust email for personal and professional exchanges, ignoring its security can have disastrous consequences. One major pitfall? Sending email without Transport Layer Security (TLS) or Secure Sockets Layer (SSL) encryption, essentially sending messages through unencrypted channels. This might seem harmless, but it's like sending postcards with sensitive information written on them – anyone can peek and exploit it.
+
+Telivy identifies if you are sending unencrypted emails by looking for ports that are used for sending such unencrypted emails. In an external scan these finds are part of the "Email without SSL/TLS Found" findings in the Network Security section.
+
+<Steps>
+  <Step title="Enter External Scan Section">
+    <img src="/images/unsecured-emails/unsecured-emails-1.jpg" />
+  </Step>
+  <Step title="Enter Network Security Section">
+    In the Telivy Risk Assessment, it is part of the Network Security section.
+    <img src="/images/unsecured-emails/unsecured-emails-2.jpg" />
+  </Step>
+  <Step title="Review Ports">
+    Once you click on this finding, you should see a list of ports:
+    <img src="/images/unsecured-emails/unsecured-emails-3.jpg" />
+  </Step>
+</Steps>
+
+## Ports Overview
+
+Let's delve into the different ports that might be usually found in this finding and the associated vulnerabilities and context needed to understand these findings:
+
+<AccordionGroup>
+  <Accordion title="Port 110 (POP3)">
+    This port is used by the Post Office Protocol (POP3) for retrieving emails from a server.
+
+    **Vulnerability:** POP3 transmits data in plain text, making it susceptible to eavesdropping and password theft. However, if users enable POP3 over SSL (POP3S on port 995), the communication becomes encrypted. Additionally, if emails are already secured on the server and users practice good password hygiene, the risk might be lower.
+
+    **Context:** Consider whether POP3 is still actively used, if SSL is enabled, and the sensitivity of the emails retrieved. Consider switching over to POP3S and closing this port.
+  </Accordion>
+
+  <Accordion title="Port 143 (IMAP)" >
+   This port is used by the Internet Message Access Protocol (IMAP) for accessing and managing emails on a server.
+
+    **Vulnerability:** Similar to POP3, unencrypted IMAP (on port 143) transmits data in plain text. Using IMAP over SSL (IMAPS on port 993) mitigates this risk. Additionally, the level of access granted to users through IMAP (read-only or full management) impacts the potential damage.
+
+    **Context:** Assess whether IMAP is actively used, if SSL is enabled, the user access levels, and the sensitivity of the emails stored. Consider switching over to IMAPS on port 993.
+  </Accordion>
+
+  <Accordion title="Port 25 (SMTP)" >
+    This port is used by the Simple Mail Transfer Protocol (SMTP) for sending emails.
+
+    **Vulnerability:** An open SMTP server can be exploited by spammers to send out malicious emails through your server. Additionally, weak authentication mechanisms can allow unauthorized access for sending emails.
+
+    **Context:** Evaluate if your own SMTP server is necessary, if strong authentication (e.g., STARTTLS, SASL) is enforced, and whether reputation management tools are used to prevent abuse. This port is needed for anyone on the public internet to send emails. 
+  </Accordion>
+</AccordionGroup>

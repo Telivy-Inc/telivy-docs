@@ -1,0 +1,29 @@
+---
+title: Track Submissions with UTM Source
+description: 'Understand where leads are coming from'
+---
+
+Once the lead magnet is set up in multiple marketing campaigns (ex. email, website, facebook, etc), it is crucial to track where the submissions are coming in from. This allows you to understand campaigns' performances and how they can be refined. The steps to track submissions will differ based on the configuration method - easy-go link or custom form.
+
+## Track with the Easy-Go link
+
+Append ```utmSource``` to your link's query params. Ex. if the campaign's name is 'facebook-campaign-2', append it to the link like this: 
+
+```https://portal.telivy.com/start/{unique-account-id}?utmSource='facebook-campaign-2'```
+
+## Track with custom form
+
+Append ```utmSource``` to the form data. Ex. if the campaign's name is 'facebook-campaign-2', insert this code to the custom form:
+
+```
+...
+formData.append("agentId", {AGENT_ID});
+formData.append("utmSource", "facebook-campaign-2");
+...
+```
+
+## View on Dashboard
+
+Upon submission, the UTM Source Column will display the source value you configured above.
+
+<img src="/images/track-submissions-with-utm-source.png" />

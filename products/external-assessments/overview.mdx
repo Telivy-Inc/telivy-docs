@@ -1,0 +1,31 @@
+---
+title: Overview
+description: 'Scan For External Threats'
+---
+
+## Telivy External Scans
+
+An external security scan is a test of your organization's public-facing systems and networks for security vulnerabilities. Imagine that your organization is a castle. An external security scan is like walking around the outside of the castle and looking for any weak points, such as unlocked doors, broken windows, or hidden tunnels. By identifying and fixing these weak points, you can make it more difficult for attackers to break into your castle.
+
+It is performed from the outside, simulating the perspective of an attacker. External security scans can identify a wide range of vulnerabilities and misconfigurations. Below is a summary of different areas of the assessment:
+
+<Tabs>
+  <Tab title="External Vulnerabilities">
+    In this section we scan the publicly accessible services like your websites, external IPs or endpoints that can accessible via the public internet. Telivy parses your DNS and uses a network mapper to scan these endpoints to infer the existing vulnerabilities.
+
+    The platform then classifies these vulnerabilities as a Low, Medium and High Severity vulnerabilities. Note that these classification are based on the NVE database maintained by the federal government. 
+
+    <img src="/images/external-vulnerabilities.jpg" />
+
+     </Tab>
+
+  <Tab title="Network Security">
+    In this section we scan for weakness/vulnerabilities in the network itself. Here are some checks we perform for External Network Security.
+    
+    1. **Email Without SSL/TLS**: This check scans for insecure email configuration. You can learn more about it in [this](/products/external-assessments/unsecured-emails/overview) article.
+    2. **Open Ports**: This check scans for open ports and categorizes them as Low, Medium and High Severity. Learn more in [this](/products/external-assessments/close-open-ports/overview) article.
+    3. **Certificate Checks**: These checks scan for healthy certificates on your website. Learn more in [this](/products/risk-assessments/grading-criteria/overview) article.
+
+    <img src="/images/network-security.jpg" />
+  </Tab>
+</Tabs>

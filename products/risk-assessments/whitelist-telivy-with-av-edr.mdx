@@ -1,0 +1,33 @@
+---
+title: Whitelist Telivy with AV/EDR
+description: 'Notify AVs and EDRs to run Telivy scans'
+---
+
+## Whitelist Telivy
+
+### How to get your Anti Virus to allow smooth installation of Telivy
+
+To whitelist your Anti Virus or EDR, follow these instructions:
+1. Whitelist **"C:\Program Files (x86)\Telivy"** for downloading executables and executing powershell scripts. If you want to grant finer grained controls, please refer to [this](/products/risk-assessments/install-telivy-agent-windows) page.
+2. Whitelist **install.telivy.com** download location. All powershell scripts and executables will be downloaded from this location only.
+3. If your zero trust software has powershell shell restrictions, you will have to provide powershell access as well.
+
+## Installation Timeline
+
+Once the installation has been kicked off, here is the sequence of events that are performed:
+1. When using RMM installation, the first step is to download the executable from install.telivy.com and execute the downloaded installation. If you notices that the download has failed, please check your anti virus status.
+2. The first step is to reach to the Telivy servers to create an asset in your assessment. Telivy scanner gathers hostname, OS name and a lot of other metadata.
+3. The next step is to install the Telivy application controller. The Telivy application controller is responsible for coordinating the scan process and any rescans that are triggered.
+4. The asset scan is then triggered - which includes vulnerability scanning, application scanning, PII scans and password analysis. The scans are powershell commands that are triggered in memory.
+5. The status then changes to "In Progress" in the Telivy portal.
+6. The controller checks in every 1 hour to check if the scan has completed. Usually the PII scan takes a while depending on how many files are present on the asset.
+7. If a scan fails for any reason a rescan is scheduled - this means that whenever the controller checks in with the asset, a rescan will be scheduled. If there is an error with the controller installation, a rescan may be stuck in "Rescan Scheduled".
+
+## Under the Hood
+
+### What happens under the hood
+
+Some of the executables that we run are as follows:
+1. **C:\Program Files (x86)\Telivy\Telivy Agent\TelivyAgent.exe**: Installs and runs as a Windows Service. Used to perform the network, application and PII scan on the device.
+2. **C:\Program Files (x86)\Telivy\Telivy Agent\telivy_pdf_text.exe**: Used to parse texts in PDFs.
+3. **C:\Program Files (x86)\Telivy\Telivy Agent\telivy_scanner.exe**: Used to perform password analysis.

@@ -1,0 +1,121 @@
+---
+title: Grading Criteria
+description: 'Understanding Your Telivy Internal Security Scan Report'
+---
+
+This article aims to provide a comprehensive understanding of the Telivy Internal Security Scan report. The Telivy report offers a detailed assessment of your organization's security posture and highlighting potential vulnerabilities.
+
+Each security section is divided into 1 or more sub sections. Each subsection has a grade and a weight for the final section grade. The final grade will then be determined as follows:
+
+```Final Score = Sum(Section Weight X Section Score)/Sum(Section Weight)```
+
+Section score is on a scale from 1 to 4 with 1 being most secure and 4 being least secure. Once the final score is determined, the conversion to a grade score is calculated as follows:
+
+Final Score Range | Grade
+--- | ---
+4 | F
+3 - 4 | D
+2 - 3 | C
+1 - 2 | B
+
+## Network Security
+
+Network security consists of the following subsections:
+
+1. Internal Vulnerabilities
+2. External Vulnerabilities
+3. Open Ports
+4. Certificate Security
+5. HTTPs security
+
+#### Internal Vulnerability
+
+Internal Vulnerability grades will be determined as follows:
+
+Criteria | Grade
+--- | ---
+\>10% of users have a atleast 1 critical Vulnerability | 4
+
+#### External Vulnerability
+
+External Vulnerability grades will be determined as follows:
+
+Criteria | Grade
+--- | ---
+Any High Severity findings | 4
+Any Medium Severity findings | 3
+Only Low Severity findings | 2
+No findings | 1
+
+#### Open Ports
+
+Open Ports grades will be determined as follows:
+
+Criteria | Grade
+--- | ---
+Any High Severity open ports | 4
+Any Medium Severity open ports | 3
+Only Low Severity open ports | 2
+No open ports | 1
+
+#### Certificates
+
+Certificate grades will be determined as follows:
+
+Criteria | Grade
+--- | ---
+Any High Severity certificate findings | 4
+Any Medium Severity certificate findings | 3
+Only Low Severity certificate findings | 2
+No certificate findings | 1
+
+#### HTTPs findings
+
+HTTPs grades will be determined as follows:
+
+Criteria | Grade
+--- | ---
+HTTPs not enabled | 3
+HTTPs enabled | 1
+
+### Weights for Network Security
+
+Internal Vulnerabilities: 10
+External Vulnerabilities: 8
+Port Scans: 6
+Certificate: 4
+HTTPs: 8
+
+## Data Security
+
+Data Security grades will be determined as follows:
+
+Criteria | Grade
+--- | ---
+At Least 1 user with data value >= $100,000 (OR) Total risk >= $1,000,000 | D
+Total risk >$100,000 and less than $1,000,000 | C
+Total risk >$10,000 and less than $100,000 | B
+Total risk \<$10,000 | A
+
+## Dark Web Security
+
+Dark Web grades will be determined as follows:
+
+Criteria | Grade
+--- | ---
+Dark Web findings in the last 2 year | D
+Dark Web findings only prior to last 2 years but newer than 5 years | C
+Dark Web findings prior to 5 years | B
+No Dark Web findings | A
+
+## Password Security
+
+Password grade security will be determined as follows:
+
+Criteria | Grade
+--- | ---
+High number of weak and compromised passwords found | D
+Weak and compromised passwords found | C
+Few weak or compromised passwords found | B
+No Weak or Compromised passwords were found | A
+

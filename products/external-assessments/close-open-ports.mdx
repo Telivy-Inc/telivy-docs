@@ -1,0 +1,98 @@
+---
+title: Close Open Ports
+description: 'Why Having Open Ports Is Bad And Why You Should Close Them'
+---
+
+Imagine your house with all the doors and windows wide open. While convenient for easy access, it also presents a clear security risk. Similarly, leaving open ports on your computer or network creates vulnerabilities that malicious actors can exploit.
+
+## What Are Ports?
+
+Think of ports as numbered doorways in your digital world. Each port corresponds to a specific service or application, allowing data to flow through for its intended purpose. For example, port 80 is commonly used for web browsing, while port 22 is used for secure shell access. You can access the list of open ports that are visible to the outside world by running a **Telivy External Assessment** or a **Risk Assessment**.
+
+## Why Are Open Ports Bad And Why Should You Close Them?
+
+While necessary for certain functions, open ports present several security risks:
+
+<AccordionGroup>
+  <Accordion title="Increased Attack Surface">
+    Open ports are like open doors - they offer more entry points for attackers to probe and exploit vulnerabilities. The more ports open, the greater the attack surface and the risk of compromise.  
+  </Accordion>
+
+  <Accordion title="Exploiting Vulnerabilities" >
+    Hackers can scan for open ports and use known vulnerabilities in the services running on those ports to gain unauthorized access. Unpatched software or outdated configurations further exacerbate this risk.
+  </Accordion>
+
+  <Accordion title="Malware Infiltration" >
+    Open ports can be used to install malware onto your system, potentially leading to data theft, identity theft, or even remote control of your device.
+  </Accordion>
+
+  <Accordion title="Resource Drain" >
+    Even unused open ports can consume system resources, making your device slower and more susceptible to performance issues.
+  </Accordion>
+</AccordionGroup>
+
+## High-Risk Ports (Close Unless Absolutely Necessary)
+
+While necessary for certain functions, open ports present several security risks:
+
+<AccordionGroup>
+  <Accordion title="FTP (20, 21)">
+    Used for file transfer, but known for security vulnerabilities and lack of encryption. Consider secure alternatives like SFTP (22) or FTPS (990).  
+  </Accordion>
+
+  <Accordion title="Telnet (23)" >
+    Unencrypted remote access protocol, highly insecure. Use SSH (22) instead for secure remote access.
+  </Accordion>
+
+  <Accordion title="NetBIOS (135, 137, 139)" >
+    Used for file and printer sharing in older Windows systems. Often exploited by malware. Disable if not needed.
+  </Accordion>
+
+  <Accordion title="Remote Desktop (3389)" >
+    Allows remote access to desktops, requires strong password and proper configuration. Consider alternative remote access solutions with better security practices.
+  </Accordion>
+
+  <Accordion title="SMTP (25)" >
+    Used for email sending, vulnerable to spam and phishing attacks. Implement strong spam filters and user education. Use SMTPS instead (587 or 465).
+  </Accordion>
+
+  <Accordion title="Database ports (MySQL - 3306, PostgreSQL - 5432 )" >
+Used for accessing a database. Make sure there are proper access controls and strong passwords with MFA are used. Try avoiding public access to these ports.
+  </Accordion>
+</AccordionGroup>
+
+## Medium-Risk Ports (Use With Caution)
+
+<AccordionGroup>
+  <Accordion title="SSH (22)">
+    Secure shell access, essential for server administration but can be targeted by brute-force attacks. Use strong passwords and consider additional security measures.
+  </Accordion>
+
+  <Accordion title="DNS (53)" >
+   Used for domain name resolution, essential but can be exploited for DNS poisoning attacks. Keep DNS software updated and consider security measures like DNSSEC.
+  </Accordion>
+
+  <Accordion title="Web servers (80)" >
+    Essential for websites, but require strong security practices like HTTPS encryption, regular updates, and secure coding practices.
+  </Accordion>
+</AccordionGroup>
+
+## Low-Risk Ports (Generally Safe To Leave Open)
+
+<AccordionGroup>
+  <Accordion title="HTTPS (443)">
+    Secure web browsing, essential for online transactions and secure communication.
+  </Accordion>
+
+  <Accordion title="VPN (various ports)" >
+   Virtual Private Network, encrypts internet traffic for secure remote access. Choose reputable VPN providers and follow best practices.
+  </Accordion>
+
+  <Accordion title="Gaming servers (various ports)" >
+    Used for online gaming, often require specific ports open depending on the game. Research necessary ports before opening them.
+  </Accordion>
+</AccordionGroup>
+
+## How To Close Unused Ports
+
+The process of closing unused ports depends on your specific device or network configuration. The first is to use a port scanner like Telivy to identify which ports are open on your network. Next, understand the purpose of the ports and close the service behind the ports if you don't need them.
