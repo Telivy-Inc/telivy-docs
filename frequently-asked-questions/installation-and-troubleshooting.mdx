@@ -4,81 +4,53 @@ description: 'Common questions and answers'
 ---
 
 <AccordionGroup>
-    <Accordion title="How Do I Start The Installation Process For A Risk Assessment?">
-        Please refer to [this](https://docs.google.com/document/d/1udauxMxkkn6lN3fTyg-eZ24DCKj2gc9PAqqZtOx4taI/edit?tab=t.0#heading=h.cqf0wabvjxiy) article for more details on the installation process.
-    </Accordion>
+  <Accordion title="How Do I Start The Installation Process For A Risk Assessment?">
+    Please refer to [this](https://docs.google.com/document/d/1udauxMxkkn6lN3fTyg-eZ24DCKj2gc9PAqqZtOx4taI/edit?tab=t.0#heading=h.cqf0wabvjxiy) article for more details on the installation process.
+  </Accordion>
 
-    <Accordion title="What Software(s) Do You Install For The Risk Assessment?">
-        The list of softwares installed are detailed in [this](https://docs.google.com/document/d/1udauxMxkkn6lN3fTyg-eZ24DCKj2gc9PAqqZtOx4taI/edit?tab=t.0#heading=h.mtnu2ko2007j) section.
-    </Accordion>
+  <Accordion title="What Software(s) Do You Install For The Risk Assessment?">
+    The list of softwares installed are detailed in [this](https://docs.google.com/document/d/1udauxMxkkn6lN3fTyg-eZ24DCKj2gc9PAqqZtOx4taI/edit?tab=t.0#heading=h.mtnu2ko2007j) section.
+  </Accordion>
 
-    <Accordion title='What Happens If I See "Download Failed" Error Message When Executing The Script?'>
-       This usually happens when an anti virus (or a similar software like zero trust applications etc) is blocking the download and install of Telivy. Please allowlist the path “C:\Program Files (x86)\Telivy” in your anti-virus. In some cases, you might have to allowlist the “telivy.exe” execution as well. In some cases, allowlisting Telivy to execute powershell scripts might also be required if you have realtime protection turned on.
+  <Accordion title="On What Devices Should I Install Telivy?">
+    The Telivy agent can be installed on supported servers, laptops, and desktops. For optimal coverage, we recommend installing it on as close to 100% of your client devices as possible. However, if this is not feasible, we recommend installing it on a diverse set of devices. For example, you could install it on one device from each department, such as HR, accounting, and sales. This will help you to capture trends across your organization.
+  </Accordion>
 
-       If you have questions on how to whitelist, we can definitely help you. Please reach out to support@telivy.com for more details.
-    </Accordion>
+  <Accordion title="What Is The Minimum User Rights And Licensing Needed To Complete The Microsoft 365 Portion Of The Assessment?">
+    To get login and security data from M365, a Azure AD P1 Business license and Global admin is required. This license allows us to retrieve monitor login statistics like location and MFA status from Microsoft.  This license comes with audit logging which enables us to monitor M365 security.
 
-    <Accordion title='On What Devices Should I Install Telivy?'>
-        The Telivy agent can be installed on supported servers, laptops, and desktops. For optimal coverage, we recommend installing it on as close to 100% of your client devices as possible. However, if this is not feasible, we recommend installing it on a diverse set of devices. For example, you could install it on one device from each department, such as HR, accounting, and sales. This will help you to capture trends across your organization.
-    </Accordion>
+    You can check out the plans, costs and features here: https://www.microsoft.com/en-us/security/business/microsoft-entra-pricing.
+  </Accordion>
 
-    <Accordion title="What Is The Minimum User Rights And Licensing Needed To Complete The Microsoft 365 Portion Of The Assessment?">
-        To get login and security data from M365, a Azure AD P1 Business license and Global admin is required. This license allows us to retrieve monitor login statistics like location and MFA status from Microsoft.  This license comes with audit logging which enables us to monitor M365 security.
+  <Accordion title="How Do I Verify That Telivy Has Successfully Run On A Device?">
+    When you run Telivy on a device, it should show up on the Assets page with details on the installation.
 
-        You can check out the plans, costs and features here: https://www.microsoft.com/en-us/security/business/microsoft-entra-pricing.
-    </Accordion>
+    If you do not see the device in the assets page it could mean two things:
 
-    <Accordion title="How Do I Verify That Telivy Has Successfully Run On A Device?">
-        When you run Telivy on a device, it should show up on the Assets page with details on the installation.
+    1. There is an Anti Virus like software that is blocking the execution.
 
-        If you do not see the device in the assets page it could mean two things:
+    2. The devices are added to the wrong Risk Assessment. You should be able to uninstall from the wrong risk assessment and add it back to the correct one.
 
-        1. There is an Anti Virus like software that is blocking the execution.
-        2. The devices are added to the wrong Risk Assessment. You should be able to uninstall from the wrong risk assessment and add it back to the correct one.
+    If you want to verify installation without accessing the assets page, you can check for whether "Telivy" shows up in the list of installed software in Control Panel.
+  </Accordion>
 
-        If you want to verify installation without accessing the assets page, you can check for whether "Telivy" shows up in the list of installed software in Control Panel.
-    </Accordion>
+  <Accordion title="How Do I Add Multiple Domains To A Scan?">
+    For External Scans, under the “Security” tab, navigate to “Targets” and click on “Add Target” to add either an external IP address or another domain.
 
-    <Accordion title="How Do I Add Multiple Domains To A Scan?">    
-        For External Scans, under the “Security” tab, navigate to “Targets” and click on “Add Target” to add either an external IP address or another domain.
+    For Risk Assessments, under the “Assets” tab, navigate to “Domain/IP Address” and click on “Add Target” to add either an external IP or another domain.
+  </Accordion>
 
-        For Risk Assessments, under the “Assets” tab, navigate to “Domain/IP Address” and click on “Add Target” to add either an external IP or another domain.
-    </Accordion>
+  <Accordion title="Why Does My M365 Security Not Show Up Even After Connecting My Microsoft Account?">
+    Sometimes M365 data fetching takes 10-15 mins based on the number of users and the event history you have. If this issue persists even after an hour, try reconnecting M365 from the Configuration page > Configure M365 Section.
 
-    <Accordion title="What Should I Do If Windows Defender Is Flagging Telivy Agent Install?">    
-        Telivy agent uses decryption and encryption libraries to analyse user passwords. Sometimes this logic can be flagged as ransomware since such tools use similar decryption and encryption libraries to encrypt user data for ransom.
+    To re-fetch the data, go to Assets > Softwares and click on the "Refetch M365 data" button. The M365 data should be updated within 5 mins.
+  </Accordion>
 
-        In such cases adding an Exclusion to Windows Defender can help with a smoother installation.
+  <Accordion title="How To Add An IP/Domain To A Risk Assessment?">
+    You can add an external scan by going to “Assets” > “Domain / IP Addresses” > “Add Target” (top right) and then you can add an IP address or additional domains.
+  </Accordion>
 
-        For more details, see: https://support.microsoft.com/en-us/windows/add-an-exclusion-to-windows-security-811816c0-4dfd-af4a-47e4-c301afe13b26
-    </Accordion>
-
-    <Accordion title="Why Does My M365 Security Not Show Up Even After Connecting My Microsoft Account?">
-        Sometimes M365 data fetching takes 10-15 mins based on the number of users and the event history you have. If this issue persists even after an hour, try reconnecting M365 from the Configuration page > Configure M365 Section.
-
-        To re-fetch the data, go to Assets > Softwares and click on the "Refetch M365 data" button. The M365 data should be updated within 5 mins.
-    </Accordion>
-
-    <Accordion title="How To Add An IP/Domain To A Risk Assessment?">
-        You can add an external scan by going to “Assets” > “Domain / IP Addresses” > “Add Target” (top right) and then you can add an IP address or additional domains.
-    </Accordion>
-
-    <Accordion title="Why Is My Asset Scan/Rescan Taking A Long Time?">
-        A scan or a rescan can complete only when the system is up for a sufficient amount of time - typically 2 hours continuously. If you still see the rescan to be in progress after being online for a long time, please reach out to support@telivy.com and we can take look at the reason for the delay.
-    </Accordion>
-
-    <Accordion title='What should I do if an asset is stuck in "Rescan Scheduled" state?'>
-        Sometimes Telivy might not be able to trigger a rescan immediately because an antivirus might be blocking it. To troubleshoot this, reinstall Telivy on this device and the scan should usually resume. 
-
-        If the issue still persists, please reach out to support@telivy.com
-    </Accordion>
-
-    <Accordion title="What should I do I execute the RMM command but the device does not show up">
-        If there are issues in installing via the RMM, it can so happen that an antivirus is blocking the first step - which is downloading the executable. In this case, try executing via the executable.
-
-        If that fails, "C:\Telivy\stderr.txt" should have logs on why the installation fails. If you notice an error message along the lines of "Failed to Download" or "Error in Downloading" or "Unable to find", the antivirus has either blocked the download of the Telivy executable or has quarantined it.
-
-        If you still do not see any errors, please reach out to support@telivy.com
-    </Accordion>
+  <Accordion title="Why Is My Asset Scan/Rescan Taking A Long Time?">
+    A scan or a rescan can complete only when the system is up for a sufficient amount of time - typically 2 hours continuously. If you still see the rescan to be in progress after being online for a long time, please reach out to support@telivy.com and we can take look at the reason for the delay.
+  </Accordion>
 </AccordionGroup>
-
