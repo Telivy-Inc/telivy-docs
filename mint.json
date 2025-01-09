@@ -105,10 +105,10 @@
     "group": "Frequently Asked Questions",
     "pages": [
       "frequently-asked-questions/getting-started",
+      "frequently-asked-questions/installation-and-troubleshooting",
+      "frequently-asked-questions/microsoft-365-and-google-workspace", 
       "frequently-asked-questions/risk-assessments-and-external-scans",
       "frequently-asked-questions/telivy-accounts-and-platforms",
-      "frequently-asked-questions/installation-and-troubleshooting",
-      "frequently-asked-questions/microsoft-365-and-google-workspace",
       "frequently-asked-questions/threatlocker-and-telivy-policy-during-installation"
     ]
   },
