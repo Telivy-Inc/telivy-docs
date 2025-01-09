@@ -1,6 +1,6 @@
 ---
-title: Installation and Troubleshooting
-description: 'Common questions and answers'
+title: "Installation and Troubleshooting"
+description: "Common questions and answers"
 ---
 
 <AccordionGroup>
@@ -16,38 +16,16 @@ description: 'Common questions and answers'
     The Telivy agent can be installed on supported servers, laptops, and desktops. For optimal coverage, we recommend installing it on as close to 100% of your client devices as possible. However, if this is not feasible, we recommend installing it on a diverse set of devices. For example, you could install it on one device from each department, such as HR, accounting, and sales. This will help you to capture trends across your organization.
   </Accordion>
 
-  <Accordion title="What Is The Minimum User Rights And Licensing Needed To Complete The Microsoft 365 Portion Of The Assessment?">
-    To get login and security data from M365, a Azure AD P1 Business license and Global admin is required. This license allows us to retrieve monitor login statistics like location and MFA status from Microsoft.  This license comes with audit logging which enables us to monitor M365 security.
-
-    You can check out the plans, costs and features here: https://www.microsoft.com/en-us/security/business/microsoft-entra-pricing.
-  </Accordion>
-
   <Accordion title="How Do I Verify That Telivy Has Successfully Run On A Device?">
     When you run Telivy on a device, it should show up on the Assets page with details on the installation.
 
     If you do not see the device in the assets page it could mean two things:
 
-    1. There is an Anti Virus like software that is blocking the execution.
+    1. There is an Anti Virus, Firewall or similar software that is blocking the execution.
 
     2. The devices are added to the wrong Risk Assessment. You should be able to uninstall from the wrong risk assessment and add it back to the correct one.
 
     If you want to verify installation without accessing the assets page, you can check for whether "Telivy" shows up in the list of installed software in Control Panel.
-  </Accordion>
-
-  <Accordion title="How Do I Add Multiple Domains To A Scan?">
-    For External Scans, under the “Security” tab, navigate to “Targets” and click on “Add Target” to add either an external IP address or another domain.
-
-    For Risk Assessments, under the “Assets” tab, navigate to “Domain/IP Address” and click on “Add Target” to add either an external IP or another domain.
-  </Accordion>
-
-  <Accordion title="Why Does My M365 Security Not Show Up Even After Connecting My Microsoft Account?">
-    Sometimes M365 data fetching takes 10-15 mins based on the number of users and the event history you have. If this issue persists even after an hour, try reconnecting M365 from the Configuration page > Configure M365 Section.
-
-    To re-fetch the data, go to Assets > Softwares and click on the "Refetch M365 data" button. The M365 data should be updated within 5 mins.
-  </Accordion>
-
-  <Accordion title="How To Add An IP/Domain To A Risk Assessment?">
-    You can add an external scan by going to “Assets” > “Domain / IP Addresses” > “Add Target” (top right) and then you can add an IP address or additional domains.
   </Accordion>
 
   <Accordion title="Why Is My Asset Scan/Rescan Taking A Long Time?">

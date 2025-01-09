@@ -1,0 +1,20 @@
+---
+title: " Microsoft 365 and Google Workspace"
+description: "Common questions and answers"
+---
+
+<AccordionGroup>
+  <Accordion title="What Is The Minimum User Rights And Licensing Needed To Complete The Microsoft 365 Portion Of The Assessment?">
+    To get login and security data from M365, a Azure AD P1 Business license and Global admin is required. This license allows us to retrieve monitor login statistics like location and MFA status from Microsoft.  This license comes with audit logging which enables us to monitor M365 security.
+
+    You can check out the plans, costs and features here: https://www.microsoft.com/en-us/security/business/microsoft-entra-pricing.
+  </Accordion>
+
+  <Accordion title="Why Does My M365 Security Not Show Up Even After Connecting My Microsoft Account?">
+    Sometimes M365 data fetching takes 15 mins to few hours based on the number of users and the event history you have.
+
+    If this issue persists even after an hour, try reconnecting M365 from the Setup > Connect Cloud > Connect Microsoft 365 Section.
+
+    To trigger a re-fetch of the data, go to Inventory > Applications > Cloud and click on the “Refetch Microsoft 365 data” button. You will be notified via email when Microsoft 365 insights are ready.
+  </Accordion>
+</AccordionGroup>
