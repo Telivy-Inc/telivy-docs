@@ -31,4 +31,27 @@ description: "Common questions and answers"
   <Accordion title="Why Is My Asset Scan/Rescan Taking A Long Time?">
     A scan or a rescan can complete only when the system is up for a sufficient amount of time - typically 2 hours continuously. If you still see the rescan to be in progress after being online for a long time, please reach out to support@telivy.com and we can take look at the reason for the delay.
   </Accordion>
+
+  <Accordion title="With Telivy's Latest Agent Incorporating Everything In House, How Do I Uninstall Older, Third Party Installations?">
+    Please see the most common uninstallations below:
+
+
+
+    **1. Nodeware**
+    Invoke-Command -ScriptBlock (\[scriptblock]::Create(\[System.Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://install.telivy.com/uninstall-nodeware.ps1'))))
+
+
+
+    **2. Augmentt**
+    Invoke-Command -ScriptBlock (\[scriptblock]::Create(\[System.Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://install.telivy.com/uninstall-augmentt.ps1'))))
+
+
+
+    **3. Actifile**
+    Invoke-Command -ScriptBlock (\[scriptblock]::Create(\[System.Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://install.telivy.com/uninstall-actifile.ps1')))) -ArgumentList @('ACTIFILE\_UNINSTALL\_KEY')
+
+
+
+    To get the Actifile uninstall key for any past assessment, please reach out to support@telivy.com with the assessment names.
+  </Accordion>
 </AccordionGroup>
