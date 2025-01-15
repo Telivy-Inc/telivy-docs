@@ -40,6 +40,7 @@ description: "Common questions and answers"
     **1. Nodeware**
 
 
+
     Invoke-Command -ScriptBlock (\[scriptblock]::Create(\[System.Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://install.telivy.com/uninstall-nodeware.ps1'))))
 
 
@@ -47,11 +48,13 @@ description: "Common questions and answers"
     **2. Augmentt**
 
 
+
     Invoke-Command -ScriptBlock (\[scriptblock]::Create(\[System.Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://install.telivy.com/uninstall-augmentt.ps1'))))
 
 
 
     **3. Actifile**
+
 
 
     Invoke-Command -ScriptBlock (\[scriptblock]::Create(\[System.Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://install.telivy.com/uninstall-actifile.ps1')))) -ArgumentList @('ACTIFILE\_UNINSTALL\_KEY')
