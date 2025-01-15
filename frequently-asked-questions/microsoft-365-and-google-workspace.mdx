@@ -18,22 +18,30 @@ description: "Common questions and answers"
     To trigger a re-fetch of the data, go to Inventory > Applications > Cloud and click on the “Refetch Microsoft 365 data” button. You will be notified via email when Microsoft 365 insights are ready.
   </Accordion>
 
-<Accordion title="Why Do I Keep Recieving An Authorization Error When Attempting To Connect My Google Workspace?">
+  <Accordion title="Why Do I Keep Recieving An Authorization Error When Attempting To Connect My Google Workspace/An Error Message Saying Admin_Policy_Enforced?">
+    There are two possible options:
 
-There are two possible options:
+    a) API Access is Restricted.
+    To fix this and Enable API Access:
 
-  a) API Access is Restricted. 
-  To fix this and Enable API Access: 
-1. Log in to the Google Workspace Admin Console.
-2. Go to Security > API Controls > Manage Google Services
-3. Find Google Workspace Admin and select Change Access
-4. Select Unrestricted: Any user-approved app can access a service to enable API Access
- 
-  b) One of the systems is disabled.
-  To fix this and enable systems:  
-1. Log in to the Google Workspace Admin Console.
-2. Go to Security  > API Permissions.
-3. Enable any disabled systems
+    1. Log in to the Google Workspace Admin Console.
+
+    2. Go to Security > API Controls > Manage Google Services
+
+    3. Find Google Workspace Admin and select Change Access
+
+    4. Select Unrestricted: Any user-approved app can access a service to enable API Access
+
+    b) One of the systems is disabled.
+    To fix this and enable systems:
+
+    1. Log in to the Google Workspace Admin Console.
+
+    2. Go to Security  > API Permissions.
+
+    3. Enable any disabled systems
+
+For further questions, please see:
+https://support.google.com/a/thread/168978251?hl=en&msgid=169210944
   </Accordion>
-  
 </AccordionGroup>
