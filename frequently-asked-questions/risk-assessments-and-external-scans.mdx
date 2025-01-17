@@ -88,4 +88,34 @@ description: "Common questions and answers"
   <Accordion title="How To Add An IP/Domain To A Risk Assessment?">
     You can add an external scan by going to “Assets” > “Domain / IP Addresses” > “Add Target” (top right) and then you can add an IP address or additional domains.
   </Accordion>
+
+  <Accordion title="What Is Agent/Agentless?">
+    We offer two options for every assessment.
+
+    1. Agent
+
+    * You can deploy rapidly using your RMM
+
+    * You can leave Telivy deployed and “rescan” on demand
+
+    * You will generate the most comprehensive data
+
+    * You can convert a CSRA to “Monitoring” where Telivy will rescan and help build risk-over-time charts and graphs
+
+    * With Monitoring you can also set policies and receive alerts when a policy is violated
+
+    2. Agentless (Non Agent)
+
+    * Recommended for new clients as it does not require any installation or uninstallation
+
+    * Link to executable can be sent on email, very useful for prospecting when you don't have RMM setup to the devices to install agent
+
+    * It tries to run as admin, if no permission granted then runs as non admin
+
+    * Non admin scan limitations
+
+      * PII scan done only for files accessible by the local use
+
+      * Browser history and passwords captured only for the local user
+  </Accordion>
 </AccordionGroup>
