@@ -105,4 +105,30 @@ description: "Common questions and answers"
 
        * Security Fatigue & Non-Compliance: If employees consistently bypass security features (e.g., opting out of MFA, ignoring phishing alerts), the organization’s Secure Score won’t improve significantly even if policies exist.
   </Accordion>
+
+  <Accordion title="Why Does the Maximum Possible Score Differ??">
+    1. **Licensing & Feature Availability**
+
+       * Higher-tier licenses (E5, E3) have access to more security controls, increasing the total possible score.
+
+       * Lower-tier licenses (Business Standard, Business Premium, Basic) have fewer available security features, leading to a lower max score.
+
+    2. **Security Services in Use**
+
+       * If an organization uses SharePoint, OneDrive, Exchange, and Teams, they will have more security controls to implement, increasing their total possible points.
+
+       * If another organization only uses Exchange Online and Microsoft Defender, their total possible score is lower since fewer controls apply.
+
+    3. **Microsoft-Native vs. Third-Party Security Tools**
+
+       * Organizations using Microsoft-native security tools (e.g., Defender for Endpoint, Defender for Identity) will have more scoring opportunities.
+
+       * Organizations using third-party solutions (e.g., CrowdStrike for endpoint protection, Okta for IAM) won’t receive points for security controls they are enforcing outside of Microsoft’s ecosystem.
+
+    4. **Organizational Complexity & Number of Users**
+
+       * Larger organizations with more users, devices, and workloads will generally have more security recommendations, leading to a higher possible Secure Score ceiling.
+
+       * A small company with a simple IT setup will have fewer security controls to configure, lowering their total possible points.
+  </Accordion>
 </AccordionGroup>
