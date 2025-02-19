@@ -1,0 +1,246 @@
+---
+title: "Scoring on the Telivy Portal"
+description: "Common questions and answers"
+---
+
+<AccordionGroup>
+  <Accordion title="Telivy Security Score Methodology">
+    Telivy assigns security scores to key areas of an organization’s security posture. Each area is evaluated based on various security factors, and grades are assigned according to severity.
+
+    **Network Security Score**
+
+    This score evaluates network infrastructure, external exposure, and internal system vulnerabilities.
+
+    *Grade Criteria Explanation*    
+
+    **A** (Excellent):&#x20;
+
+    * No major findings.&#x20;
+
+    * No critical or medium vulnerabilities detected.&#x20;
+
+    * Minimal low-severity issues.   
+
+    **B** (Good):
+
+    * Few low-severity vulnerabilities&#x20;
+
+    * Minor security gaps exist, but they are unlikely to be exploited.&#x20;
+
+    * No exposed high-risk ports.   
+
+    **C** (Fair):&#x20;
+
+    * Some medium/high vulnerabilities&#x20;
+
+    * External services or internal assets have moderate security issues.&#x20;
+
+    * Security patches may be required.   
+
+    **D** (Poor):&#x20;
+
+    * Critical vulnerabilities detected&#x20;
+
+    * High-risk vulnerabilities, misconfigurations, and exposed services present.
+
+    * Immediate action needed
+
+    **Data Security Score**
+
+    This score assesses how well sensitive data is managed and protected.
+
+    *Grade Criteria Explanation*
+
+    **A** (Excellent):&#x20;
+
+    * Minimal sensitive data exposure&#x20;
+
+    * Strong data protection measures are in place.   
+
+    **B** (Good):&#x20;
+
+    * Some PII exposure&#x20;
+
+    * Low risk, but best practices should be maintained.   
+
+    **C** (Fair):&#x20;
+
+    * Moderate PII exposure&#x20;
+
+    * High-value data detected.&#x20;
+
+    * Encryption and policies should be reviewed.   
+
+    **D** (Poor):&#x20;
+
+    * Significant sensitive data found&#x20;
+
+    * Major security risks.&#x20;
+
+    * Encryption and data access controls must be improved.  
+
+    **Application Security Score**
+
+    This score evaluates the security of applications running within the environment.
+
+    *Grade Criteria Explanation*
+
+    **A** (Excellent):&#x20;
+
+    * No risky applications found&#x20;
+
+    * All installed applications are considered secure.   
+
+    **B** (Good):&#x20;
+
+    * Some low-risk applications present&#x20;
+
+    * Applications have minor security concerns.   
+
+    **C** (Fair):&#x20;
+
+    * Medium-risk applications detected&#x20;
+
+    * Applications with security vulnerabilities or historical breaches are in use.   
+
+    **D** (Poor):&#x20;
+
+    * High-risk applications detected&#x20;
+
+    * Software with known security risks (e.g., outdated, breached apps) is in use
+
+    **Identity & Access Management (IAM) Score**
+
+    This score measures password security, account protection, and authentication strength.
+
+    *Grade Criteria Explanation*
+
+    **A** (Excellent):
+
+    * No compromised or weak passwords found&#x20;
+
+    * Strong IAM policies are in place.   
+
+    **B** (Good):&#x20;
+
+    * Few weak passwords&#x20;
+
+    * Minor risks detected, but overall good security.   
+
+    **C** (Fair)&#x20;
+
+    * Some compromised passwords detected&#x20;
+
+    * Several credentials are weak or found in breaches.   
+
+    **D** (Poor):&#x20;
+
+    * High number of weak/compromised passwords&#x20;
+
+    * Major security risk due to credential vulnerabilities.
+
+    **Security Awareness & Training Scor**e
+
+    This score evaluates how well employees and organizations handle security risks.
+
+    *Grade Criteria Explanation*
+
+    **A** (Excellent):&#x20;
+
+    * No dark web exposure, ongoing training&#x20;
+
+    * Employees have strong security awareness.   
+
+    **B** (Good):&#x20;
+
+    * Minor dark web exposure, some training in place&#x20;
+
+    * Some data found but proactive measures exist.   
+
+    **C** (Fair):&#x20;
+
+    * Older dark web exposure, little security training&#x20;
+
+    * Past leaks indicate security gaps.   
+
+    **D** (Poor):&#x20;
+
+    * Recent dark web exposure, no security training&#x20;
+
+    * High risk of phishing, breaches, and social engineering
+
+    **Improving Your Security Score**
+
+    The fastest way to improve a security score is by prioritizing high-impact fixes, such as:
+
+    * Patching critical vulnerabilities (especially external exposure)
+
+    * Enforcing strong authentication policies (MFA, password management)
+
+    * Closing unnecessary open ports & restricting access
+
+    * Conducting regular employee security trainingMonitoring for dark web credential leaks
+  </Accordion>
+
+  <Accordion title="How does MS Dynamically Calculate the M365 Score?">
+    The total points achieved in Microsoft 365 Security Score (M365 Secure Score) differs based on the client because Microsoft dynamically calculates the score based on the security controls applicable to each organization’s unique environment. The key factors include:
+
+    1. **Licensing & Available Features**
+
+       * M365 Plan Differences: Security score recommendations depend on the Microsoft 365 licensing level. Clients with E3 or E5 licenses have access to more advanced security controls (like Microsoft Defender for Endpoint, Conditional Access, DLP, and Threat Protection) than those with Business Standard or Basic plans.
+
+       * Feature Availability: If a client doesn’t have access to certain security features, those features won’t contribute to their total possible score.
+
+    2. **Security Controls in Use**&#x20;
+
+       * Baseline Security Posture: Organizations that have already implemented security best practices start with a higher score compared to those that have little to no security configurations in place.
+
+       * Enabled vs. Applicable Controls: The M365 Secure Score suggests security improvements only for features that the client is actively using. If a client doesn’t use Exchange Online, SharePoint, or Microsoft Defender, they won’t see related controls factored into their score.
+
+    3. **Organizational Size & Configuration Complexity**
+
+       * Number of Users & Devices: The larger an organization, the more users, endpoints, and policies impact the Secure Score. A small business with 10 users might have a lower total score ceiling than an enterprise with 1,000 users.
+
+       * Configurations & Custom Policies: Organizations that use custom security configurations (rather than Microsoft’s recommended defaults) might not receive full points, even if they have strong security controls in place.
+
+    4. **Third-Party Security Tools Impact**
+
+       * External Security Solutions: If a company relies on third-party security solutions (e.g., CrowdStrike for endpoint protection, Okta for identity management), Microsoft Secure Score may not recognize these controls, leading to lower scores despite having strong security.
+
+       * Microsoft-Native vs. External Solutions: Organizations that implement Microsoft-native security features (like Defender for Identity or Microsoft Sentinel) tend to score higher than those using external tools.
+
+    5. **Policy & User Adoption Over Time**
+
+       * Score Changes Based on User Behavior: If users disable MFA, weaken password policies, or remove security settings, the score drops.
+
+       * Security Fatigue & Non-Compliance: If employees consistently bypass security features (e.g., opting out of MFA, ignoring phishing alerts), the organization’s Secure Score won’t improve significantly even if policies exist.
+  </Accordion>
+
+  <Accordion title="Why Does the Maximum Possible Score Differ?">
+    1. **Licensing & Feature Availability**
+
+       * Higher-tier licenses (E5, E3) have access to more security controls, increasing the total possible score.
+
+       * Lower-tier licenses (Business Standard, Business Premium, Basic) have fewer available security features, leading to a lower max score.
+
+    2. **Security Services in Use**
+
+       * If an organization uses SharePoint, OneDrive, Exchange, and Teams, they will have more security controls to implement, increasing their total possible points.
+
+       * If another organization only uses Exchange Online and Microsoft Defender, their total possible score is lower since fewer controls apply.
+
+    3. **Microsoft-Native vs. Third-Party Security Tools**
+
+       * Organizations using Microsoft-native security tools (e.g., Defender for Endpoint, Defender for Identity) will have more scoring opportunities.
+
+       * Organizations using third-party solutions (e.g., CrowdStrike for endpoint protection, Okta for IAM) won’t receive points for security controls they are enforcing outside of Microsoft’s ecosystem.
+
+    4. **Organizational Complexity & Number of Users**
+
+       * Larger organizations with more users, devices, and workloads will generally have more security recommendations, leading to a higher possible Secure Score ceiling.
+
+       * A small company with a simple IT setup will have fewer security controls to configure, lowering their total possible points.
+
+    ![](/images/Screenshot2025-02-17at1.26.17PM.png)
+  </Accordion>
+</AccordionGroup>
