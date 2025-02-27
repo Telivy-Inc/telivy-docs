@@ -80,7 +80,6 @@
         "group": "Risk Assessments",
         "pages": [
           "products/risk-assessments/overview",
-          "products/risk-assessments/ai-scoring",
           "products/risk-assessments/start-a-new-risk-assessment",
           "products/risk-assessments/whitelist-telivy-with-av-edr",
           "products/risk-assessments/install-telivy-agent-windows",
