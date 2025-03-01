@@ -102,20 +102,29 @@
     ]
   },
   {
-    "group": "Frequently Asked Questions",
-    "pages": [
-      "frequently-asked-questions/getting-started",
-      "frequently-asked-questions/installation-and-troubleshooting", "frequently-asked-questions/integrations",
-      "frequently-asked-questions/microsoft-365-and-google-workspace", 
-      "frequently-asked-questions/risk-assessments-and-external-scans",
-      "frequently-asked-questions/telivy-accounts-and-platforms",
-      "frequently-asked-questions/threatlocker-and-telivy-policy-during-installation"
-    ]
-  },
-  {
-    "group": "Additional Information",
-    "pages": [
-      "additional-information/release-notes"
+   "group": "Frequently Asked Questions",
+      "pages": [
+        "frequently-asked-questions/getting-started",
+        "frequently-asked-questions/installation-and-troubleshooting",
+        "frequently-asked-questions/integrations",
+        "frequently-asked-questions/microsoft-365-and-google-workspace",
+        "frequently-asked-questions/risk-assessments-and-external-scans",
+        "frequently-asked-questions/telivy-accounts-and-platforms",
+        "frequently-asked-questions/threatlocker-and-telivy-policy-during-installation"
+      ]
+    },
+    {
+      "group": "Scoring", 
+      "pages": [
+        "scoring/ai-scoring", 
+        "scoring/m365",
+       "scoring/telivycriteria",
+      ]
+    },
+    {
+      "group": "Additional Information",
+      "pages": [
+        "additional-information/release-notes"
     ]
   }
   ],
