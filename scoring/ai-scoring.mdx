@@ -1,0 +1,35 @@
+---
+title: "New file"
+description: "A guide to how Telivy grades AI usage"
+---
+
+<AccordionGroup>
+  <Accordion title="How is the AI Exposure Score calculated?">
+    The score is based on three key factors:
+
+    * Tool Usage Volume (T) – How many AI tools are being used?
+
+      * The more AI tools in use, the higher the risk exposure.
+
+    * Risk of Exploitation (R) – Are these tools vulnerable to attacks?
+
+      * Evaluates how prevalent usage is amongst employees and 
+
+      * Whether those tools have known vulnerabilities (v2)
+
+    * Security Controls (S) – Are security measures in place? (v2)
+
+      * If access controls, MFA, encryption, monitoring, DLP practices are in place, the risk score decreases
+  </Accordion>
+
+  <Accordion title="How to Interpret the Score">
+    Once calculated, the AI Exposure Score is normalized (0-100 scale) and classified into four risk levels:
+
+    | Score Range | Risk Level            | Meaning                                             |
+    | ----------- | --------------------- | --------------------------------------------------- |
+    | **0-20**    | **Low (Green)**       | Minimal AI risk exposure, strong security controls. |
+    | **21-50**   | **Moderate (Yellow)** | Some AI risk, but manageable with improvements      |
+    | **51-80**   | **High (Orange)**     | Significant AI exposure, potential security risks.  |
+    | **81-100**  | **Critical (Red)**    | Major AI security gaps, immediate action required.  |
+  </Accordion>
+</AccordionGroup>

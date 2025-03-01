@@ -1,0 +1,68 @@
+---
+title: 'Microsoft Scoring'
+description: 'How Microsoft + Telivy Generate Your Scores'
+---
+
+<AccordionGroup>
+  <Accordion title="How does MS Dynamically Calculate the M365 Score?">
+    The total points achieved in Microsoft 365 Security Score (M365 Secure Score) differs based on the client because Microsoft dynamically calculates the score based on the security controls applicable to each organization’s unique environment. The key factors include:
+
+    1. **Licensing & Available Features**
+
+       * M365 Plan Differences: Security score recommendations depend on the Microsoft 365 licensing level. Clients with E3 or E5 licenses have access to more advanced security controls (like Microsoft Defender for Endpoint, Conditional Access, DLP, and Threat Protection) than those with Business Standard or Basic plans.
+
+       * Feature Availability: If a client doesn’t have access to certain security features, those features won’t contribute to their total possible score.
+
+    2. **Security Controls in Use**&#x20;
+
+       * Baseline Security Posture: Organizations that have already implemented security best practices start with a higher score compared to those that have little to no security configurations in place.
+
+       * Enabled vs. Applicable Controls: The M365 Secure Score suggests security improvements only for features that the client is actively using. If a client doesn’t use Exchange Online, SharePoint, or Microsoft Defender, they won’t see related controls factored into their score.
+
+    3. **Organizational Size & Configuration Complexity**
+
+       * Number of Users & Devices: The larger an organization, the more users, endpoints, and policies impact the Secure Score. A small business with 10 users might have a lower total score ceiling than an enterprise with 1,000 users.
+
+       * Configurations & Custom Policies: Organizations that use custom security configurations (rather than Microsoft’s recommended defaults) might not receive full points, even if they have strong security controls in place.
+
+    4. **Third-Party Security Tools Impact**
+
+       * External Security Solutions: If a company relies on third-party security solutions (e.g., CrowdStrike for endpoint protection, Okta for identity management), Microsoft Secure Score may not recognize these controls, leading to lower scores despite having strong security.
+
+       * Microsoft-Native vs. External Solutions: Organizations that implement Microsoft-native security features (like Defender for Identity or Microsoft Sentinel) tend to score higher than those using external tools.
+
+    5. **Policy & User Adoption Over Time**
+
+       * Score Changes Based on User Behavior: If users disable MFA, weaken password policies, or remove security settings, the score drops.
+
+       * Security Fatigue & Non-Compliance: If employees consistently bypass security features (e.g., opting out of MFA, ignoring phishing alerts), the organization’s Secure Score won’t improve significantly even if policies exist.
+  </Accordion>
+
+  <Accordion title="Why Does the Maximum Possible Score Differ?">
+    1. **Licensing & Feature Availability**
+
+       * Higher-tier licenses (E5, E3) have access to more security controls, increasing the total possible score.
+
+       * Lower-tier licenses (Business Standard, Business Premium, Basic) have fewer available security features, leading to a lower max score.
+
+    2. **Security Services in Use**
+
+       * If an organization uses SharePoint, OneDrive, Exchange, and Teams, they will have more security controls to implement, increasing their total possible points.
+
+       * If another organization only uses Exchange Online and Microsoft Defender, their total possible score is lower since fewer controls apply.
+
+    3. **Microsoft-Native vs. Third-Party Security Tools**
+
+       * Organizations using Microsoft-native security tools (e.g., Defender for Endpoint, Defender for Identity) will have more scoring opportunities.
+
+       * Organizations using third-party solutions (e.g., CrowdStrike for endpoint protection, Okta for IAM) won’t receive points for security controls they are enforcing outside of Microsoft’s ecosystem.
+
+    4. **Organizational Complexity & Number of Users**
+
+       * Larger organizations with more users, devices, and workloads will generally have more security recommendations, leading to a higher possible Secure Score ceiling.
+
+       * A small company with a simple IT setup will have fewer security controls to configure, lowering their total possible points.
+
+    ![](/images/Screenshot2025-02-17at1.26.17PM.png)
+  </Accordion>
+</AccordionGroup>
