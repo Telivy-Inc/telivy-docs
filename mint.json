@@ -118,7 +118,7 @@
       "pages": [
         "scoring/ai-scoring", 
         "scoring/m365",
-       "scoring/telivycriteria",
+       "scoring/telivycriteria"
       ]
     },
     {
@@ -126,8 +126,7 @@
       "pages": [
         "additional-information/release-notes"
     ],
-    },
-    
+    }, 
   ],
   "footerSocials": {
     "facebook": "https://www.facebook.com/profile.php?id=100078018562649",
