@@ -397,9 +397,7 @@ description: "This guide will help you integrate with Telivy's webhook system to
     - **Rotation:** Periodically rotate API keys, tokens, or passwords used in custom headers.
     - **Minimal Privileges:** The authentication credentials used in webhook headers should have the minimal privileges needed.
   </Accordion>
-
-  
-   <Accordion title="Payload Encryption">
+  <Accordion title="Payload Encryption">
     For added security, you can choose to encrypt the payload data when setting up your webhook. When encryption is enabled:
 
     1. Only the data field of the payload is encrypted (the metadata field remains unencrypted)
@@ -411,17 +409,16 @@ description: "This guide will help you integrate with Telivy's webhook system to
 
     When you receive an encrypted webhook, you'll need to decrypt the data before processing it. Here are examples of how to decrypt the payload in various programming languages:
 
-
- ### C#
+    ### C#
 
     ```csharp
     using System;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
-
-public class WebhookDecryptor
-{
+    using System.IO;
+    using System.Security.Cryptography;
+    using System.Text;
+    
+    public class WebhookDecryptor
+    {
     public static string DecryptData(string encryptedData, string iv, string secret)
     {
         // Create key from secret
@@ -467,21 +464,22 @@ public class WebhookDecryptor
         Console.WriteLine($"Event type: {webhookPayload.metadata.eventType}");
         Console.WriteLine($"Decrypted data: {webhookPayload.data}");
     }
-}
-
+    }
+    
     ```
-### Java
+
+    ### Java
 
     ```java
-   import javax.crypto.Cipher;
-import javax.crypto.Mac;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-
-public class WebhookDecryptor {
-
+    import javax.crypto.Cipher;
+    import javax.crypto.Mac;
+    import javax.crypto.spec.IvParameterSpec;
+    import javax.crypto.spec.SecretKeySpec;
+    import java.nio.charset.StandardCharsets;
+    import java.util.Base64;
+    
+    public class WebhookDecryptor {
+    
     public static String decryptData(String encryptedData, String ivBase64, String secret) throws Exception {
         // Create key from secret
         Mac hmac = Mac.getInstance("HmacSHA256");
@@ -528,59 +526,61 @@ public class WebhookDecryptor {
             e.printStackTrace();
         }
     }
-}
-
+    }
+    
     ```
- 
-### Python
-```python 
-import hmac
-import hashlib
-import json
-import base64
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import unpad
 
-def decrypt_data(encrypted_data, iv_base64, secret):
-    # Create key from secret
-    key = hmac.new(
-        secret.encode('utf-8'),
-        b'encryption-key',
-        hashlib.sha256
-    ).digest()
-    
-    # Decode IV and encrypted data
-    iv = base64.b64decode(iv_base64)
-    cipher_text = base64.b64decode(encrypted_data)
-    
-    # Create cipher and decrypt
-    cipher = AES.new(key, AES.MODE_CBC, iv)
-    padded_data = cipher.decrypt(cipher_text)
-    data = unpad(padded_data, AES.block_size)
-    
-    return data.decode('utf-8')
+    ### Python
 
-def process_webhook(webhook_payload, secret):
-    if webhook_payload['metadata']['encrypted']:
-        decrypted_data_str = decrypt_data(
-            webhook_payload['data'],
-            webhook_payload['iv'],
-            secret
-        )
+    ```python
+    import hmac
+    import hashlib
+    import json
+    import base64
+    from Crypto.Cipher import AES
+    from Crypto.Util.Padding import unpad
+    
+    def decrypt_data(encrypted_data, iv_base64, secret):
+        # Create key from secret
+        key = hmac.new(
+            secret.encode('utf-8'),
+            b'encryption-key',
+            hashlib.sha256
+        ).digest()
         
-        # Parse the decrypted JSON string
-        webhook_payload['data'] = json.loads(decrypted_data_str)
+        # Decode IV and encrypted data
+        iv = base64.b64decode(iv_base64)
+        cipher_text = base64.b64decode(encrypted_data)
+        
+        # Create cipher and decrypt
+        cipher = AES.new(key, AES.MODE_CBC, iv)
+        padded_data = cipher.decrypt(cipher_text)
+        data = unpad(padded_data, AES.block_size)
+        
+        return data.decode('utf-8')
     
-    # Process the webhook with decrypted data
-    print(f"Event type: {webhook_payload['metadata']['eventType']}")
-    print(f"Decrypted data: {webhook_payload['data']}")
-```
-   ### PHP
+    def process_webhook(webhook_payload, secret):
+        if webhook_payload['metadata']['encrypted']:
+            decrypted_data_str = decrypt_data(
+                webhook_payload['data'],
+                webhook_payload['iv'],
+                secret
+            )
+            
+            # Parse the decrypted JSON string
+            webhook_payload['data'] = json.loads(decrypted_data_str)
+        
+        # Process the webhook with decrypted data
+        print(f"Event type: {webhook_payload['metadata']['eventType']}")
+        print(f"Decrypted data: {webhook_payload['data']}")
+    ```
+
+    ### PHP
 
     ```php
-<?php
-
-function decryptData($encryptedData, $ivBase64, $secret) {
+    <?php
+    
+    function decryptData($encryptedData, $ivBase64, $secret) {
     // Create key from secret
     $key = hash_hmac('sha256', 'encryption-key', $secret, true);
     
@@ -598,9 +598,9 @@ function decryptData($encryptedData, $ivBase64, $secret) {
     );
     
     return $decrypted;
-}
-
-function processWebhook($webhookPayload, $secret) {
+    }
+    
+    function processWebhook($webhookPayload, $secret) {
     if ($webhookPayload['metadata']['encrypted']) {
         $decryptedDataStr = decryptData(
             $webhookPayload['data'],
@@ -615,13 +615,29 @@ function processWebhook($webhookPayload, $secret) {
     // Process the webhook with decrypted data
     echo "Event type: " . $webhookPayload['metadata']['eventType'] . "\n";
     echo "Decrypted data: " . json_encode($webhookPayload['data']) . "\n";
-}
-```
-</Accordion>
-<Accordion title="Handling Webhook Data">
+    }
+    ```
+  </Accordion>
+  <Accordion title="Handling Webhook Data">
     Webhooks provide a way for your systems to receive real-time notifications when specific events occur in Telivy. When an event happens, we'll send an HTTP POST request to the URL you specified when setting up the webhook.
   </Accordion>
-<Accordion title="Troubleshooting">
-    Webhooks provide a way for your systems to receive real-time notifications when specific events occur in Telivy. When an event happens, we'll send an HTTP POST request to the URL you specified when setting up the webhook.
+  <Accordion title="Troubleshooting">
+    ### **Common Issues**
+
+    1. **Invalid Signature**: Ensure you're using the correct webhook secret. The entire request body must be used when verifying the signature.
+    2. **Decryption Failures**: Make sure you're using the correct algorithm (AES-256-CBC) and properly decoding the base64-encoded data and IV.
+    3. **Timeout Errors**: If your endpoint doesn't respond within 10 seconds, we may retry the webhook. Process data asynchronously after returning a response.
+    4. **Missing Events**: Verify that your webhook subscription is active and subscribed to the events you're expecting.
+    5. **Authentication Issues**: Double-check that any custom authentication headers are correctly configured in your webhook subscription and properly validated by your endpoint.
+
+    ### **Debugging Tips**
+
+    1. Log the raw webhook payload for investigation
+    2. Check signature verification logic using the examples provided
+    3. Verify that your endpoint is accessible from external sources
+    4. Set up monitoring to track webhook receipts and processing success rates
+    5. When testing, temporarily log all headers received to ensure custom authentication headers are being properly sent
+
+    For additional help, please contact Telivy support (support@telivy.com).
   </Accordion>
 </AccordionGroup>
