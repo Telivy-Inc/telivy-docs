@@ -619,7 +619,33 @@ description: "This guide will help you integrate with Telivy's webhook system to
     ```
   </Accordion>
   <Accordion title="Handling Webhook Data">
-    Webhooks provide a way for your systems to receive real-time notifications when specific events occur in Telivy. When an event happens, we'll send an HTTP POST request to the URL you specified when setting up the webhook.
+    ### **Using Metadata**
+
+    The metadata field contains important information about the webhook:
+
+    - eventType: Identifies what triggered the webhook (e.g., ASSESSMENT_STATUS_CHANGED)
+    - timestamp: When the event occurred (ISO 8601 format)
+    - webhookId: Your webhook subscription ID
+    - attemptNumber: Number of attempts made to deliver this webhook
+    - encrypted: Whether the payload data is encrypted
+
+    You can use this metadata to:
+
+    1. **Route the webhook** to different handlers based on the event type
+    2. **Track delivery attempts** for monitoring and debugging
+    3. **Detect encryption** to know whether decryption is needed
+    4. **Correlate events** using the timestamp for reporting
+
+    ### **HTTP Headers**
+
+    Each webhook request includes these headers:
+
+    - Content-Type: Always application/json
+    - User-Agent: Telivy-Webhook-Sender/1.0
+    - X-Telivy-Signature: HMAC-SHA256 signature for verification
+    - X-Telivy-Event: The event type that triggered the webhook
+    - X-Webhook-ID: Your webhook subscription ID
+    - Any custom headers you specified when creating the webhook
   </Accordion>
   <Accordion title="Troubleshooting">
     ### **Common Issues**
@@ -638,6 +664,6 @@ description: "This guide will help you integrate with Telivy's webhook system to
     4. Set up monitoring to track webhook receipts and processing success rates
     5. When testing, temporarily log all headers received to ensure custom authentication headers are being properly sent
 
-    For additional help, please contact Telivy support (support@telivy.com).
+    For additional help, please contact Telivy support ([support@telivy.com](mailto:support@telivy.com)).
   </Accordion>
 </AccordionGroup>
