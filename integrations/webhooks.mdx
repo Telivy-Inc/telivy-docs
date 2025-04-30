@@ -1,0 +1,624 @@
+---
+title: "Telivy Webhook Integration Guide"
+description: "This guide will help you integrate with Telivy's webhook system to receive real-time updates when certain events occur in your agency's account"
+---
+
+## **Table of Contents**
+
+1. Introduction
+2. Webhook Events
+3. Setting Up Webhooks
+4. Processing Webhooks
+5. Authentication
+6. Custom Authentication Headers
+7. Payload Encryption
+8. Handling Webhook Data
+9. Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Introduction">
+    Webhooks provide a way for your systems to receive real-time notifications when specific events occur in Telivy. When an event happens, we'll send an HTTP POST request to the URL you specified when setting up the webhook.
+  </Accordion>
+  <Accordion title="Webhook Events">
+    When archiving an assessment, you will receive the following notification:
+
+    Currently, Telivy supports the following webhook events:
+
+    - ASSESSMENT_STATUS_CHANGED: Triggered when an assessment's status changes
+    - ALERT_RAISED: Triggered when an alert is raised for your agency
+  </Accordion>
+  <Accordion title="Setting Up Webhooks">
+    Webhooks are set up through your Telivy dashboard. For each webhook, you'll need to specify:
+
+    1. A destination URL that will receive the webhook requests
+    2. The events you want to subscribe to
+    3. Whether you want the payload to be encrypted
+    4. Any additional HTTP headers you want us to include in the request
+
+    When you create a webhook subscription, we'll generate a secret key that you'll use to verify the authenticity of webhook requests and decrypt encrypted payloads.
+  </Accordion>
+  <Accordion title="Processing Webhooks">
+    ### **Best Practices**
+
+    When processing webhooks, we recommend the following approach:
+
+    1. **Receive the webhook data**
+    2. **Verify the signature** to ensure the request is from Telivy
+    3. **Return a 2xx response** immediately (preferably a 200 OK)
+    4. **Process the webhook data asynchronously** after returning the response
+
+    This approach ensures that your webhook endpoint responds quickly, preventing timeouts and unnecessary retries from our system. Our webhook requests will time out after 10 seconds.
+
+    ### **HTTP Response Codes**
+
+    - **2xx**: Success - We'll consider the webhook delivered
+    - **Other status codes**: Failure - We will retry sending the webhook, first time right after, second time with a delay
+  </Accordion>
+
+  
+  <Accordion title="Authentication">
+    Every webhook request includes a signature in the `X-Telivy-Signature` header. You should verify this signature to ensure the request is legitimate and comes from Telivy.
+    The signature is an HMAC-SHA256 hash of the entire request body, using your webhook secret as the key.
+
+    ### Verifying the Signature
+
+    Here are examples of how to verify the signature in various programming languages:
+
+    ### JavaScript/Node.js
+
+    ```javascript
+    const crypto = require('crypto');
+    
+    function verifyWebhookSignature(requestBody, signature, secret) {
+      const computedSignature = crypto
+        .createHmac('sha256', secret)
+        .update(requestBody)
+        .digest('hex');
+    
+      return crypto.timingSafeEqual(
+        Buffer.from(computedSignature, 'hex'),
+        Buffer.from(signature, 'hex')
+      );
+    }
+    
+    // In your Express.js route handler:
+    app.post('/webhook', (req, res) => {
+      const signature = req.headers['x-telivy-signature'];
+      const requestBody = JSON.stringify(req.body);
+      const secret = 'your_webhook_secret';
+    
+      if (!verifyWebhookSignature(requestBody, signature, secret)) {
+        return res.status(401).send('Invalid signature');
+      }
+    
+      // Process webhook
+      res.status(200).send('Webhook received');
+    
+      // Process data asynchronously
+      processWebhookData(req.body);
+    });
+    ```
+
+    ### C#
+
+    ```csharp
+    using System;
+    using System.Security.Cryptography;
+    using System.Text;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
+    using System.Text.Json;
+    
+    [ApiController]
+    [Route("webhook")]
+    public class WebhookController : ControllerBase
+    {
+        [HttpPost]
+        public IActionResult ReceiveWebhook([FromBody] object payload)
+        {
+            var signature = Request.Headers["X-Telivy-Signature"].ToString();
+            var secret = "your_webhook_secret";
+            var requestBody = JsonSerializer.Serialize(payload);
+    
+            if (!VerifySignature(requestBody, signature, secret))
+            {
+                return Unauthorized("Invalid signature");
+            }
+    
+            // Process webhook asynchronously
+            _ = Task.Run(() => ProcessWebhookData(payload));
+    
+            return Ok("Webhook received");
+        }
+    
+        private bool VerifySignature(string payload, string signature, string secret)
+        {
+            using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret)))
+            {
+                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(payload));
+                var computedSignature = BitConverter.ToString(computedHash).Replace("-", "").ToLower();
+    
+                return computedSignature == signature;
+            }
+        }
+    
+        private void ProcessWebhookData(object payload)
+        {
+            // Process the webhook data
+        }
+    }
+    ```
+
+    ### Java
+
+    ```java
+    import javax.crypto.Mac;
+    import javax.crypto.spec.SecretKeySpec;
+    import java.nio.charset.StandardCharsets;
+    import java.util.HexFormat;
+    import org.springframework.http.HttpStatus;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.web.bind.annotation.*;
+    import java.util.concurrent.CompletableFuture;
+    
+    @RestController
+    public class WebhookController {
+    
+        @PostMapping("/webhook")
+        public ResponseEntity<String> receiveWebhook(@RequestBody String payload,
+                                                       @RequestHeader("X-Telivy-Signature") String signature) {
+            String secret = "your_webhook_secret";
+    
+            if (!verifySignature(payload, signature, secret)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid signature");
+            }
+    
+            // Return response immediately
+            CompletableFuture.runAsync(() -> processWebhookData(payload));
+    
+            return ResponseEntity.ok("Webhook received");
+        }
+    
+        private boolean verifySignature(String payload, String signature, String secret) {
+            try {
+                Mac mac = Mac.getInstance("HmacSHA256");
+                SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+                mac.init(secretKeySpec);
+                byte[] digest = mac.doFinal(payload.getBytes(StandardCharsets.UTF_8));
+                String computedSignature = HexFormat.of().formatHex(digest);
+    
+                return computedSignature.equals(signature);
+            } catch (Exception e) {
+                return false;
+            }
+        }
+    
+        private void processWebhookData(String payload) {
+            // Process the webhook data
+        }
+    }
+    ```
+
+    ### Python
+
+    ```python
+    import hmac
+    import hashlib
+    from flask import Flask, request, jsonify
+    import threading
+    
+    app = Flask(__name__)
+    
+    @app.route('/webhook', methods=['POST'])
+    def receive_webhook():
+        payload = request.data
+        signature = request.headers.get('X-Telivy-Signature')
+        secret = 'your_webhook_secret'
+    
+        if not verify_signature(payload, signature, secret):
+            return jsonify({'error': 'Invalid signature'}), 401
+    
+        # Process webhook asynchronously
+        # In a production environment, use a task queue like Celery
+        thread = threading.Thread(target=process_webhook_data, args=(payload,))
+        thread.start()
+    
+        return jsonify({'status': 'Webhook received'}), 200
+    
+    def verify_signature(payload, signature, secret):
+        computed_signature = hmac.new(
+            secret.encode('utf-8'),
+            payload,
+            hashlib.sha256
+        ).hexdigest()
+    
+        return hmac.compare_digest(computed_signature, signature)
+    
+    def process_webhook_data(payload):
+        # Process the webhook data
+        pass
+    ```
+
+    ### PHP
+
+    ```php
+    <?php
+    
+    function verifySignature($payload, $signature, $secret) {
+        $computedSignature = hash_hmac('sha256', $payload, $secret);
+        return hash_equals($computedSignature, $signature);
+    }
+    
+    // Get the webhook payload and headers
+    $payload = file_get_contents('php://input');
+    $signature = $_SERVER['HTTP_X_TELIVY_SIGNATURE'];
+    $secret = 'your_webhook_secret';
+    
+    if (!verifySignature($payload, $signature, $secret)) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Invalid signature']);
+        exit;
+    }
+    
+    // Return a success response immediately
+    http_response_code(200);
+    echo json_encode(['status' => 'Webhook received']);
+    
+    // Flush the output buffer to ensure the response is sent
+    if (function_exists('fastcgi_finish_request')) {
+        fastcgi_finish_request();
+    }
+    
+    // Process the webhook data asynchronously
+    processWebhookData(json_decode($payload, true));
+    
+    function processWebhookData($data) {
+        // Process the webhook data
+    }
+    ?>
+    ```
+  </Accordion>
+  
+  <Accordion title="Custom Authentication Headers">
+    In addition to verifying that webhooks are coming from Telivy using the signature, you may need to secure your webhook endpoint from unauthorized access. Telivy allows you to specify custom headers that will be included in webhook requests, which you can use for authentication in your system.
+
+    <Accordion title="Setting Up Custom Authentication Headers">
+      When creating or updating a webhook subscription in your Telivy dashboard, you can specify custom HTTP headers to be included in all webhook requests to your endpoint. Common authentication headers include:
+
+      - `Authorization`: For JWT bearer tokens, OAuth tokens, or Basic Auth
+      - `X-API-Key`: For API key authentication
+      - `X-Client-ID` and `X-Client-Secret`: For client credential authentication
+    </Accordion>
+    <Accordion title="Examples of Custom Header Authentication">
+      <Accordion title="API Key Authentication">
+        Example custom headers configuration in Telivy
+
+        ```json
+        {
+          "X-API-Key": "your_api_key_here"
+        }
+        ```
+
+        Your webhook handler can then verify this header:
+
+        ```javascript
+        // Node.js example
+        app.post('/webhook', (req, res) => {
+          const apiKey = req.headers['x-api-key'];
+        
+          // First verify API key
+          if (apiKey !== 'your_api_key_here') {
+            return res.status(401).send('Unauthorized');
+          }
+        
+          // Then verify Telivy signature
+          const signature = req.headers['x-telivy-signature'];
+          // ...signature verification code...
+        
+          // Process webhook
+          res.status(200).send('Webhook received');
+        });
+        ```
+      </Accordion>
+      <Accordion title="Bearer Token Authentication">
+        Example custom headers configuration in Telivy
+
+        ```json
+        {
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        }
+        ```
+
+        Your webhook handler can then verify this token:
+
+        ```python
+        # Python/Flask example
+        @app.route('/webhook', methods=['POST'])
+        def receive_webhook():
+            auth_header = request.headers.get('Authorization')
+        
+            # First verify JWT token
+            if not auth_header or not auth_header.startswith('Bearer '):
+                return jsonify({'error': 'Unauthorized'}), 401
+        
+            token = auth_header.split(' ')[1]
+            if not verify_jwt_token(token):
+                return jsonify({'error': 'Invalid token'}), 401
+        
+            # Then verify Telivy signature
+            # ...signature verification code...
+        
+            return jsonify({'status': 'Webhook received'}), 200
+        ```
+      </Accordion>
+      <Accordion title="Basic Auth">
+        Example custom headers configuration in Telivy
+
+        ```json
+        {
+          "Authorization": "Basic dXNlcm5hbWU6cGFzc3dvcmQ="  // Base64 of "username:password"
+        }
+        ```
+
+        Your webhook handler would then decode and verify:
+
+        ```csharp
+        // C# example
+        [HttpPost]
+        public IActionResult ReceiveWebhook([FromBody] object payload)
+        {
+            var authHeader = Request.Headers["Authorization"].ToString();
+        
+            // First verify Basic Auth
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Basic "))
+            {
+                return Unauthorized("Missing authentication");
+            }
+        
+            var encodedCreds = authHeader.Substring("Basic ".Length).Trim();
+            var credentials = Encoding.UTF8.GetString(Convert.FromBase64String(encodedCreds));
+            var parts = credentials.Split(':');
+        
+            if (parts.Length != 2 || parts[0] != "username" || parts[1] != "password")
+            {
+                return Unauthorized("Invalid credentials");
+            }
+        
+            // Then verify Telivy signature
+            // ...signature verification code...
+        
+            return Ok("Webhook received");
+        }
+        ```
+      </Accordion>
+    </Accordion>
+    <Accordion title="Security Considerations">
+      When using custom authentication headers:
+
+      - **Use HTTPS:** Always ensure your webhook endpoint uses HTTPS to prevent header interception.
+      - **Multiple Layers:** Consider implementing both custom header authentication and Telivy signature verification for enhanced security.
+      - **Rotation:** Periodically rotate API keys, tokens, or passwords used in custom headers.
+      - **Minimal Privileges:** The authentication credentials used in webhook headers should have the minimal privileges needed.
+  </Accordion>
+  
+  <Accordion title="Payload Encryption">
+    For added security, you can choose to encrypt the payload data when setting up your webhook. When encryption is enabled:
+
+    1. Only the data field of the payload is encrypted (the metadata field remains unencrypted)
+    2. The encryption uses AES-256-CBC
+    3. The initialization vector (IV) is included in the payload in the iv field
+    4. The metadata.encrypted flag is set to true
+
+    ### **Decrypting the Payload**
+
+    When you receive an encrypted webhook, you'll need to decrypt the data before processing it. Here are examples of how to decrypt the payload in various programming languages:
+
+
+ ### C#
+
+    ```csharp
+    using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+
+public class WebhookDecryptor
+{
+    public static string DecryptData(string encryptedData, string iv, string secret)
+    {
+        // Create key from secret
+        using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret)))
+        {
+            byte[] key = hmac.ComputeHash(Encoding.UTF8.GetBytes("encryption-key"));
+            byte[] ivBytes = Convert.FromBase64String(iv);
+            byte[] cipherText = Convert.FromBase64String(encryptedData);
+            
+            using (var aes = Aes.Create())
+            {
+                aes.Key = key;
+                aes.IV = ivBytes;
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
+                
+                using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+                using (var ms = new MemoryStream(cipherText))
+                using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+                using (var sr = new StreamReader(cs))
+                {
+                    return sr.ReadToEnd();
+                }
+            }
+        }
+    }
+    
+    public static void ProcessWebhook(dynamic webhookPayload, string secret)
+    {
+        if (webhookPayload.metadata.encrypted)
+        {
+            string decryptedDataStr = DecryptData(
+                (string)webhookPayload.data,
+                (string)webhookPayload.iv,
+                secret
+            );
+            
+            // Parse the decrypted JSON string
+            webhookPayload.data = System.Text.Json.JsonSerializer.Deserialize<dynamic>(decryptedDataStr);
+        }
+        
+        // Process the webhook with decrypted data
+        Console.WriteLine($"Event type: {webhookPayload.metadata.eventType}");
+        Console.WriteLine($"Decrypted data: {webhookPayload.data}");
+    }
+}
+
+    ```
+    ### Java
+
+    ```java
+   import javax.crypto.Cipher;
+import javax.crypto.Mac;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
+public class WebhookDecryptor {
+
+    public static String decryptData(String encryptedData, String ivBase64, String secret) throws Exception {
+        // Create key from secret
+        Mac hmac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF8), "HmacSHA256");
+        hmac.init(secretKeySpec);
+        byte[] key = hmac.doFinal("encryption-key".getBytes(StandardCharsets.UTF8));
+        
+        // Decode IV and encrypted data
+        byte[] iv = Base64.getDecoder().decode(ivBase64);
+        byte[] cipherText = Base64.getDecoder().decode(encryptedData);
+        
+        // Set up cipher
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
+        IvParameterSpec ivSpec = new IvParameterSpec(iv);
+        cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
+        
+        // Decrypt
+        byte[] decryptedBytes = cipher.doFinal(cipherText);
+        return new String(decryptedBytes, StandardCharsets.UTF8);
+    }
+    
+    public static void processWebhook(JsonNode webhookPayload, String secret) {
+        try {
+            if (webhookPayload.get("metadata").get("encrypted").asBoolean()) {
+                String decryptedDataStr = decryptData(
+                    webhookPayload.get("data").asText(),
+                    webhookPayload.get("iv").asText(),
+                    secret
+                );
+                
+                // Parse the decrypted JSON string
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode decryptedData = mapper.readTree(decryptedDataStr);
+                
+                // Replace encrypted data with decrypted data
+                ((ObjectNode) webhookPayload).set("data", decryptedData);
+            }
+            
+            // Process the webhook with decrypted data
+            System.out.println("Event type: " + webhookPayload.get("metadata").get("eventType").asText());
+            System.out.println("Decrypted data: " + webhookPayload.get("data").toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+    ```
+ 
+### Python
+```python 
+import hmac
+import hashlib
+import json
+import base64
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
+
+def decrypt_data(encrypted_data, iv_base64, secret):
+    # Create key from secret
+    key = hmac.new(
+        secret.encode('utf-8'),
+        b'encryption-key',
+        hashlib.sha256
+    ).digest()
+    
+    # Decode IV and encrypted data
+    iv = base64.b64decode(iv_base64)
+    cipher_text = base64.b64decode(encrypted_data)
+    
+    # Create cipher and decrypt
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    padded_data = cipher.decrypt(cipher_text)
+    data = unpad(padded_data, AES.block_size)
+    
+    return data.decode('utf-8')
+
+def process_webhook(webhook_payload, secret):
+    if webhook_payload['metadata']['encrypted']:
+        decrypted_data_str = decrypt_data(
+            webhook_payload['data'],
+            webhook_payload['iv'],
+            secret
+        )
+        
+        # Parse the decrypted JSON string
+        webhook_payload['data'] = json.loads(decrypted_data_str)
+    
+    # Process the webhook with decrypted data
+    print(f"Event type: {webhook_payload['metadata']['eventType']}")
+    print(f"Decrypted data: {webhook_payload['data']}")
+```
+   ### PHP
+
+    ```php
+<?php
+
+function decryptData($encryptedData, $ivBase64, $secret) {
+    // Create key from secret
+    $key = hash_hmac('sha256', 'encryption-key', $secret, true);
+    
+    // Decode IV and encrypted data
+    $iv = base64_decode($ivBase64);
+    $cipherText = base64_decode($encryptedData);
+    
+    // Decrypt
+    $decrypted = openssl_decrypt(
+        $cipherText,
+        'aes-256-cbc',
+        $key,
+        OPENSSL_RAW_DATA,
+        $iv
+    );
+    
+    return $decrypted;
+}
+
+function processWebhook($webhookPayload, $secret) {
+    if ($webhookPayload['metadata']['encrypted']) {
+        $decryptedDataStr = decryptData(
+            $webhookPayload['data'],
+            $webhookPayload['iv'],
+            $secret
+        );
+        
+        // Parse the decrypted JSON string
+        $webhookPayload['data'] = json_decode($decryptedDataStr, true);
+    }
+    
+    // Process the webhook with decrypted data
+    echo "Event type: " . $webhookPayload['metadata']['eventType'] . "\n";
+    echo "Decrypted data: " . json_encode($webhookPayload['data']) . "\n";
+}
+```
+</Accordion>
+
+  
