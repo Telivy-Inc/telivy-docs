@@ -123,6 +123,14 @@
             ]
         },
         {
+           "group": "Integrations",
+            "pages": [
+                "integrations/nodeware",
+                "integrations/rewst",
+                "integrations/webhooks"
+            ]
+        },
+        {
             "group": "Additional Information",
             "pages": [
                 "additional-information/release-notes"
