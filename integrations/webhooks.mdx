@@ -397,4 +397,226 @@ description: "This guide will help you integrate with Telivy's webhook system to
     - **Rotation:** Periodically rotate API keys, tokens, or passwords used in custom headers.
     - **Minimal Privileges:** The authentication credentials used in webhook headers should have the minimal privileges needed.
   </Accordion>
+
+  
+   <Accordion title="Payload Encryption">
+    For added security, you can choose to encrypt the payload data when setting up your webhook. When encryption is enabled:
+
+    1. Only the data field of the payload is encrypted (the metadata field remains unencrypted)
+    2. The encryption uses AES-256-CBC
+    3. The initialization vector (IV) is included in the payload in the iv field
+    4. The metadata.encrypted flag is set to true
+
+    ### **Decrypting the Payload**
+
+    When you receive an encrypted webhook, you'll need to decrypt the data before processing it. Here are examples of how to decrypt the payload in various programming languages:
+
+
+ ### C#
+
+    ```csharp
+    using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+
+public class WebhookDecryptor
+{
+    public static string DecryptData(string encryptedData, string iv, string secret)
+    {
+        // Create key from secret
+        using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret)))
+        {
+            byte[] key = hmac.ComputeHash(Encoding.UTF8.GetBytes("encryption-key"));
+            byte[] ivBytes = Convert.FromBase64String(iv);
+            byte[] cipherText = Convert.FromBase64String(encryptedData);
+            
+            using (var aes = Aes.Create())
+            {
+                aes.Key = key;
+                aes.IV = ivBytes;
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
+                
+                using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+                using (var ms = new MemoryStream(cipherText))
+                using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+                using (var sr = new StreamReader(cs))
+                {
+                    return sr.ReadToEnd();
+                }
+            }
+        }
+    }
+    
+    public static void ProcessWebhook(dynamic webhookPayload, string secret)
+    {
+        if (webhookPayload.metadata.encrypted)
+        {
+            string decryptedDataStr = DecryptData(
+                (string)webhookPayload.data,
+                (string)webhookPayload.iv,
+                secret
+            );
+            
+            // Parse the decrypted JSON string
+            webhookPayload.data = System.Text.Json.JsonSerializer.Deserialize<dynamic>(decryptedDataStr);
+        }
+        
+        // Process the webhook with decrypted data
+        Console.WriteLine($"Event type: {webhookPayload.metadata.eventType}");
+        Console.WriteLine($"Decrypted data: {webhookPayload.data}");
+    }
+}
+
+    ```
+### Java
+
+    ```java
+   import javax.crypto.Cipher;
+import javax.crypto.Mac;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
+public class WebhookDecryptor {
+
+    public static String decryptData(String encryptedData, String ivBase64, String secret) throws Exception {
+        // Create key from secret
+        Mac hmac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF8), "HmacSHA256");
+        hmac.init(secretKeySpec);
+        byte[] key = hmac.doFinal("encryption-key".getBytes(StandardCharsets.UTF8));
+        
+        // Decode IV and encrypted data
+        byte[] iv = Base64.getDecoder().decode(ivBase64);
+        byte[] cipherText = Base64.getDecoder().decode(encryptedData);
+        
+        // Set up cipher
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
+        IvParameterSpec ivSpec = new IvParameterSpec(iv);
+        cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
+        
+        // Decrypt
+        byte[] decryptedBytes = cipher.doFinal(cipherText);
+        return new String(decryptedBytes, StandardCharsets.UTF8);
+    }
+    
+    public static void processWebhook(JsonNode webhookPayload, String secret) {
+        try {
+            if (webhookPayload.get("metadata").get("encrypted").asBoolean()) {
+                String decryptedDataStr = decryptData(
+                    webhookPayload.get("data").asText(),
+                    webhookPayload.get("iv").asText(),
+                    secret
+                );
+                
+                // Parse the decrypted JSON string
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode decryptedData = mapper.readTree(decryptedDataStr);
+                
+                // Replace encrypted data with decrypted data
+                ((ObjectNode) webhookPayload).set("data", decryptedData);
+            }
+            
+            // Process the webhook with decrypted data
+            System.out.println("Event type: " + webhookPayload.get("metadata").get("eventType").asText());
+            System.out.println("Decrypted data: " + webhookPayload.get("data").toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+    ```
+ 
+### Python
+```python 
+import hmac
+import hashlib
+import json
+import base64
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
+
+def decrypt_data(encrypted_data, iv_base64, secret):
+    # Create key from secret
+    key = hmac.new(
+        secret.encode('utf-8'),
+        b'encryption-key',
+        hashlib.sha256
+    ).digest()
+    
+    # Decode IV and encrypted data
+    iv = base64.b64decode(iv_base64)
+    cipher_text = base64.b64decode(encrypted_data)
+    
+    # Create cipher and decrypt
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    padded_data = cipher.decrypt(cipher_text)
+    data = unpad(padded_data, AES.block_size)
+    
+    return data.decode('utf-8')
+
+def process_webhook(webhook_payload, secret):
+    if webhook_payload['metadata']['encrypted']:
+        decrypted_data_str = decrypt_data(
+            webhook_payload['data'],
+            webhook_payload['iv'],
+            secret
+        )
+        
+        # Parse the decrypted JSON string
+        webhook_payload['data'] = json.loads(decrypted_data_str)
+    
+    # Process the webhook with decrypted data
+    print(f"Event type: {webhook_payload['metadata']['eventType']}")
+    print(f"Decrypted data: {webhook_payload['data']}")
+```
+   ### PHP
+
+    ```php
+<?php
+
+function decryptData($encryptedData, $ivBase64, $secret) {
+    // Create key from secret
+    $key = hash_hmac('sha256', 'encryption-key', $secret, true);
+    
+    // Decode IV and encrypted data
+    $iv = base64_decode($ivBase64);
+    $cipherText = base64_decode($encryptedData);
+    
+    // Decrypt
+    $decrypted = openssl_decrypt(
+        $cipherText,
+        'aes-256-cbc',
+        $key,
+        OPENSSL_RAW_DATA,
+        $iv
+    );
+    
+    return $decrypted;
+}
+
+function processWebhook($webhookPayload, $secret) {
+    if ($webhookPayload['metadata']['encrypted']) {
+        $decryptedDataStr = decryptData(
+            $webhookPayload['data'],
+            $webhookPayload['iv'],
+            $secret
+        );
+        
+        // Parse the decrypted JSON string
+        $webhookPayload['data'] = json_decode($decryptedDataStr, true);
+    }
+    
+    // Process the webhook with decrypted data
+    echo "Event type: " . $webhookPayload['metadata']['eventType'] . "\n";
+    echo "Decrypted data: " . json_encode($webhookPayload['data']) . "\n";
+}
+```
+</Accordion>
+
 </AccordionGroup>
