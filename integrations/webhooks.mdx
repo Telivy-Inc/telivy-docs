@@ -54,4 +54,227 @@ description: "This guide will help you integrate with Telivy's webhook system to
     - **2xx**: Success - We'll consider the webhook delivered
     - **Other status codes**: Failure - We will retry sending the webhook, first time right after, second time with a delay
   </Accordion>
+    
+  <Accordion title="Authentication">
+    Every webhook request includes a signature in the `X-Telivy-Signature` header. You should verify this signature to ensure the request is legitimate and comes from Telivy.
+    The signature is an HMAC-SHA256 hash of the entire request body, using your webhook secret as the key.
+
+    ### Verifying the Signature
+
+    Here are examples of how to verify the signature in various programming languages:
+
+    ### JavaScript/Node.js
+
+    ```javascript
+    const crypto = require('crypto');
+    
+    function verifyWebhookSignature(requestBody, signature, secret) {
+      const computedSignature = crypto
+        .createHmac('sha256', secret)
+        .update(requestBody)
+        .digest('hex');
+    
+      return crypto.timingSafeEqual(
+        Buffer.from(computedSignature, 'hex'),
+        Buffer.from(signature, 'hex')
+      );
+    }
+    
+    // In your Express.js route handler:
+    app.post('/webhook', (req, res) => {
+      const signature = req.headers['x-telivy-signature'];
+      const requestBody = JSON.stringify(req.body);
+      const secret = 'your_webhook_secret';
+    
+      if (!verifyWebhookSignature(requestBody, signature, secret)) {
+        return res.status(401).send('Invalid signature');
+      }
+    
+      // Process webhook
+      res.status(200).send('Webhook received');
+    
+      // Process data asynchronously
+      processWebhookData(req.body);
+    });
+    ```
+
+    ### C#
+
+    ```csharp
+    using System;
+    using System.Security.Cryptography;
+    using System.Text;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
+    using System.Text.Json;
+    
+    [ApiController]
+    [Route("webhook")]
+    public class WebhookController : ControllerBase
+    {
+        [HttpPost]
+        public IActionResult ReceiveWebhook([FromBody] object payload)
+        {
+            var signature = Request.Headers["X-Telivy-Signature"].ToString();
+            var secret = "your_webhook_secret";
+            var requestBody = JsonSerializer.Serialize(payload);
+    
+            if (!VerifySignature(requestBody, signature, secret))
+            {
+                return Unauthorized("Invalid signature");
+            }
+    
+            // Process webhook asynchronously
+            _ = Task.Run(() => ProcessWebhookData(payload));
+    
+            return Ok("Webhook received");
+        }
+    
+        private bool VerifySignature(string payload, string signature, string secret)
+        {
+            using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret)))
+            {
+                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(payload));
+                var computedSignature = BitConverter.ToString(computedHash).Replace("-", "").ToLower();
+    
+                return computedSignature == signature;
+            }
+        }
+    
+        private void ProcessWebhookData(object payload)
+        {
+            // Process the webhook data
+        }
+    }
+    ```
+
+    ### Java
+
+    ```java
+    import javax.crypto.Mac;
+    import javax.crypto.spec.SecretKeySpec;
+    import java.nio.charset.StandardCharsets;
+    import java.util.HexFormat;
+    import org.springframework.http.HttpStatus;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.web.bind.annotation.*;
+    import java.util.concurrent.CompletableFuture;
+    
+    @RestController
+    public class WebhookController {
+    
+        @PostMapping("/webhook")
+        public ResponseEntity<String> receiveWebhook(@RequestBody String payload,
+                                                       @RequestHeader("X-Telivy-Signature") String signature) {
+            String secret = "your_webhook_secret";
+    
+            if (!verifySignature(payload, signature, secret)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid signature");
+            }
+    
+            // Return response immediately
+            CompletableFuture.runAsync(() -> processWebhookData(payload));
+    
+            return ResponseEntity.ok("Webhook received");
+        }
+    
+        private boolean verifySignature(String payload, String signature, String secret) {
+            try {
+                Mac mac = Mac.getInstance("HmacSHA256");
+                SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+                mac.init(secretKeySpec);
+                byte[] digest = mac.doFinal(payload.getBytes(StandardCharsets.UTF_8));
+                String computedSignature = HexFormat.of().formatHex(digest);
+    
+                return computedSignature.equals(signature);
+            } catch (Exception e) {
+                return false;
+            }
+        }
+    
+        private void processWebhookData(String payload) {
+            // Process the webhook data
+        }
+    }
+    ```
+
+    ### Python
+
+    ```python
+    import hmac
+    import hashlib
+    from flask import Flask, request, jsonify
+    import threading
+    
+    app = Flask(__name__)
+    
+    @app.route('/webhook', methods=['POST'])
+    def receive_webhook():
+        payload = request.data
+        signature = request.headers.get('X-Telivy-Signature')
+        secret = 'your_webhook_secret'
+    
+        if not verify_signature(payload, signature, secret):
+            return jsonify({'error': 'Invalid signature'}), 401
+    
+        # Process webhook asynchronously
+        # In a production environment, use a task queue like Celery
+        thread = threading.Thread(target=process_webhook_data, args=(payload,))
+        thread.start()
+    
+        return jsonify({'status': 'Webhook received'}), 200
+    
+    def verify_signature(payload, signature, secret):
+        computed_signature = hmac.new(
+            secret.encode('utf-8'),
+            payload,
+            hashlib.sha256
+        ).hexdigest()
+    
+        return hmac.compare_digest(computed_signature, signature)
+    
+    def process_webhook_data(payload):
+        # Process the webhook data
+        pass
+    ```
+
+    ### PHP
+
+    ```php
+    <?php
+    
+    function verifySignature($payload, $signature, $secret) {
+        $computedSignature = hash_hmac('sha256', $payload, $secret);
+        return hash_equals($computedSignature, $signature);
+    }
+    
+    // Get the webhook payload and headers
+    $payload = file_get_contents('php://input');
+    $signature = $_SERVER['HTTP_X_TELIVY_SIGNATURE'];
+    $secret = 'your_webhook_secret';
+    
+    if (!verifySignature($payload, $signature, $secret)) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Invalid signature']);
+        exit;
+    }
+    
+    // Return a success response immediately
+    http_response_code(200);
+    echo json_encode(['status' => 'Webhook received']);
+    
+    // Flush the output buffer to ensure the response is sent
+    if (function_exists('fastcgi_finish_request')) {
+        fastcgi_finish_request();
+    }
+    
+    // Process the webhook data asynchronously
+    processWebhookData(json_decode($payload, true));
+    
+    function processWebhookData($data) {
+        // Process the webhook data
+    }
+    ?>
+    ```
+</Accordion>
 </AccordionGroup>
