@@ -277,4 +277,45 @@ description: "This guide will help you integrate with Telivy's webhook system to
     ?>
     ```
 </Accordion>
+
+ <Accordion title="Custom Authentication Headers">
+    In addition to verifying that webhooks are coming from Telivy using the signature, you may need to secure your webhook endpoint from unauthorized access. Telivy allows you to specify custom headers that will be included in webhook requests, which you can use for authentication in your system.
+
+    **Setting Up Custom Authentication Headers**
+      When creating or updating a webhook subscription in your Telivy dashboard, you can specify custom HTTP headers to be included in all webhook requests to your endpoint. Common authentication headers include:
+
+      - `Authorization`: For JWT bearer tokens, OAuth tokens, or Basic Auth
+      - `X-API-Key`: For API key authentication
+      - `X-Client-ID` and `X-Client-Secret`: For client credential authentication      
+
+   **API Key Authentication**
+        Example custom headers configuration in Telivy
+
+        ```json
+        {
+          "X-API-Key": "your_api_key_here"
+        }
+        ```
+
+        Your webhook handler can then verify this header:
+
+        ```javascript
+        // Node.js example
+        app.post('/webhook', (req, res) => {
+          const apiKey = req.headers['x-api-key'];
+        
+          // First verify API key
+          if (apiKey !== 'your_api_key_here') {
+            return res.status(401).send('Unauthorized');
+          }
+        
+          // Then verify Telivy signature
+          const signature = req.headers['x-telivy-signature'];
+          // ...signature verification code...
+        
+          // Process webhook
+          res.status(200).send('Webhook received');
+        });
+        ```
+</Accordion>
 </AccordionGroup>
