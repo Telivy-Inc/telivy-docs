@@ -15,3 +15,43 @@ description: "This guide will help you integrate with Telivy's webhook system to
 8. Handling Webhook Data
 9. Troubleshooting
 
+<AccordionGroup>
+  <Accordion title="Introduction">
+     Webhooks provide a way for your systems to receive real-time notifications when specific events occur in Telivy. When an event happens, we'll send an HTTP POST request to the URL you specified when setting up the webhook.
+  </Accordion>
+  <Accordion title="Webhook Events">
+    When archiving an assessment, you will receive the following notification:
+
+    Currently, Telivy supports the following webhook events:
+
+    - ASSESSMENT_STATUS_CHANGED: Triggered when an assessment's status changes
+    - ALERT_RAISED: Triggered when an alert is raised for your agency
+  </Accordion>
+  <Accordion title="Setting Up Webhooks">
+    Webhooks are set up through your Telivy dashboard. For each webhook, you'll need to specify:
+
+    1. A destination URL that will receive the webhook requests
+    2. The events you want to subscribe to
+    3. Whether you want the payload to be encrypted
+    4. Any additional HTTP headers you want us to include in the request
+
+    When you create a webhook subscription, we'll generate a secret key that you'll use to verify the authenticity of webhook requests and decrypt encrypted payloads.
+  </Accordion>
+  <Accordion title="Processing Webhooks">
+    ### **Best Practices**
+
+    When processing webhooks, we recommend the following approach:
+
+    1. **Receive the webhook data**
+    2. **Verify the signature** to ensure the request is from Telivy
+    3. **Return a 2xx response** immediately (preferably a 200 OK)
+    4. **Process the webhook data asynchronously** after returning the response
+
+    This approach ensures that your webhook endpoint responds quickly, preventing timeouts and unnecessary retries from our system. Our webhook requests will time out after 10 seconds.
+
+    ### **HTTP Response Codes**
+
+    - **2xx**: Success - We'll consider the webhook delivered
+    - **Other status codes**: Failure - We will retry sending the webhook, first time right after, second time with a delay
+  </Accordion>
+</AccordionGroup>
