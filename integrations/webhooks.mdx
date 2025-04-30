@@ -1,5 +1,5 @@
 ---
-title: "Telivy Webhook Integration Guide"
+title: "Telivy Webhook"
 description: "This guide will help you integrate with Telivy's webhook system to receive real-time updates when certain events occur in your agency's account"
 ---
 
@@ -17,7 +17,7 @@ description: "This guide will help you integrate with Telivy's webhook system to
 
 <AccordionGroup>
   <Accordion title="Introduction">
-     Webhooks provide a way for your systems to receive real-time notifications when specific events occur in Telivy. When an event happens, we'll send an HTTP POST request to the URL you specified when setting up the webhook.
+    Webhooks provide a way for your systems to receive real-time notifications when specific events occur in Telivy. When an event happens, we'll send an HTTP POST request to the URL you specified when setting up the webhook.
   </Accordion>
   <Accordion title="Webhook Events">
     When archiving an assessment, you will receive the following notification:
@@ -54,7 +54,6 @@ description: "This guide will help you integrate with Telivy's webhook system to
     - **2xx**: Success - We'll consider the webhook delivered
     - **Other status codes**: Failure - We will retry sending the webhook, first time right after, second time with a delay
   </Accordion>
-    
   <Accordion title="Authentication">
     Every webhook request includes a signature in the `X-Telivy-Signature` header. You should verify this signature to ensure the request is legitimate and comes from Telivy.
     The signature is an HMAC-SHA256 hash of the entire request body, using your webhook secret as the key.
@@ -276,137 +275,126 @@ description: "This guide will help you integrate with Telivy's webhook system to
     }
     ?>
     ```
-</Accordion>
-
-<Accordion title="Custom Authentication Headers">
-  In addition to verifying that webhooks are coming from Telivy using the signature, you may need to secure your webhook endpoint from unauthorized access. Telivy allows you to specify custom headers that will be included in webhook requests, which you can use for authentication in your system.
-
-  <Accordion>
-    <AccordionItem title="Setting Up Custom Authentication Headers">
-      When creating or updating a webhook subscription in your Telivy dashboard, you can specify custom HTTP headers to be included in all webhook requests to your endpoint. Common authentication headers include:
-
-      - `Authorization`: For JWT bearer tokens, OAuth tokens, or Basic Auth
-      - `X-API-Key`: For API key authentication
-      - `X-Client-ID` and `X-Client-Secret`: For client credential authentication
-    </AccordionItem>
-
-    <AccordionItem title="Examples of Custom Header Authentication">
-      <Accordion>
-        <AccordionItem title="API Key Authentication">
-          Example custom headers configuration in Telivy:
-
-          ```json
-          {
-            "X-API-Key": "your_api_key_here"
-          }
-          ```
-
-          Your webhook handler can then verify this header:
-
-          ```javascript
-          // Node.js example
-          app.post('/webhook', (req, res) => {
-            const apiKey = req.headers['x-api-key'];
-
-            // First verify API key
-            if (apiKey !== 'your_api_key_here') {
-              return res.status(401).send('Unauthorized');
-            }
-
-            // Then verify Telivy signature
-            const signature = req.headers['x-telivy-signature'];
-            // ...signature verification code...
-
-            // Process webhook
-            res.status(200).send('Webhook received');
-          });
-          ```
-        </AccordionItem>
-
-        <AccordionItem title="Bearer Token Authentication">
-          Example custom headers configuration in Telivy:
-
-          ```json
-          {
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-          }
-          ```
-
-          Your webhook handler can then verify this token:
-
-          ```python
-          # Python/Flask example
-          @app.route('/webhook', methods=['POST'])
-          def receive_webhook():
-            auth_header = request.headers.get('Authorization')
-
-            # First verify JWT token
-            if not auth_header or not auth_header.startswith('Bearer '):
-              return jsonify({'error': 'Unauthorized'}), 401
-
-            token = auth_header.split(' ')[1]
-            if not verify_jwt_token(token):
-              return jsonify({'error': 'Invalid token'}), 401
-
-            # Then verify Telivy signature
-            # ...signature verification code...
-
-            return jsonify({'status': 'Webhook received'}), 200
-          ```
-        </AccordionItem>
-
-        <AccordionItem title="Basic Auth">
-          Example custom headers configuration in Telivy:
-
-          ```json
-          {
-            "Authorization": "Basic dXNlcm5hbWU6cGFzc3dvcmQ="  // Base64 of "username:password"
-          }
-          ```
-
-          Your webhook handler would then decode and verify:
-
-          ```csharp
-          // C# example
-          [HttpPost]
-          public IActionResult ReceiveWebhook([FromBody] object payload)
-          {
-            var authHeader = Request.Headers["Authorization"].ToString();
-
-            // First verify Basic Auth
-            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Basic "))
-            {
-                return Unauthorized("Missing authentication");
-            }
-
-            var encodedCreds = authHeader.Substring("Basic ".Length).Trim();
-            var credentials = Encoding.UTF8.GetString(Convert.FromBase64String(encodedCreds));
-            var parts = credentials.Split(':');
-
-            if (parts.Length != 2 || parts[0] != "username" || parts[1] != "password")
-            {
-                return Unauthorized("Invalid credentials");
-            }
-
-            // Then verify Telivy signature
-            // ...signature verification code...
-
-            return Ok("Webhook received");
-          }
-          ```
-        </AccordionItem>
-      </Accordion>
-    </AccordionItem>
-
-    <AccordionItem title="Security Considerations">
-      When using custom authentication headers:
-
-      - **Use HTTPS:** Always ensure your webhook endpoint uses HTTPS to prevent header interception.
-      - **Multiple Layers:** Consider implementing both custom header authentication and Telivy signature verification for enhanced security.
-      - **Rotation:** Periodically rotate API keys, tokens, or passwords used in custom headers.
-      - **Minimal Privileges:** The authentication credentials used in webhook headers should have the minimal privileges needed.
-    </AccordionItem>
   </Accordion>
-</Accordion>
+  <Accordion title="Custom Authentication Headers">
+    In addition to verifying that webhooks are coming from Telivy using the signature, you may need to secure your webhook endpoint from unauthorized access. Telivy allows you to specify custom headers that will be included in webhook requests, which you can use for authentication in your system.
 
+    **Setting Up Custom Authentication Headers**
+    When creating or updating a webhook subscription in your Telivy dashboard, you can specify custom HTTP headers to be included in all webhook requests to your endpoint. Common authentication headers include:
+
+    - `Authorization`: For JWT bearer tokens, OAuth tokens, or Basic Auth
+    - `X-API-Key`: For API key authentication
+    - `X-Client-ID` and `X-Client-Secret`: For client credential authentication
+
+    **_Examples of Custom Header Authentication_**
+
+    **API Key Authentication**
+    Example custom headers configuration in Telivy:
+
+    ```json
+    {
+      "X-API-Key": "your_api_key_here"
+    }
+    ```
+
+    Your webhook handler can then verify this header:
+
+    ```javascript
+    // Node.js example
+    app.post('/webhook', (req, res) => {
+      const apiKey = req.headers['x-api-key'];
+    
+      // First verify API key
+      if (apiKey !== 'your_api_key_here') {
+        return res.status(401).send('Unauthorized');
+      }
+    
+      // Then verify Telivy signature
+      const signature = req.headers['x-telivy-signature'];
+      // ...signature verification code...
+    
+      // Process webhook
+      res.status(200).send('Webhook received');
+    });
+    ```
+
+    **Bearer Token Authentication**
+    Example custom headers configuration in Telivy:
+
+    ```json
+    {
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    }
+    ```
+
+    Your webhook handler can then verify this token:
+
+    ```python
+    # Python/Flask example
+    @app.route('/webhook', methods=['POST'])
+    def receive_webhook():
+      auth_header = request.headers.get('Authorization')
+    
+      # First verify JWT token
+      if not auth_header or not auth_header.startswith('Bearer '):
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+      token = auth_header.split(' ')[1]
+      if not verify_jwt_token(token):
+        return jsonify({'error': 'Invalid token'}), 401
+    
+      # Then verify Telivy signature
+      # ...signature verification code...
+    
+      return jsonify({'status': 'Webhook received'}), 200
+    ```
+
+    **Basic Auth**
+    Example custom headers configuration in Telivy:
+
+    ```json
+    {
+      "Authorization": "Basic dXNlcm5hbWU6cGFzc3dvcmQ="  // Base64 of "username:password"
+    }
+    ```
+
+    Your webhook handler would then decode and verify:
+
+    ```csharp
+    // C# example
+    [HttpPost]
+    public IActionResult ReceiveWebhook([FromBody] object payload)
+    {
+      var authHeader = Request.Headers["Authorization"].ToString();
+    
+      // First verify Basic Auth
+      if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Basic "))
+      {
+          return Unauthorized("Missing authentication");
+      }
+    
+      var encodedCreds = authHeader.Substring("Basic ".Length).Trim();
+      var credentials = Encoding.UTF8.GetString(Convert.FromBase64String(encodedCreds));
+      var parts = credentials.Split(':');
+    
+      if (parts.Length != 2 || parts[0] != "username" || parts[1] != "password")
+      {
+          return Unauthorized("Invalid credentials");
+      }
+    
+      // Then verify Telivy signature
+      // ...signature verification code...
+    
+      return Ok("Webhook received");
+    }
+    ```
+
+    **Security Considerations**
+    When using custom authentication headers:
+
+    - **Use HTTPS:** Always ensure your webhook endpoint uses HTTPS to prevent header interception.
+    - **Multiple Layers:** Consider implementing both custom header authentication and Telivy signature verification for enhanced security.
+    - **Rotation:** Periodically rotate API keys, tokens, or passwords used in custom headers.
+    - **Minimal Privileges:** The authentication credentials used in webhook headers should have the minimal privileges needed.
+  </Accordion>
 </AccordionGroup>
