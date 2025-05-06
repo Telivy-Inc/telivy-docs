@@ -20,8 +20,6 @@ description: "This guide will help you integrate with Telivy's webhook system to
     Webhooks provide a way for your systems to receive real-time notifications when specific events occur in Telivy. When an event happens, we'll send an HTTP POST request to the URL you specified when setting up the webhook.
   </Accordion>
   <Accordion title="Webhook Events">
-    When archiving an assessment, you will receive the following notification:
-
     Currently, Telivy supports the following webhook events:
 
     - ASSESSMENT_STATUS_CHANGED: Triggered when an assessment's status changes
@@ -619,33 +617,31 @@ description: "This guide will help you integrate with Telivy's webhook system to
     ```
   </Accordion>
   <Accordion title="Handling Webhook Data">
-    
-
     Each webhook payload follows this structure:
 
     ```json
     {
-
+    
       "metadata": {
-
+    
         "eventType": "EVENT_TYPE",
-
+    
         "timestamp": "ISO_TIMESTAMP",
-
+    
         "webhookId": "WEBHOOK_SUBSCRIPTION_ID",
-
+    
         "attemptNumber": 1,
-
+    
         "encrypted": false
-
+    
       },
-
+    
       "data": {
-
+    
         // Event-specific data
-
+    
       }
-
+    
     }
     ```
 
@@ -653,26 +649,25 @@ description: "This guide will help you integrate with Telivy's webhook system to
 
     ```json
     {
-  
-
+    
       "metadata": {
-
+    
         "eventType": "EVENT_TYPE",
-
+    
         "timestamp": "ISO_TIMESTAMP",
-
+    
         "webhookId": "WEBHOOK_SUBSCRIPTION_ID",
-
+    
         "attemptNumber": 1,
-
+    
         "encrypted": true
-
+    
       },
-
+    
       "data": "BASE64_ENCRYPTED_DATA",
-
+    
       "iv": "BASE64_IV"
-
+    
     }
     ```
 
