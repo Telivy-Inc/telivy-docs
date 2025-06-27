@@ -1,15 +1,16 @@
 ---
-title: What Happens Under the Hood?
-description: 'Understand the Telivy Agent Installation Process'
+title: "What Happens Under the Hood?"
+description: "Understand the Telivy Agent Installation Process"
 ---
 
 ## Learn more about the installation process
 
 ### This can help to debug the process
 
-Telivy uses executables for completing the different types of scans. In this section we will list all the locations and the name of the executables to provide more context to help you with anti virus whitelisting.
+Telivy uses executables to complete the different types of scans. In this section, we will list all the locations and the names of the executables to provide more context to help you with anti-virus whitelisting.
 
 Some of the executables that we run are as follows:
-1. **C:\Program Files (x86)\Telivy\Telivy Agent\TelivyAgent.exe**: Installs and runs as a Windows Service. Used to perform the network, application and PII scan on the device.
-2. **C:\Program Files (x86)\Telivy\Telivy Agent\telivy_pdf_text.exe**: Used to parse texts in PDFs.
-3. **C:\Program Files (x86)\Telivy\Telivy Agent\telivy_scanner.exe**: Used to perform password analysis
+
+1. **C:\\Program Files (x86)\\Telivy\\Telivy Agent\\TelivyAgent.exe:** Registers as Windows Service, a controller orchestrating the scanning process. Responsible for periodically running Telivy Scanner and sending heartbeat log to Telivy services.
+2. **C:\\Program Files (x86)\\Telivy\\Telivy Agent\\telivy_pdf_text.exe:** Used to parse texts in PDFs.
+3. **C:\\Program Files (x86)\\Telivy\\Telivy Agent\\TelivyScanner.exe:** Performs the actual scanning.
