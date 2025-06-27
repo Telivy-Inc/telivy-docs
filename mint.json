@@ -87,7 +87,6 @@
                         "products/risk-assessments/identity-and-access-management",
                         "products/risk-assessments/microsoft-365-security",
                         "products/risk-assessments/google-workspace-security",
-                        "products/risk-assessments/grading-criteria",
                         "products/risk-assessments/uninstall-telivy-agent-windows"
                     ]
                 },
