@@ -1,31 +1,50 @@
 ---
-title: Release Notes
-description: 'Get Notified of New Features'
+title: "Release Notes"
+description: "Get Notified of New Features"
 ---
 
+<Update label="07-01-2025" description="Four Items">
+  **PII Detection in OneDrive (Alpha)**
+
+  Telivy now supports PII scanning for files in OneDrive. This allows users to identify what types of sensitive data are being stored in the cloud — a big step toward deeper cloud compliance visibility.
+
+  **Application Security – "Last Visited"**
+
+  We’ve added a “Last Visited” timestamp for websites in Application Security scans. This helps teams investigate potential malicious activity and determine when users last accessed risky sites.
+
+  **UI Improvements**
+
+  Currency fields now respect custom formats everywhere, even in placeholders.
+
+  **Bug Fixes & Stability**
+
+  - PII scan crash fixed for inaccessible directories (network issues no longer block scans)
+  - Fixed network scan behavior when default gateways are missing or misconfigured
+  - Gateway detection is now more accurate, improving the reliability of network scans
+  - Increased webhook timeout to reduce timeouts on busy systems
+</Update>
 <Update label="06-05-2025" description="Seven Items">
-    **Cron Reliability**
+  **Cron Reliability**
 
-    Improved IP-to-City updater indexing to enhance cron job reliability.
+  Improved IP-to-City updater indexing to enhance cron job reliability.
 
-    **Status Migration**
+  **Status Migration**
 
-    Enabled automatic "Completed" status for non-agent scans. 
+  Enabled automatic "Completed" status for non-agent scans.
 
-    **AI Upgrades**
+  **AI Upgrades**
 
-    Improved AI-based detection mapping logic.
+  Improved AI-based detection mapping logic.
 
-    **Lead Magnet**
+  **Lead Magnet**
 
-    Removed CORS restriction for Lead Magnet integration.
+  Removed CORS restriction for Lead Magnet integration.
 
-    **Access Code**
+  **Access Code**
 
-    Updated access code behavior
+  Updated access code behavior
 
-    **Uninstall Messaging**
+  **Uninstall Messaging**
 
-    Improved uninstall messaging.
-
+  Improved uninstall messaging.
 </Update>
