@@ -3,6 +3,16 @@ title: "Release Notes"
 description: "Get Notified of New Features"
 ---
 
+<Update label="07-09-2025" description="Two Items">
+  **Analysis of**`p=`**Value in DMARC**
+
+  Inspects the `p=` tag in DMARC records to assess the enforcement level of email authentication policies (none, quarantine, or reject). This improves detection of overly permissive DMARC configurations (e.g., `p=`none), which may leave organizations vulnerable to spoofing and phishing. By highlighting weak enforcement, this feature empowers MSPs to help clients harden their email defenses and align with industry best practices, reducing reputational risk and enhancing email trustworthiness.
+
+  **Agent vs Agentless Deployment Method Differences**
+
+  Clearly shows the differences between agent-based scans and agentless deployment methods with an easy-to-understand model. This helps users understand what type of deployment is best for their client’s use case and which features can be enabled based on the type. This should reduce the support tickets created by educating the user from the platform itself.
+</Update>
+
 <Update label="07-01-2025" description="Four Items">
   **PII Detection in OneDrive (Alpha)**
 
@@ -23,6 +33,7 @@ description: "Get Notified of New Features"
   - Gateway detection is now more accurate, improving the reliability of network scans
   - Increased webhook timeout to reduce timeouts on busy systems
 </Update>
+
 <Update label="06-05-2025" description="Seven Items">
   **Cron Reliability**
 
