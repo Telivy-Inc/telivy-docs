@@ -48,42 +48,35 @@ Here's a detailed guide on making a POST call in JavaScript to Telivy backend fo
 
     ```html file.html
     <form id="myForm" method="POST">
-        // Mandatory Fields
+        <!-- These are Mandatory Fields -->
         <input type="text" name="organizationName" placeholder="Enter the name of your business">
         <input type="text" name="domain" placeholder="Enter your website domain">
         <input type="email" name="contactEmail" placeholder="Enter your email">
-        // Optional Fields
+        <!-- Optional Fields but good to have  -->
         <input type="text" name="contactName" placeholder="Enter your full name">
         <input type="tel" name="contactPhone" placeholder="Enter your phone number">
         <input type="text" name="zipCode" placeholder="Enter your zip code">
         <input type="number" name="employeeCount" placeholder="Number of employees">
-        <input type="number" name="annualRevenue" placeholder="Annual revenue (#)">
+        <input type="number" name="annualRevenue" placeholder="Annual revenue ($)">
         <button type="submit">Submit</button>
       </form>
-    
-    
       <script>
       const form = document.getElementById("myForm");
       form.addEventListener("submit", (event) => {
-    
         event.preventDefault();
-    
         const formData = new FormData(form);
         // Replace with your actual Agent ID.
         formData.append("agentId", "your-agent-id-here");
         // Read next article to learn about utm source tracking
         formData.append("utmSource", "custom-form");
-    
         const dataObj = {};
         formData.forEach(function(value, key){
-          // Convert numeric fields to numbers
           if ((key === "employeeCount" || key === "annualRevenue") && value) {
             dataObj[key] = parseInt(value, 10);
           } else if (value) {
             dataObj[key] = value;
           }
         });
-    
         fetch("https://api-v1.telivy.com/api/v1/applications/public", {
           method: "POST",
           body: JSON.stringify(dataObj),
@@ -99,7 +92,6 @@ Here's a detailed guide on making a POST call in JavaScript to Telivy backend fo
           console.error(error);
         });
       });
-    
       </script>
     ```
   </Step>
