@@ -1,6 +1,6 @@
 ---
-title: Configure with Custom Form
-description: 'For a more customized implementation'
+title: "Configure with Custom Form"
+description: "For a more customized implementation"
 ---
 
 Here's a detailed guide on making a POST call in JavaScript to Telivy backend form input when a submit button is clicked on your own form:
@@ -10,85 +10,97 @@ Here's a detailed guide on making a POST call in JavaScript to Telivy backend fo
     Create a form with the method attribute set to POST and a submit button.
   </Step>
   <Step title="Attach A JavaScript Event Listener">
-    Use *addEventListener* to listen for the submit event on the form.
+    Use _addEventListener_ to listen for the submit event on the form.
   </Step>
   <Step title="Gather Form Data">
     Use FormData to construct a data object from the form's input fields. Add the agentId or UTM Source fields to the form data if necessary.
 
-    <Warning>Before you proceed any further, please make sure that the following validations to the data are passed:</Warning>
-
+    <Warning>
+      Before you proceed any further, please make sure that the following validations to the data are passed:
+    </Warning>
     <Tabs>
-    <Tab title="Email is Valid">
+      <Tab title="Email is Valid">
         Ensure the email has an "@."
-    </Tab>
-    <Tab title="Domain is Valid">
+      </Tab>
+      <Tab title="Domain is Valid">
         Ensure the domain is valid. The following examples are valid domains:
 
         ```
         https://www.cleansolar.com
-
+        
         www.cleansolar.com
-
+        
         cleansolar.com
-
+        
         https://www.cleansolar.com/
-
+        
         www.cleansolar.com/
-
+        
         cleansolar.com/
         ```
-    </Tab>
+      </Tab>
     </Tabs>
   </Step>
-
   <Step title="Send The POST Request">
     Use the fetch API to send the POST request.
 
     Here's the full example:
 
-    ``` html file.html
+    ```html file.html
     <form id="myForm" method="POST">
-    <input type="text" name="organizationName" placeholder="Enter the name of your business">
-    <input type="email" name="contactEmail" placeholder="Enter your email">
-    <input type="text" name="domain" placeholder="Enter your website domain">
-    <button type="submit">Submit</button>
-    </form>
-
-
-    <script>
-    const form = document.getElementById("myForm");
-    form.addEventListener("submit", (event) => {
-
-    event.preventDefault();
-
-    const formData = new FormData(form);
-    // Replace with your actual Agent ID.
-    formData.append("agentId", "your-agent-id-here");
-    // Read next article to learn about utm source tracking
-    formData.append("utmSource", "custom-form"); 
-
-    const dataObj = {};
-    formData.forEach(function(value, key){
-        dataObj[key] = value;
-    });
-
-    fetch("https://api-v1.telivy.com/api/v1/applications/public", {
-        method: "POST",
-        body: JSON.stringify(dataObj),
-        headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-        }
-    })
-    .then(data => {
-        console.log(data);
-    })
-    .catch(error => {
-        console.error(error);
-    });
-    });
-
-    </script>
+        // Mandatory Fields
+        <input type="text" name="organizationName" placeholder="Enter the name of your business">
+        <input type="text" name="domain" placeholder="Enter your website domain">
+        <input type="email" name="contactEmail" placeholder="Enter your email">
+        // Optional Fields
+        <input type="text" name="contactName" placeholder="Enter your full name">
+        <input type="tel" name="contactPhone" placeholder="Enter your phone number">
+        <input type="text" name="zipCode" placeholder="Enter your zip code">
+        <input type="number" name="employeeCount" placeholder="Number of employees">
+        <input type="number" name="annualRevenue" placeholder="Annual revenue (#)">
+        <button type="submit">Submit</button>
+      </form>
+    
+    
+      <script>
+      const form = document.getElementById("myForm");
+      form.addEventListener("submit", (event) => {
+    
+        event.preventDefault();
+    
+        const formData = new FormData(form);
+        // Replace with your actual Agent ID.
+        formData.append("agentId", "your-agent-id-here");
+        // Read next article to learn about utm source tracking
+        formData.append("utmSource", "custom-form");
+    
+        const dataObj = {};
+        formData.forEach(function(value, key){
+          // Convert numeric fields to numbers
+          if ((key === "employeeCount" || key === "annualRevenue") && value) {
+            dataObj[key] = parseInt(value, 10);
+          } else if (value) {
+            dataObj[key] = value;
+          }
+        });
+    
+        fetch("https://api-v1.telivy.com/api/v1/applications/public", {
+          method: "POST",
+          body: JSON.stringify(dataObj),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      });
+    
+      </script>
     ```
   </Step>
 </Steps>
