@@ -125,6 +125,7 @@
             "pages": [
                 "integrations/nodeware",
                 "integrations/rewst",
+               "integrations/connectwise",
                 "integrations/webhooks"
             ]
         },
