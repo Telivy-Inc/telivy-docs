@@ -126,6 +126,7 @@
                 "integrations/nodeware",
                 "integrations/rewst",
                "integrations/connectwise",
+              "integrations/autotask",
                 "integrations/webhooks"
             ]
         },
