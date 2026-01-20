@@ -3,7 +3,7 @@ title: "Whitelist Telivy with AV/EDR"
 description: "Notify AVs and EDRs to run Telivy scans"
 ---
 
-## Whitelist Telivy
+## Whitelist Telivy 
 
 ### How to get your Anti-Virus to allow smooth installation of Telivy
 
@@ -18,9 +18,7 @@ To whitelist your Anti-Virus or EDR, follow these instructions:
       2. [install.telivy.com](http://install.telivy.com)
    1. Executables:
       1. 1. C:\\Program Files (x86)\\Telivy\\Telivy Agent\\[Telivy.Agent.Windows](http://Telivy.Agent.Windows).exe
-
          2. C:\\Program Files (x86)\\Telivy\\Telivy Agent\\[Telivy.Scanner.Windows](http://Telivy.Scanner.Windows).exe
-
          3. C:\\Program Files (x86)\\Telivy\\Telivy Agent\\[Telivy.Launcher.Windows](http://Telivy.Launcher.Windows).exe
    2. If neither of the above work, we then advise more excessive whitelisting:
       1. Domains: \*.[telivy.com](http://telivy.com)
@@ -38,8 +36,8 @@ Once the installation has been kicked off, here are the sequence of events to be
 1. Telivy Agent is a Windows Service that sends a heartbeat log and starts Telivy Scanner every hour.
 2. The first step for the Telivy Scanner is to reach the Telivy servers to create an asset in your assessment. It gathers a hostname, OS name, and any other machine-identifying metadata.
 3. The asset scan is then triggered, which includes vulnerability scanning, application scanning, PII scans, and password analysis.
-3. The status then changes to “In Progress” in the Telivy portal.
-4. The controller checks in every 1 hour to check if the scan has completed. Usually, the PII scan takes a bit depending on how many files are present on the asset.
+1. The status then changes to “In Progress” in the Telivy portal.
+2. The controller checks in every 1 hour to check if the scan has completed. Usually, the PII scan takes a bit depending on how many files are present on the asset.
 
 ## Under the Hood
 
