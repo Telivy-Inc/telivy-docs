@@ -1,0 +1,9 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Cytracom/cytracom-oss/main/schemas/repo-metadata.schema.json",
+  "semgrep": {
+    "tags": [
+      "mdx",
+      "tier:standard"
+    ]
+  }
+}
