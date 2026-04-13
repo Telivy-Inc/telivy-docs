@@ -9,6 +9,15 @@
   },
   "favicon": "/logo/favicon.png",
   "navigation": {
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Website",
+          "icon": "globe",
+          "href": "https://www.telivy.com/"
+        }
+      ]
+    },
     "anchors": [
       {
         "anchor": "Documentation",
@@ -68,7 +77,8 @@
                   "products/risk-assessments/identity-and-access-management",
                   "products/risk-assessments/microsoft-365-security",
                   "products/risk-assessments/google-workspace-security",
-                  "products/risk-assessments/uninstall-telivy-agent-windows"
+                  "products/risk-assessments/uninstall-telivy-agent-windows",
+                  "products/risk-assessments/auto-update"
                 ]
               },
               {
@@ -119,16 +129,7 @@
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Website",
-          "href": "https://www.telivy.com/",
-          "icon": "globe"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/logo.svg",
