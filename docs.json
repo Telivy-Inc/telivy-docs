@@ -107,7 +107,12 @@
             "pages": [
               "scoring/ai-scoring",
               "scoring/m365",
-              "scoring/telivycriteria"
+              {
+                "group": "Legacy Scoring",
+                "pages": [
+                  "scoring/telivycriteria"
+                ]
+              }
             ]
           },
           {
