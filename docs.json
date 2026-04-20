@@ -105,6 +105,7 @@
           {
             "group": "Scoring",
             "pages": [
+              "scoring/untitled-page",
               "scoring/ai-scoring",
               "scoring/m365",
               {

@@ -1,0 +1,96 @@
+---
+title: "Understanding Risk Scoring"
+---
+
+## Overview
+
+Telivy's Risk Score provides a single, normalized measure of your security posture on a 0–100 scale. The scoring engine is informed by industry risk quantification frameworks such as FAIR (Factor Analysis of Information Risk) and adapted specifically for MSP environments where you manage diverse clients of varying sizes and complexity.
+
+The score is designed to be **fair across environments**, **actionable for prioritization**, and **responsive to improvements** you make.
+
+> **Applies to: Risk Assessments only.** The Risk Score described in this article is calculated for Risk Assessments, which combine agent-based endpoint scanning with cloud platform integrations (M365, Google Workspace) to build a complete picture of your environment. External Scans (domain-based, no agent required) use a separate scoring methodology and are not covered here.
+
+---
+
+## How the Score Works
+
+### Environment-Aware Normalization
+
+Your score accounts for the size and shape of your environment. A 10-device client is evaluated differently from a 500-device client — the system adjusts expectations based on your actual environment, including:
+
+- Number of devices
+- Number of users
+- Number of domains
+- Number of web-facing hosts
+
+This means two environments with the same types of issues but different sizes will receive comparable scores rather than penalizing larger environments simply for having more assets.
+
+### Severity-Weighted Findings
+
+Not all findings carry the same weight. Critical-severity findings have a significantly larger impact on the score than low-severity findings. This reflects real-world risk: an unpatched critical vulnerability poses a fundamentally different threat than a minor configuration recommendation.
+
+The score is calculated across all applicable security controls, with each finding contributing based on its severity level.
+
+### Only Applicable Controls Are Scored
+
+If your environment does not use a particular platform (for example, Microsoft 365 or Google Workspace), controls related to that platform are excluded from your score entirely. You are only scored on what is relevant to your environment.
+
+### Every Improvement Counts
+
+The scoring model is designed so that **every finding you remediate improves your score**. The first remediations in a category tend to have the largest impact, but continued progress always moves the needle. There is no "dead zone" where fixing issues has no visible effect.
+
+This also means partial remediation is recognized. You don't need to fully resolve every finding in a category to see your score improve.
+
+---
+
+## Risk Bands
+
+Your numeric score maps to a risk band that provides a quick summary of your security posture:
+
+| Risk Band | Score Range | What It Means |
+| --- | --- | --- |
+| Low Risk | 90 – 100 | Strong security posture with minimal open findings |
+| Medium Risk | 70 – 89 | Moderate security posture; some areas need attention |
+| High Risk | 50 – 69 | Significant gaps exist; prioritized remediation recommended |
+| Critical Risk | 0 – 49 | Serious exposure; immediate action recommended |
+
+---
+
+## Prioritized Remediation Actions
+
+Alongside your score, Telivy identifies the **top remediation actions** ranked by their projected impact on your score. This tells you exactly which issues to address first for the biggest improvement.
+
+Each recommended action shows:
+
+- **The finding category** and its severity
+- **Projected score improvement** if fully remediated
+- **What your score would be** after fixing it
+
+This helps you and your clients focus effort where it matters most, rather than guessing which findings to tackle first.
+
+---
+
+## Why Your Score May Change
+
+Your Risk Score is a living metric. It may change between scans for several reasons:
+
+- **New findings discovered** — A scan may detect new issues that were not present before (new software, configuration changes, newly disclosed vulnerabilities).
+- **Findings remediated** — Resolving issues improves your score.
+- **Environment changes** — Adding or removing devices, users, or domains adjusts the baseline expectations.
+- **Scoring model updates** — We continuously refine the scoring model to improve accuracy and fairness. As we incorporate new security controls, adjust severity weightings, or improve normalization, scores may shift. These updates are designed to make the score more representative of actual risk over time.
+
+---
+
+## Frequently Asked Questions
+
+**Q: Why do two similar-looking environments have different scores?** Even environments that appear similar may differ in the specific findings detected, the platforms connected (M365, Google Workspace), or the exact number of assets. The score reflects the unique risk profile of each environment.
+
+**Q: My score dropped but I didn't change anything. Why?** This can happen when a new scan detects findings that weren't visible before (for example, a newly disclosed vulnerability affecting software already in your environment) or when the scoring model is updated to better reflect risk.
+
+**Q: How do I improve my score?** Focus on the **prioritized remediation actions** shown in the platform. These are ranked by impact, so starting at the top gives you the fastest path to a better score. Addressing critical and high-severity findings first will have the largest effect.
+
+**Q: Does accepting or resolving a finding affect the score?** Yes. Findings that are accepted or resolved are excluded from the score calculation, giving you control over what is reflected in your risk posture.
+
+**Q: How often is the score recalculated?** The score is recalculated each time a scan completes, so it always reflects the latest data from your environment.
+
+**Q: Will the scoring model change over time?** Yes. We are actively refining the scoring engine to improve accuracy and coverage. As we add new security controls and improve normalization, you may see score adjustments. These changes are always aimed at providing a more accurate picture of your actual security posture.
