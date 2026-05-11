@@ -40,6 +40,7 @@
           {
             "group": "Learning Center",
             "pages": [
+              "learning-center/disk-encryption-detection",
               "learning-center/dark-web-scans",
               "learning-center/typo-squatting",
               "learning-center/open-ports",
