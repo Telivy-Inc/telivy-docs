@@ -1,0 +1,166 @@
+---
+title: "Data Security"
+description: "How Telivy detects PII on a client's endpoints, what evidence the platform stores and displays, and how to control it for HIPAA-sensitive partners."
+---
+
+Data Security is the part of a Telivy Risk Assessment that finds personally identifiable information sitting on the wrong machines, in the wrong folders — and quantifies what it would cost the client if any of those machines got lost, stolen, or compromised. This page explains exactly what Telivy scans, what evidence is captured, what shows up in the platform, and how to configure it for partners with stricter privacy or HIPAA requirements.
+
+---
+
+## Overview
+
+The Telivy agent inspects files on each endpoint during its scan and identifies content that matches recognized PII patterns: credit card numbers, Social Security numbers (and Canadian SIN equivalents), email addresses, phone numbers, and other regulated identifiers. For each match, Telivy captures the **file path**, the **device**, the **PII type**, the **match count**, and a **dollar-risk valuation** based on per-record liability assumptions. Findings roll up into a per-device and per-client view your tech can act on — and that an MSP can put in front of an SMB owner during a QBR or insurance renewal.
+
+The output is the conversation that gets cyber insurance approved: *"Your client has 14,000 records of regulated PII spread across 22 laptops, and three of those laptops are unencrypted. That's the carrier's first question."*
+
+---
+
+## Requirements
+
+- A **Risk Assessment** (Data Security is included). External Assessments do not perform PII detection.
+- The **Telivy agent** deployed on the endpoints to be scanned. Agentless mode is supported with a meaningful limitation:
+  - **Agent (recommended):** Scans files accessible to the system; broadest coverage.
+  - **Agentless:** Runs in the security context of the local user. Only files readable by that user are scanned.
+- For **OneDrive PII** detection, the assessment must have OneDrive scanning enabled at the machine level.
+
+---
+
+## What Telivy scans for
+
+Telivy classifies findings by PII type. The most common categories:
+
+| Category | Examples |
+| --- | --- |
+| **Credit card** | 14–19 digit card numbers passing Luhn validation |
+| **Social Security Number** | US SSNs, Canadian SIN equivalents (Luhn-validated) |
+| **Personal contact data** | Email addresses, phone numbers |
+| **Other regulated identifiers** | Drivers license, passport, tax ID patterns by region |
+
+Each finding is enriched with a **dollar-risk valuation** — a per-record liability estimate that lets the platform roll up "this client has \$1.2M of exposure on this one fileserver" rather than just "this client has 14,000 records." You can adjust the per-record weights in the **Configure PII Costs** modal (covered below).
+
+---
+
+## How matches appear in the platform
+
+The Data Risk experience has two views, deliberately separated:
+
+1. **The grid view** (Data Risk modal). Columns include device, file path, file size, last modified, PII type, **match count**, and dollar-risk. The actual matched values are **not** shown in the grid — only the count.
+2. **The detail view** (per-file modal, opened with **View**). Shows full file metadata plus a **Data Found** section that displays the matched values themselves (for example, the literal numbers a credit-card pattern matched on). This is the screen your tech uses to confirm a finding isn't a false positive — a Luhn-valid string in a code sample, an old testing export, a year-end CSV that should have been purged.
+
+**Reports and exports.** The CSV PII report includes columns by category (Credit Card Matches, SSN/ID Matches, Email Matches, etc.) and is intended for the same operational use as the detail view: confirming materiality and routing remediation.
+
+---
+
+## Privacy & custody — what leaves the device
+
+This is the section to read carefully if your partner is HIPAA-sensitive, has a strict vendor risk program, or has asked the question directly.
+
+**By default**, Telivy is designed to give the MSP enough evidence to confirm that a finding is real and to drive remediation. That includes capturing **a sample of the matched value** along with file path, device, and PII type. The data flow is:
+
+1. The Telivy agent scans files locally on the endpoint.
+2. Matches are packaged into an **encrypted payload** before transmission — encryption is applied at the application layer in addition to TLS.
+3. The encrypted payload is delivered to the Telivy platform, where it is decrypted and stored against the device record.
+4. Authorized users in your tenant view findings through `ApplicationAccess`-controlled portal endpoints.
+
+Cleartext passwords from the password-analysis module, by contrast, are **never** transmitted off the device — only their hashes are. PII match samples follow a different design choice because confirming and remediating PII findings requires being able to see *what was matched*. We're transparent about that distinction so you can make the right call for each client.
+
+If that default is the wrong fit for a specific client or your entire book, you can change it.
+
+---
+
+## Mask PII Data — the supported privacy control
+
+Telivy provides a **Mask PII Data** setting at both the agency level and the per-assessment level. When enabled, the platform redacts the literal match values everywhere they would otherwise be displayed — the **Data Found** detail view, CSV exports, and any other surface that would have shown the raw match. **Counts, file paths, device names, and dollar-risk valuations are still shown** so the finding remains actionable.
+
+The toggle is labeled **"Mask PII Data (may be required under HIPAA)"** and is the right setting for:
+
+- HIPAA-sensitive partners or any client with regulated PHI
+- Partners whose vendor risk program prohibits a third-party platform from storing or displaying production PII
+- MSPs who want a consistent privacy posture across their book regardless of individual client requirements
+
+### Where to configure it
+
+**Agency level (recommended for partners who want this on by default for all clients):**
+
+Navigate to **Account Settings → PII Configuration → Configure PII Costs**, and enable **Mask PII Data**.
+
+**Assessment level (for client-by-client overrides):**
+
+Open the specific assessment, navigate to its PII configuration, and enable **Mask PII Data** for that assessment alone.
+
+### Important: this setting requires a rescan to take effect
+
+The PII configuration modal explicitly notes that toggling **Mask PII Data** does not retroactively redact already-captured matches. After enabling the setting, run **Rescan All** on the affected assessments to refresh the data. New scans honor the masking from the moment of capture; old scan results retain whatever they captured at the time.
+
+For partners turning this on as a baseline policy, the right rollout is: enable at the agency level → notify your team → trigger a rescan on each active assessment → verify the **Data Found** view in a sample finding shows redacted output before considering the change complete.
+
+### Adjacent control: Mask Dark Web Passwords
+
+The PII Configuration screen also offers a separate **Mask Dark Web Passwords** toggle. This affects how dark-web finding evidence is displayed (the same masking concept applied to leaked-credential evidence). It's independent from Mask PII Data — turning one on does not turn the other on.
+
+---
+
+## Per-type cost weights
+
+Beyond masking, the **Configure PII Costs** modal lets you adjust the dollar valuation per record by PII type, currency, and region. These weights drive the **dollar-risk** column in the grid and the rolled-up exposure value used in the assessment's data-security grade.
+
+Cost weight changes take effect immediately — they don't require a rescan, because the underlying match data isn't changing, only the valuation logic on top of it.
+
+Adjust weights when:
+
+- Your client is in a regulated vertical with known per-record fines that differ from defaults (for example, healthcare PHI under HIPAA breach valuations).
+- Your client's region uses a different currency or has different regulatory liability ranges.
+- You want a more conservative dollar-risk display in QBR materials.
+
+---
+
+## How MSPs use this in practice — Analyze → Prioritize → Commit
+
+**Analyze.** Filter the Data Risk view by device. Identify the small number of machines with disproportionate exposure — typically file servers, finance/HR laptops, and old endpoints that accumulated years of CSV exports. The 80/20 holds: a handful of devices usually account for the majority of dollar-risk.
+
+**Prioritize.** Sort by dollar-risk, not match count. A single 50,000-row export with one match per row inflates counts but represents one file. Pair Data Security findings with **disk encryption** findings — an unencrypted laptop with high PII exposure is the urgent ticket.
+
+**Commit.** Drive remediation through the obvious paths:
+
+- **Delete or archive** stale exports that don't need to be on endpoints.
+- **Move** active datasets into managed cloud storage with access controls.
+- **Encrypt** any device holding regulated PII (BitLocker / FileVault).
+- **Tighten access** on the file server — finance shouldn't have read on HR exports, and vice versa.
+
+The next scan will close the finding automatically when the underlying file is gone or moved.
+
+---
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does Telivy store the actual PII values it finds (like credit card numbers)?">
+    By default, yes — the matched value is captured along with file path, device, and PII type so that your tech can verify the finding isn't a false positive and drive remediation with the SMB. The transmission from agent to platform is encrypted at the application layer, and access to the data inside the platform is gated by `ApplicationAccess` controls.
+
+    If you don't want literal match values displayed in the platform, enable **Mask PII Data** at the agency or assessment level and rescan. With masking on, counts, file paths, devices, and dollar-risk are still shown — only the literal match values are redacted.
+  </Accordion>
+
+  <Accordion title="How do I enable Mask PII Data for an entire client base?">
+    Set it at the **agency level** in **Account Settings → PII Configuration → Configure PII Costs**. The setting will inherit down to every existing and future assessment unless you explicitly override it at the assessment level. After enabling, run **Rescan All** on each active assessment so already-captured findings refresh under the new masking rule.
+  </Accordion>
+
+  <Accordion title="Will Mask PII Data hide findings or just the values?">
+    Just the values. Findings still appear, devices and file paths are still listed, match counts are still shown, and dollar-risk is still calculated. The change is to the **Data Found** display and the per-match values in exports — the actionable portion of the finding remains intact.
+  </Accordion>
+
+  <Accordion title="Why does Telivy capture match samples by default at all?">
+    Because false positives matter. A regex that flags every Luhn-valid 16-digit string will hit on test files, sample data, and code. Without a sample, your tech can't confirm whether a finding is a real production card number or a developer's `4111-1111-1111-1111`. Without that confirmation, the alternative is escalating every match as a real breach — which destroys the credibility of the report. The supported answer for partners who don't want to take custody of literal values is **Mask PII Data**.
+  </Accordion>
+
+  <Accordion title="Are passwords handled the same way as PII?">
+    No. Cleartext passwords are **never** transmitted from the device — Telivy stores only hashes for the password-analysis features. PII matches follow a different design as described above. The two are governed by separate controls (**Mask PII Data** for PII, **Mask Dark Web Passwords** for password evidence), so you can configure each according to your partner's needs.
+  </Accordion>
+
+  <Accordion title="Does the dollar-risk valuation update without rescanning?">
+    Yes. Cost-weight changes recompute the dollar-risk display immediately — they don't require a rescan, because they only change valuation logic, not the underlying matches. The **Mask PII Data** setting is the one that requires Rescan All to take effect.
+  </Accordion>
+
+  <Accordion title="What if the agent runs without admin privileges?">
+    In agentless mode (or any scenario where the scanner lacks elevation), Telivy can only inspect files readable by the local user account. Production fileservers and other shared locations may be missed. For full Data Security coverage, deploy the agent under a context that can read the data your client cares about.
+  </Accordion>
+</AccordionGroup>
