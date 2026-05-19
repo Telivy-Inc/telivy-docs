@@ -26,8 +26,8 @@ Note: Currently Account tab is only visible to account admins.
   <Accordion title="Access Control Made Simple">
     View a list of your organization's users and their permission levels. Two options are available:
 
-    - **All Assessments**: Users can access every assessment conducted within your organization. This will make them an "Agency Admin"
-    - **Own Assessments**: Users can only access assessments they personally created.
+    - **All Assessments**: Users can access every assessment conducted within your organization. This will make them an "Account Admin"
+    - **Own Assessments (+ Shared)**: Users can access assessments they personally created **and** any assessments that have been explicitly shared with them by an admin or the original creator. See "Sharing Assessments With Teammates" below for details.
 
     ![](/images/access-control-made-simple.jpg)
   </Accordion>
@@ -36,8 +36,29 @@ Note: Currently Account tab is only visible to account admins.
 
     ![](/images/expand-your-team.png)
   </Accordion>
+  <Accordion title="Sharing Assessments With Teammates">
+    Need a teammate to help on a specific assessment without granting them access to every assessment in your agency? Open the assessment and use **Manage Access** to add additional users.
+
+    **Who can manage access?**
+    - The assessment **owner** (the user who originally created it, or whoever the assessment was reassigned to)
+    - **Account Admins** in the same account
+    - **Telivy Admins**
+
+    **What shared users can do:** Shared users have the same edit and view permissions as the owner on that single assessment — they can rescan, view reports, archive, convert, and receive the same hourly alert emails. They cannot, however, add or remove other shared users, or transfer ownership.
+
+    **What shared users cannot do:** Manage the sharing list, reassign the assessment to someone else, or see other assessments they were not added to.
+
+    **Removing access:** Removing a shared user is non-destructive. The assessment retains an audit record (who was shared, who removed them, when), even though the user immediately loses access.
+
+    **Note on Unity:** Your Unity role (Telivy User / Telivy Admin) still controls whether you're an Account Admin in Telivy. Sharing a single assessment with a Telivy User does **not** change their Unity role or give them access to any other assessment.
+  </Accordion>
   <Accordion title="Reassigning / Archiving Assessments">
-    Bulk re-assign assessments using the check boxes in the Telivy dashboard. Or you can archived those assessments
+    Reassigning is different from sharing:
+
+    - **Reassign** transfers full ownership of an assessment from one user to another. The previous owner loses access (unless they were also added as a shared user). Use this when a team member leaves or hands off a client permanently.
+    - **Share** adds a teammate to an assessment without removing anyone. Use this for short-term collaboration or backup coverage.
+
+    Bulk re-assign assessments using the check boxes in the Telivy dashboard. Or you can archive those assessments.
 
     ![](/images/reassigning-archiving-assessments.png)
   </Accordion>
