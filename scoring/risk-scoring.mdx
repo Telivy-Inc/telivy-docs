@@ -1,0 +1,164 @@
+---
+title: "Understanding Risk Scoring"
+description: "How Telivy calculates your client's Risk Score, what the gauge and band labels mean, and how to use scoring to drive remediation conversations."
+---
+
+## What This Is
+
+Telivy's Risk Score is a single number between 0 and 100 that summarizes the security posture of a client environment. Higher is better. It appears as the primary metric on every Risk Assessment overview and is the number your clients will ask about in QBRs.
+
+The score is calculated using a **harmonic penalty model** — a formula that translates the severity and volume of open findings into a score that is sensitive to real risk without being easily gamed by closing low-impact issues.
+
+> **Risk Assessments only.** The Risk Score described here applies to Risk Assessments, which combine agent-based endpoint scanning with cloud integrations (M365, Google Workspace). External Assessments use a separate methodology and are not covered on this page.
+
+---
+
+## What You See in the Portal
+
+When you open a Risk Assessment, the main dashboard shows:
+
+- **Risk Score gauge** — a semicircular dial from 0–100 with a needle pointing to the current score, color-coded from red (low scores) to green (high scores)
+- **Risk Band label** — a text classification (Critical / High / Medium / Low) shown alongside the gauge
+- **Sparkline history** — a mini bar chart of the last N scans, visible once the assessment has at least 2 completed scans; shows "Enable monitoring to track score history" until that threshold is met
+- **Top Actions** — a ranked table of the highest-impact findings, each showing severity, finding count, and the score gain if fixed
+- **CIS Controls Passing** — a separate companion percentage shown alongside the Risk Score (see [CIS Controls Passing](#cis-controls-passing) below)
+
+---
+
+## Risk Bands
+
+Your numeric score maps to a risk band that is the definitive classification used in reports, exports, and scoring history:
+
+| Band | Score range | What it means |
+|---|---|---|
+| Low Risk | 90 – 100 | Strong posture, minimal open findings |
+| Medium Risk | 70 – 89 | Moderate posture, some areas need attention |
+| High Risk | 50 – 69 | Significant gaps, prioritized remediation recommended |
+| Critical Risk | 0 – 49 | Serious exposure, immediate action recommended |
+
+**For client conversations:** lead with the band label. "Your environment is currently rated Medium Risk" is a clear, defensible statement that ties directly to what appears in reports.
+
+---
+
+## How the Score Is Calculated
+
+<AccordionGroup>
+  <Accordion title="Plain English explanation">
+    Every finding in the assessment has a severity: Critical, High, Medium, or Low. Higher-severity findings create a larger penalty against the score. The total penalty across all open findings is fed into a formula that compresses it into a 0–100 number.
+
+    The formula is designed so that:
+    - Critical findings hit the score much harder than low-severity ones
+    - Fixing any finding — even a low-severity one — always improves the score
+    - Larger environments (more devices, users, domains) are evaluated against higher expectations, so a 200-device client with 10 open findings isn't penalized the same as a 10-device client with 10 open findings
+    - Platforms you haven't connected (M365, Google Workspace) are excluded entirely — you're only scored on what's relevant to your environment
+  </Accordion>
+
+  <Accordion title="Technical detail">
+    The Risk Score uses a **harmonic penalty model**:
+
+    ```
+    score = 100 / (1 + √totalPenalty)
+    ```
+
+    **Penalty accumulation:**
+    Each finding contributes a penalty based on its severity weight:
+
+    | Severity | Weight |
+    |---|---|
+    | Critical | 2.0 |
+    | High | 0.15 |
+    | Medium | 0.075 |
+    | Low | 0.02 |
+
+    **Environment normalization:**
+    Each penalty contribution is normalized against `maxExpected = perEntityCap × entityCount`, where entity count is derived from the number of devices, users, domains, and web-facing hosts. This prevents larger environments from being disproportionately penalized for having more assets.
+
+    **Platform filtering:**
+    Controls with a `platformRequirement` of `m365` or `gws` are filtered out if the corresponding integration is not connected. Filtered controls do not contribute to the score in either direction.
+
+    **Monotonic improvement guarantee:**
+    The penalty function uses `log(1 + rawCount/maxExpected)` with no hard caps. Every remediation reduces the penalty, which always increases the score. There is no threshold below which fixing a finding has no effect.
+
+    The **CIS Controls Passing** percentage shown alongside the gauge is a separate calculation: `positiveBlocks / totalBlocks × 100`, where a block is considered passing if it has no open findings. It is not derived from the harmonic penalty model and is not the number displayed in the Risk Score gauge.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## CIS Controls Passing
+
+Alongside the Risk Score, the assessment dashboard shows a **CIS Controls Passing** percentage. This is a separate metric — not a different view of the same score.
+
+| Metric | What it measures |
+|---|---|
+| Risk Score (0–100) | Severity-weighted penalty across all findings, normalized by environment size |
+| CIS Controls Passing (%) | What proportion of applicable CIS security controls have no open findings |
+
+A client can have a high Risk Score but a low CIS Controls Passing percentage if their open findings are clustered in low-severity controls. Conversely, a single Critical finding can pull the Risk Score down while most CIS controls remain green.
+
+Use CIS Controls Passing when speaking to compliance frameworks. Use the Risk Score when speaking to business risk.
+
+---
+
+## Top Actions
+
+The **Top Actions** table ranks findings by their projected impact on the Risk Score. It shows:
+
+- Finding category and severity
+- Number of affected assets
+- **Score Gain** — the points the Risk Score would increase if this finding were fully remediated
+- Action type (auto-fix available, requires configuration, manual remediation)
+
+The table prioritizes by score gain, so the first item is always the highest-leverage remediation available. Use this in QBRs to show clients exactly where to focus and what the measurable outcome will be.
+
+---
+
+## Score History
+
+Once an assessment has at least **2 completed scans**, score history becomes available in two places:
+
+- **Sparkline** — a mini bar chart on the Risk Score card showing the last N scans at a glance
+- **Risk Score Over Time** — a full chart available in the Risk History view, showing score progression across all historical scans
+
+Both require monitoring to be enabled on the assessment. Before 2 scans have completed, the sparkline area displays "Enable monitoring to track score history."
+
+Score history is per-assessment and shows how the client's posture has changed over time — useful for demonstrating remediation progress and justifying ongoing monitoring fees.
+
+---
+
+## Why Your Score May Change Between Scans
+
+- **New findings discovered** — a scan may detect issues not present before (newly disclosed CVEs, configuration changes, new devices added to the environment)
+- **Findings remediated** — resolving open findings reduces the penalty and improves the score
+- **Environment changes** — adding or removing devices, users, or domains adjusts the normalization baseline, which can shift the score even if the raw findings are unchanged
+- **Scoring model updates** — Telivy periodically refines severity weights and normalization logic to better reflect real-world risk. Score changes from model updates are communicated in release notes.
+
+---
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why do two similar-looking environments have different scores?">
+    Even environments that appear similar may differ in the specific findings detected, which platforms are connected (M365, Google Workspace), and the exact number of assets. The score reflects the unique risk profile of each environment. Environment size also affects normalization — a 10-device client and a 200-device client with identical finding types will receive different scores because the expectations scale with the environment.
+  </Accordion>
+
+  <Accordion title="My score dropped but I didn't change anything. Why?">
+    Three common causes: (1) a new scan detected findings that weren't visible before — for example, a newly disclosed CVE affecting software already in the environment; (2) new devices or users were discovered, changing the normalization baseline; (3) the scoring model was updated. Model update changes are noted in release notes.
+  </Accordion>
+
+  <Accordion title="Does accepting or resolving a finding affect the score?">
+    Yes. Findings that are accepted or resolved are excluded from the score calculation. Accepting a finding reflects a deliberate risk decision by the MSP or client and removes it from the penalty calculation.
+  </Accordion>
+
+  <Accordion title="How often is the score recalculated?">
+    The score is recalculated automatically each time a scan completes — whether triggered manually or by the automated monitoring cadence. It always reflects the state of the environment at the time of the most recent scan.
+  </Accordion>
+
+  <Accordion title="What's the difference between Risk Score and CIS Controls Passing?">
+    Risk Score is severity-weighted and normalized by environment size — it reflects how exposed the environment actually is. CIS Controls Passing is a count-based percentage showing what proportion of applicable controls have no findings. They measure different things and can move independently. See [CIS Controls Passing](#cis-controls-passing) above.
+  </Accordion>
+
+  <Accordion title="Will the scoring model change over time?">
+    Yes. Telivy continuously refines the scoring engine to improve accuracy and coverage. Changes to severity weights, normalization logic, or control mappings may shift scores. These updates are always aimed at making the score a more accurate reflection of actual risk, and changes are communicated in release notes.
+  </Accordion>
+</AccordionGroup>
