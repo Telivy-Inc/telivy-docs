@@ -118,4 +118,32 @@ description: "Common questions and answers"
 
       * Browser history and passwords captured only for the local user
   </Accordion>
+
+  <Accordion title="What CVE Database Does Telivy Use?">
+    Telivy combines three sources to make vulnerability findings both complete and actually prioritizable:
+
+    * **The CVE Program (cvelistV5)**, the authoritative CVE catalog published by the CNAs through MITRE, is synced nightly into Telivy's vulnerability database. This is the same upstream source NVD ingests from, so Telivy's coverage tracks new and updated CVEs within 24 hours of upstream publication.
+
+    * **Vulners** (executed via the Nmap `vulners` script) handles scan-time correlation. When the network or agent scanner fingerprints a service or installed software version, Vulners maps that fingerprint to the CVEs that affect it, including signal about whether public exploits exist.
+
+    * **EPSS (Exploit Prediction Scoring System)** is pulled daily and stored per CVE. EPSS scores represent the probability of a CVE being exploited in the next 30 days and drive Telivy's prioritization, so partners can sort by what's likely to be hit instead of by CVSS alone.
+
+    NVD is used for the human-readable detail link on each finding (`nvd.nist.gov/vuln/detail/CVE-...`), not as the bulk feed Telivy ingests from. For a deeper walkthrough you can hand to a client or auditor, see [Vulnerability Data Sources](/learning-center/vulnerability-data-sources).
+  </Accordion>
+
+  <Accordion title="Does Telivy Store The Actual PII It Finds (Like Credit Card Numbers)?">
+    By default, yes. When the Telivy agent's Data Security scan finds a PII match on an endpoint, the platform captures the matched value along with file path, device, PII type, and a dollar-risk valuation. Transmission from the agent to the platform is encrypted at the application layer, and access inside the platform is gated by `ApplicationAccess` controls. The reason the default captures the value is operational: confirming a finding isn't a false positive (a Luhn-valid string in a code sample, an old test export) requires being able to see what was matched.
+
+    Cleartext **passwords** from the password-analysis module are handled differently: they are never transmitted off the device; only hashes are stored. PII matches are governed by a separate control described in the next FAQ entry.
+
+    For full detail, including how matches appear in the platform and what's covered in exports, see [Data Security](/products/risk-assessments/data-security).
+  </Accordion>
+
+  <Accordion title="Can I Prevent PII Evidence From Being Shown In The Platform?">
+    Yes. Telivy provides a **Mask PII Data (may be required under HIPAA)** setting at the agency level and per-assessment, located in **Account Settings → PII Configuration → Configure PII Costs**. When enabled, the platform redacts the literal match values everywhere they would otherwise appear: the **Data Found** detail view, CSV exports, and any other surface that would have shown the raw match. Counts, file paths, device names, and dollar-risk valuations are still shown, so the finding remains actionable.
+
+    **Important:** the setting requires a rescan to take effect on already-captured findings. After enabling Mask PII Data, run **Rescan All** on the affected assessments to refresh the data. New scans honor the masking from the moment of capture.
+
+    A separate **Mask Dark Web Passwords** toggle on the same screen controls how dark-web credential evidence is displayed. The two toggles are independent. See [Data Security](/products/risk-assessments/data-security#mask-pii-data-the-supported-privacy-control) for the full configuration walkthrough.
+  </Accordion>
 </AccordionGroup>

@@ -44,7 +44,8 @@
               "learning-center/dark-web-scans",
               "learning-center/typo-squatting",
               "learning-center/open-ports",
-              "learning-center/ssl-tls-misconfigurations"
+              "learning-center/ssl-tls-misconfigurations",
+              "learning-center/vulnerability-data-sources"
             ]
           },
           {
@@ -75,6 +76,7 @@
                   "products/risk-assessments/whitelist-telivy-with-av-edr",
                   "products/risk-assessments/install-telivy-agent-windows",
                   "products/risk-assessments/identity-and-access-management",
+                  "products/risk-assessments/data-security",
                   "products/risk-assessments/microsoft-365-security",
                   "products/risk-assessments/google-workspace-security",
                   "products/risk-assessments/auto-update",
