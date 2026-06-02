@@ -88,6 +88,13 @@
                   "products/lead-magnet/configure-with-custom-form",
                   "products/lead-magnet/track-submissions-with-utm-source"
                 ]
+              },
+              {
+                "group": "Risk Monitoring",
+                "pages": [
+                  "products/risk-monitoring/overview",
+                  "products/risk-monitoring/alerts"
+                ]
               }
             ]
           },
