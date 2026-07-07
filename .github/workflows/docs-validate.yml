@@ -1,0 +1,32 @@
+name: Validate docs
+
+# main auto-deploys to production via the Mintlify GitHub App, so validate
+# every PR and branch push before anything can reach main.
+on:
+  pull_request:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Deterministic gate: repo authoring rules (frontmatter, no em dashes,
+      # docs.json <-> file consistency, internal links resolve).
+      - name: Validate authoring rules
+        run: node scripts/validate-docs.mjs
+
+      # Supplementary: Mintlify's own link checker (cross-page anchors, etc.).
+      # Advisory only; the step above is the hard gate.
+      - name: Mintlify broken-links
+        continue-on-error: true
+        run: |
+          npm i -g mintlify
+          mintlify broken-links
