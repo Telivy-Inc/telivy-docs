@@ -1,32 +1,34 @@
-# Mintlify Starter Kit
+# Telivy Documentation
 
-Click on `Use this template` to copy the Mintlify starter kit. The starter kit contains examples including
+Source for the Telivy documentation site, built with [Mintlify](https://mintlify.com).
+Content lives in `.mdx` pages; site navigation and theming are configured in `docs.json`.
 
-- Guide pages
-- Navigation
-- Customizations
-- API Reference pages
-- Use of popular components
+## Local development
 
-### Development
-
-Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
+Install the Mintlify CLI:
 
 ```
 npm i -g mintlify
 ```
 
-Run the following command at the root of your documentation (where mint.json is)
+Run the preview server from the repo root (where `docs.json` lives):
 
 ```
 mintlify dev
 ```
 
-### Publishing Changes
+Check for broken internal links before opening a PR:
 
-Install our Github App to auto propagate changes from your repo to your deployment. Changes will be deployed to production automatically after pushing to the default branch. Find the link to install on your dashboard. 
+```
+mintlify broken-links
+```
 
-#### Troubleshooting
+## Publishing
 
-- Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
-- Page loads as a 404 - Make sure you are running in a folder with `mint.json`
+Changes merged to the `main` branch deploy to production automatically via the Mintlify
+GitHub App. Treat `main` as live.
+
+## Troubleshooting
+
+- `mintlify dev` not running — run `mintlify install` to reinstall dependencies.
+- Page loads as a 404 — make sure you are running from the folder containing `docs.json`.
