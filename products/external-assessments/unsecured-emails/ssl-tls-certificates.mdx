@@ -26,7 +26,7 @@ Imagine you're sending a confidential letter. You put it in a locked container (
 
 <AccordionGroup>
   <Accordion title="Expired Certificates And Certificates About To Expire">
-    Expired certificates trigger browser warnings and distrust, potentially deterring users. Moreover, attackers can exploit expired certificates to launch man-in-the-the-middle attacks and intercept sensitive data. Automated renewal mechanisms help, but still require setup and monitoring.
+    Expired certificates trigger browser warnings and distrust, potentially deterring users. Moreover, attackers can exploit expired certificates to launch man-in-the-middle attacks and intercept sensitive data. Automated renewal mechanisms help, but still require setup and monitoring.
 
     Telivy checks if your certificate has expired or is about to expire (expires within 30 days).
   </Accordion>
@@ -40,13 +40,13 @@ Imagine you're sending a confidential letter. You put it in a locked container (
   <Accordion title="Why Weak Algorithms Pose A Threat">
     Different types of certificates offer varying levels of validation and encryption strength. Choose a certificate that meets your security needs and budget. Cryptographic algorithms like MD5 and SHA-1 are considered weak and susceptible to collision attacks. Exploiting these weaknesses, attackers can potentially forge certificates and impersonate your website, leading to security breaches. Using weak algorithms puts you at risk of non-compliance and potential penalties.
 
-    Telivy checks if you certificate is signed using a weak algorithm across your domains and sub domains. Make sure that your certificates are signed using a strong algorithm to avoid such hassles.
+    Telivy checks if your certificate is signed using a weak algorithm across your domains and subdomains. Make sure that your certificates are signed using a strong algorithm to avoid such hassles.
   </Accordion>
 
   <Accordion title="Certificate Issuer Not Found">
     SSL certificates rely on a "chain of trust" to establish legitimacy. Your browser trusts a root certificate authority (CA) like Let's Encrypt or DigiCert. This root CA then signs intermediate certificates (if used) and ultimately signs your website's SSL certificate. If the issuer (typically an intermediate CA) cannot be found, the chain of trust breaks. Your browser cannot verify the validity of your website's certificate, leading to security warnings and distrust.
 
-    Telivy verifies if your certificates issuer is found or not and helps you prevent security vulnerabilities to the website users.
+    Telivy verifies if your certificate's issuer is found or not and helps you prevent security vulnerabilities to the website users.
   </Accordion>
 
   <Accordion title="Certificate Life Higher Than Standard">

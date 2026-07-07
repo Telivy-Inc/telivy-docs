@@ -45,12 +45,12 @@ description: "This guide will help you integrate with Telivy's webhook system to
     3. **Return a 2xx response** immediately (preferably a 200 OK)
     4. **Process the webhook data asynchronously** after returning the response
 
-    This approach ensures that your webhook endpoint responds quickly, preventing timeouts and unnecessary retries from our system. Our webhook requests will time out after 10 seconds.
+    This approach ensures that your webhook endpoint responds quickly, which prevents timeouts and unnecessary retries. Our webhook requests will time out after 10 seconds.
 
     ### **HTTP Response Codes**
 
     - **2xx**: Success - We'll consider the webhook delivered
-    - **Other status codes**: Failure - We will retry sending the webhook, first time right after, second time with a delay
+    - **Other status codes**: Failure - We will retry sending the webhook: the first attempt immediately, the second after a delay
   </Accordion>
   <Accordion title="Authentication">
     Every webhook request includes a signature in the `X-Telivy-Signature` header. You should verify this signature to ensure the request is legitimate and comes from Telivy.

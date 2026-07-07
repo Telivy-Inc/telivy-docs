@@ -9,7 +9,7 @@ title: "Auto Update (Beta)"
 Each time an agent performs its hourly scan, before starting the scanner, it checks the update manifest. If an update is available, the system:
 
 1. Downloads the MSI (Windows) or PKG (macOS) update.
-2. Runs validation — hash check, certificate verification, and installer size.
+2. Runs validation: hash check, certificate verification, and installer size.
 3. Creates update metadata and launches the installer upgrade.
 4. Shuts down the agent, completes the upgrade, and restarts it.
 5. On restart, the agent detects the previous update metadata and sends a final confirmation that the update succeeded.
@@ -60,8 +60,8 @@ Here you can override account settings with assessment-specific settings.
 
 Options:
 
-- **Auto-Update** — Check "Override account setting" to set a different auto-update toggle for this assessment. The dialog shows the current inherited status (e.g., "Currently **enabled** (inherited from account)").
-- **Release Channel** — Check "Override global default setting" to select a different channel for this assessment.
+- **Auto-Update**: Check "Override account setting" to set a different auto-update toggle for this assessment. The dialog shows the current inherited status (e.g., "Currently **enabled** (inherited from account)").
+- **Release Channel**: Check "Override global default setting" to select a different channel for this assessment.
 
 ---
 
@@ -79,8 +79,8 @@ Here you can override both account and assessment settings for an individual tar
 
 Options:
 
-- **Auto-Update** — Check "Override account setting" to enable or disable auto-update for this specific machine. The dialog shows the current inherited status (e.g., "Currently **enabled** (inherited from account)").
-- **Release Channel** — Check "Override assessment setting" to assign a different channel to this machine. The dialog shows the inherited channel (e.g., "Currently using **Beta** channel (inherited from assessment)").
+- **Auto-Update**: Check "Override account setting" to enable or disable auto-update for this specific machine. The dialog shows the current inherited status (e.g., "Currently **enabled** (inherited from account)").
+- **Release Channel**: Check "Override assessment setting" to assign a different channel to this machine. The dialog shows the inherited channel (e.g., "Currently using **Beta** channel (inherited from assessment)").
 
 ---
 
@@ -97,13 +97,13 @@ Select the release channel at whichever configuration level is appropriate for y
 
 ## Configuration Examples
 
-**Example 1 — Enable auto-update for all clients:** Set Auto-Update to Enabled at the Account level with the Stable channel. All assessments and machines inherit this setting automatically.
+**Example 1, Enable auto-update for all clients:** Set Auto-Update to Enabled at the Account level with the Stable channel. All assessments and machines inherit this setting automatically.
 
-**Example 2 — Test beta on one assessment:** Keep the Account level on Stable. Override the Release Channel to Beta on a single assessment. All machines in that assessment receive beta updates while everything else stays on Stable.
+**Example 2, Test beta on one assessment:** Keep the Account level on Stable. Override the Release Channel to Beta on a single assessment. All machines in that assessment receive beta updates while everything else stays on Stable.
 
-**Example 3 — Test beta on specific machines only:** Keep the Account level on Stable. Override individual machines to the Beta channel via the Machine Level settings. Only those specific machines receive beta updates.
+**Example 3, Test beta on specific machines only:** Keep the Account level on Stable. Override individual machines to the Beta channel via the Machine Level settings. Only those specific machines receive beta updates.
 
-**Example 4 — Opt a machine out of auto-update:** Enable auto-update at the Account or Assessment level. Override a specific machine's Auto-Update setting to Disabled. That machine will not auto-update while all others continue as configured.
+**Example 4, Opt a machine out of auto-update:** Enable auto-update at the Account or Assessment level. Override a specific machine's Auto-Update setting to Disabled. That machine will not auto-update while all others continue as configured.
 
 ---
 

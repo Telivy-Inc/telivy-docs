@@ -9,7 +9,7 @@ description: "Common questions and answers"
   </Accordion>
 
   <Accordion title="What Software(s) Do You Install For The Risk Assessment?">
-    The list of softwares installed are detailed in [this](https://docs.google.com/document/d/1udauxMxkkn6lN3fTyg-eZ24DCKj2gc9PAqqZtOx4taI/edit?tab=t.0#heading=h.mtnu2ko2007j) section.
+    The list of software installed is detailed in [this](https://docs.google.com/document/d/1udauxMxkkn6lN3fTyg-eZ24DCKj2gc9PAqqZtOx4taI/edit?tab=t.0#heading=h.mtnu2ko2007j) section.
   </Accordion>
 
   <Accordion title="On What Devices Should I Install Telivy?">
@@ -19,9 +19,9 @@ description: "Common questions and answers"
   <Accordion title="How Do I Verify That Telivy Has Successfully Run On A Device?">
     When you run Telivy on a device, it should show up on the Assets page with details on the installation.
 
-    If you do not see the device in the assets page it could mean two things:
+    If you do not see the device on the Assets page it could mean two things:
 
-    1. There is an Anti Virus, Firewall or similar software that is blocking the execution.
+    1. There is an antivirus, firewall or similar software that is blocking the execution.
 
     2. The devices are added to the wrong Risk Assessment. You should be able to uninstall from the wrong risk assessment and add it back to the correct one.
 
@@ -29,26 +29,29 @@ description: "Common questions and answers"
   </Accordion>
 
   <Accordion title="Why Is My Asset Scan/Rescan Taking A Long Time?">
-    A scan or a rescan can complete only when the system is up for a sufficient amount of time - typically 2 hours continuously. If you still see the rescan to be in progress after being online for a long time, please reach out to support@telivy.com and we can take look at the reason for the delay.
+    A scan or a rescan can complete only when the system is up for a sufficient amount of time - typically 2 hours continuously. If the rescan is still in progress after the device has been online for a long time, please reach out to support@telivy.com and we can take a look at the reason for the delay.
   </Accordion>
 
-  <Accordion title="With Telivy's Latest Agent Incorporating Everything In House, How Do I Uninstall Older, Third Party Installations?">
+  <Accordion title="With Telivy's Latest Agent Incorporating Everything In-House, How Do I Uninstall Older, Third-Party Installations?">
     Please see the most common uninstallations below:
 
     **1. Nodeware**
 
-
-Invoke-Command -ScriptBlock (\[scriptblock]::Create(\[System.Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://install.telivy.com/uninstall-nodeware.ps1'))))
+    ```powershell
+    Invoke-Command -ScriptBlock ([scriptblock]::Create([System.Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://install.telivy.com/uninstall-nodeware.ps1'))))
+    ```
 
     **2. Augmentt**
 
-
-Invoke-Command -ScriptBlock (\[scriptblock]::Create(\[System.Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://install.telivy.com/uninstall-augmentt.ps1'))))
+    ```powershell
+    Invoke-Command -ScriptBlock ([scriptblock]::Create([System.Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://install.telivy.com/uninstall-augmentt.ps1'))))
+    ```
 
     **3. Actifile**
 
-
-Invoke-Command -ScriptBlock (\[scriptblock]::Create(\[System.Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://install.telivy.com/uninstall-actifile.ps1')))) -ArgumentList @('ACTIFILE\_UNINSTALL\_KEY')
+    ```powershell
+    Invoke-Command -ScriptBlock ([scriptblock]::Create([System.Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://install.telivy.com/uninstall-actifile.ps1')))) -ArgumentList @('ACTIFILE_UNINSTALL_KEY')
+    ```
 
     To get the Actifile uninstall key for any past assessment, please reach out to support@telivy.com with the assessment names.
   </Accordion>
