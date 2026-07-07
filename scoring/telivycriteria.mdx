@@ -3,11 +3,11 @@ title: "Telivy Grading Criteria"
 description: "Understanding Your Internal Security Scan Report"
 ---
 
-This article aims to provide a comprehensive understanding of the Telivy Internal Security Scan report. The Telivy report offers a detailed assessment of your organization's security posture and highlights potential vulnerabilities.
+This article explains the Telivy Internal Security Scan report, which assesses your organization's security posture and flags potential vulnerabilities.
 
 <AccordionGroup>
   <Accordion title="Final Score">
-    Each security section is divided into 1 or more sub sections. Each subsection has a grade and a weight for the final section grade. The final grade will then be determined as follows:
+    Each security section is divided into 1 or more subsections. Each subsection has a grade and a weight for the final section grade. The final grade will then be determined as follows:
 
     `Final Score = Sum(Section Weight X Section Score)/Sum(Section Weight)`
 
@@ -30,7 +30,7 @@ This article aims to provide a comprehensive understanding of the Telivy Interna
 
     4. Certificate Security
 
-    5. HTTPs security
+    5. HTTPS security
   </Accordion>
 
   <Accordion title="Internal Vulnerability">
@@ -38,7 +38,7 @@ This article aims to provide a comprehensive understanding of the Telivy Interna
 
     | Criteria                                              | Grade |
     | ----------------------------------------------------- | ----- |
-    | >10% of users have a atleast 1 critical Vulnerability | 4     |
+    | >10% of users have at least 1 critical vulnerability | 4     |
   </Accordion>
 
   <Accordion title="External Vulnerability">
@@ -74,13 +74,13 @@ This article aims to provide a comprehensive understanding of the Telivy Interna
     | No certificate findings                  | 1     |
   </Accordion>
 
-  <Accordion title="HTTPs findings">
-    HTTPs grades will be determined as follows:
+  <Accordion title="HTTPS findings">
+    HTTPS grades will be determined as follows:
 
     | Criteria          | Grade |
     | ----------------- | ----- |
-    | HTTPs not enabled | 3     |
-    | HTTPs enabled     | 1     |
+    | HTTPS not enabled | 3     |
+    | HTTPS enabled     | 1     |
   </Accordion>
 
   <Accordion title="Weights for Network Security">
@@ -88,7 +88,7 @@ This article aims to provide a comprehensive understanding of the Telivy Interna
     External Vulnerabilities: 8
     Port Scans: 6
     Certificate: 4
-    HTTPs: 8
+    HTTPS: 8
   </Accordion>
 
   <Accordion title="Data Security">
@@ -107,14 +107,14 @@ This article aims to provide a comprehensive understanding of the Telivy Interna
 
     | Criteria                                                            | Grade |
     | ------------------------------------------------------------------- | ----- |
-    | Dark Web findings in the last 2 year                                | D     |
+    | Dark Web findings in the last 2 years                               | D     |
     | Dark Web findings only prior to last 2 years but newer than 5 years | C     |
     | Dark Web findings prior to 5 years                                  | B     |
     | No Dark Web findings                                                | A     |
   </Accordion>
 
   <Accordion title="Password Security">
-    Password grade security will be determined as follows:
+    Password security grades will be determined as follows:
 
     | Criteria                                            | Grade |
     | --------------------------------------------------- | ----- |

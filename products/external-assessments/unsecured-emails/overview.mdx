@@ -3,9 +3,9 @@ title: Overview
 description: 'Keep Your Email Secure'
 ---
 
-In today's digital world, communication is more important than ever, and email remains a central player. But while we might trust email for personal and professional exchanges, ignoring its security can have disastrous consequences. One major pitfall? Sending email without Transport Layer Security (TLS) or Secure Sockets Layer (SSL) encryption, essentially sending messages through unencrypted channels. This might seem harmless, but it's like sending postcards with sensitive information written on them – anyone can peek and exploit it.
+Email is a primary channel for personal and professional communication, but sending it without Transport Layer Security (TLS) or Secure Sockets Layer (SSL) encryption exposes your messages. Unencrypted email travels through channels where anyone can intercept and read it, much like sending a postcard with sensitive information written on it.
 
-Telivy identifies if you are sending unencrypted emails by looking for ports that are used for sending such unencrypted emails. In an external scan these finds are part of the "Email without SSL/TLS Found" findings in the Network Security section.
+Telivy identifies if you are sending unencrypted emails by looking for ports that are used for sending such unencrypted emails. In an external scan, these findings are part of the "Email without SSL/TLS Found" findings in the Network Security section.
 
 <Steps>
   <Step title="Enter External Scan Section">
@@ -23,7 +23,7 @@ Telivy identifies if you are sending unencrypted emails by looking for ports tha
 
 ## Ports Overview
 
-Let's delve into the different ports that might be usually found in this finding and the associated vulnerabilities and context needed to understand these findings:
+Below are the ports that might be found in this finding, along with the associated vulnerabilities and context needed to understand these findings:
 
 <AccordionGroup>
   <Accordion title="Port 110 (POP3)">

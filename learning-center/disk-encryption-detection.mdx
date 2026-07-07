@@ -3,7 +3,7 @@ title: "Disk Encryption Detection"
 description: "How Telivy decides whether a device's disks are encrypted, what shows up as a finding, and where it sometimes gets noisy."
 ---
 
-When a laptop walks out of a coffee shop, full-disk encryption is the difference between "lost hardware" and "reportable data breach." Telivy checks every Windows and Mac device your agent reaches and flags the ones whose disks aren't actually protected — including the ones the end user *thinks* are encrypted but aren't.
+When a laptop walks out of a coffee shop, full-disk encryption is the difference between "lost hardware" and "reportable data breach." Telivy checks every Windows and Mac device your agent reaches and flags the ones whose disks aren't actually protected, including the ones the end user *thinks* are encrypted but aren't.
 
 This page explains how that detection works, what your client will see in the portal, and where the rule is known to be noisy (so your tech doesn't waste a Tuesday chasing a false positive on a Hyper-V host).
 
@@ -11,7 +11,7 @@ This page explains how that detection works, what your client will see in the po
 
 ## What this is
 
-The Telivy agent inspects each drive on a device during its scan and returns the disk's encryption state — provider, method, percentage encrypted, and whether protection is currently active. If a disk isn't encrypted, Telivy raises an **Unencrypted Disk Per Device** finding, one per non-encrypted volume.
+The Telivy agent inspects each drive on a device during its scan and returns the disk's encryption state: provider, method, percentage encrypted, and whether protection is currently active. If a disk isn't encrypted, Telivy raises an **Unencrypted Disk Per Device** finding, one per non-encrypted volume.
 
 The check runs whenever the agent performs its disk encryption collection (once per day per device), so you get a fresh read on a predictable cadence rather than a one-time snapshot.
 
@@ -31,12 +31,12 @@ Frame it for the SMB owner the way carriers frame it: *every unencrypted device 
 
 ## How Telivy detects it
 
-At a high level, the Telivy agent asks the operating system "is this volume protected, and if so, how?" — then applies a single rule to decide whether to raise a finding.
+At a high level, the Telivy agent asks the operating system "is this volume protected, and if so, how?", then applies a single rule to decide whether to raise a finding.
 
 **A disk is considered encrypted when either:**
 
 1. The OS reports protection status as **On** (the volume is fully encrypted and protection is active), **or**
-2. The OS reports protection status as **Unknown** but the volume is **Locked** (a locked encrypted volume that hasn't been unlocked yet — still protected at rest)
+2. The OS reports protection status as **Unknown** but the volume is **Locked** (a locked encrypted volume that hasn't been unlocked yet, still protected at rest)
 
 **Anything else generates a finding**, including:
 
@@ -58,7 +58,7 @@ One finding is created per non-encrypted volume per device. A laptop with an enc
     | --- | --- |
     | `ProtectionStatus` | WMI: `0` = Off, `1` = On, `2` = Unknown. From `manage-bde`, the equivalent protection state is parsed from text output. |
     | `LockStatus` | WMI: `0` = Unlocked, `1` = Locked |
-    | `EncryptionMethod` | Cipher in use — format depends on source (see below) |
+    | `EncryptionMethod` | Cipher in use; format depends on source (see below) |
     | `EncryptionPercentage` | How much of the volume has completed the encryption operation (0–100); interpret together with protection status |
     | `MountPoint` | Drive letter (e.g. `C:`, `D:`) |
     | `CapacityGB` | Volume size |
@@ -119,11 +119,11 @@ The recommendation Telivy ships for this finding is straightforward: enable nati
 
 ---
 
-## How MSPs use this in practice — Analyze → Prioritize → Commit
+## How MSPs use this in practice: Analyze → Prioritize → Commit
 
-**Analyze.** Filter the findings list to **Unencrypted Disk Per Device** for the assessment. Group by hostname to see which devices have *any* unencrypted disk vs. which have multiple. Pay attention to the drive letter — an unencrypted **C:** is the OS volume and is your top priority; an unencrypted **D:** or external drive often holds the data drive on workstations and engineering laptops.
+**Analyze.** Filter the findings list to **Unencrypted Disk Per Device** for the assessment. Group by hostname to see which devices have *any* unencrypted disk vs. which have multiple. Pay attention to the drive letter. An unencrypted **C:** is the OS volume and is your top priority; an unencrypted **D:** or external drive often holds the data drive on workstations and engineering laptops.
 
-**Prioritize.** Critical severity by default — but prioritize by who's holding the device. Owners, finance, HR, and anyone with access to PHI / PII go first. Production servers on physically-secured racks can move to a planned remediation window. Hyper-V hosts and virtualization servers may be false positives — confirm before remediating (see below).
+**Prioritize.** Critical severity by default, but prioritize by who's holding the device. Owners, finance, HR, and anyone with access to PHI / PII go first. Production servers on physically-secured racks can move to a planned remediation window. Hyper-V hosts and virtualization servers may be false positives, so confirm before remediating (see below).
 
 **Commit.** Push the remediation into your standard endpoint workflow:
 
@@ -131,7 +131,7 @@ The recommendation Telivy ships for this finding is straightforward: enable nati
 - For macOS managed by Jamf / Kandji, enable FileVault by configuration profile and escrow the recovery key.
 - For unmanaged or BYOD endpoints, use the finding as the trigger for a hardware-management conversation with the SMB owner.
 
-When a device is remediated, the next agent scan will close the finding automatically — no manual reconciliation needed.
+When a device is remediated, the next agent scan will close the finding automatically, with no manual reconciliation needed.
 
 ---
 
@@ -140,7 +140,7 @@ When a device is remediated, the next agent scan will close the finding automati
 A 40-employee accounting firm runs an annual Telivy assessment as part of their MSP's QBR cycle. The first scan returns:
 
 - **22 unencrypted disk findings** across 14 devices
-- Of those, **9 are C: drives on partner laptops** that were assumed to be encrypted because BitLocker had been enabled at imaging time — but a 2024 Windows feature update suspended BitLocker for the install and the suspension was never resumed
+- Of those, **9 are C: drives on partner laptops** that were assumed to be encrypted because BitLocker had been enabled at imaging time, but a 2024 Windows feature update suspended BitLocker for the install and the suspension was never resumed
 - **5 findings are external D: drives** on workstations where staff store working files
 - The remaining 8 are on a Hyper-V host where the underlying physical storage *is* encrypted (see caveats below)
 
@@ -151,10 +151,10 @@ The MSP delivers the finding list to the firm's managing partner with a one-line
 ## Known limitations and false positives
 
 <Warning>
-  **Hypervisors and VMs can look “unencrypted” at the guest even when storage is protected elsewhere.** The guest OS only reports what it sees on its own disks. If encryption lives on the host or storage layer, Telivy cannot infer that from inside the VM. Treat findings on hypervisor or guest systems as **needing human judgment** before you remediate.
+  **Hypervisors and VMs can look "unencrypted" at the guest even when storage is protected elsewhere.** The guest OS only reports what it sees on its own disks. If encryption lives on the host or storage layer, Telivy cannot infer that from inside the VM. Treat findings on hypervisor or guest systems as **needing human judgment** before you remediate.
 </Warning>
 
-- **Encryption suspended ≠ encrypted.** If BitLocker was suspended for a Windows feature update and the device hasn't rebooted enough times to auto-resume, the volume reports `ProtectionStatus = 0`. The fix is `manage-bde -protectors -enable C:` or letting Windows auto-resume after the next boot — not enabling BitLocker from scratch.
+- **Encryption suspended ≠ encrypted.** If BitLocker was suspended for a Windows feature update and the device hasn't rebooted enough times to auto-resume, the volume reports `ProtectionStatus = 0`. The fix is `manage-bde -protectors -enable C:` or letting Windows auto-resume after the next boot, not enabling BitLocker from scratch.
 - **Partial encryption percentage.** A value below 100% typically reflects encryption **in progress**, a **pause**, **hibernation**, **manual stop**, or problems such as **bad sectors**. Do not treat partial percentage as a steady-state "half encrypted" posture; align remediation with protection status and BitLocker event logs.
 - **Linux is not covered.** Findings will not appear for Linux endpoints regardless of LUKS state. Document Linux disk encryption as a manual control if the client's compliance scope requires it.
 - **External and removable media.** USB drives plugged in at scan time may be reported, while drives that weren't connected won't be. Treat removable-media encryption as a policy and training problem, not just a finding-list problem.
@@ -164,16 +164,16 @@ The MSP delivers the finding list to the firm's managing partner with a one-line
 ## Common misunderstandings
 
 **"BitLocker is enabled, why is this still flagged?"**
-"Enabled" and "actively protecting the volume" are not the same thing. The most common cause is a suspended BitLocker session left over from a firmware or feature update. Check `manage-bde -status` — if `Protection Status: Protection Off`, the volume is not actually protected even though encryption is configured.
+"Enabled" and "actively protecting the volume" are not the same thing. The most common cause is a suspended BitLocker session left over from a firmware or feature update. Check `manage-bde -status`: if `Protection Status: Protection Off`, the volume is not actually protected even though encryption is configured.
 
 **"We have one finding per device, right?"**
-No — Telivy emits one finding per **unencrypted volume**, not per device. A laptop with an encrypted C: and an unencrypted D: produces one finding (for D:). Sort by hostname when scoping a remediation effort.
+No. Telivy emits one finding per **unencrypted volume**, not per device. A laptop with an encrypted C: and an unencrypted D: produces one finding (for D:). Sort by hostname when scoping a remediation effort.
 
 **"This means we're compliant once it's clean."**
-Encryption is one control out of many that compliance frameworks (HIPAA, PCI, NIST CSF) expect. A clean finding list here is a strong attestable control, but it is not a substitute for a documented encryption policy, key escrow, or device inventory. Use Telivy's evidence in your QBR and compliance narrative — don't treat the finding list as the entire story.
+Encryption is one control out of many that compliance frameworks (HIPAA, PCI, NIST CSF) expect. A clean finding list here is a strong attestable control, but it is not a substitute for a documented encryption policy, key escrow, or device inventory. Use Telivy's evidence in your QBR and compliance narrative; don't treat the finding list as the entire story.
 
 ---
 
 ## Quick summary
 
-Telivy reads native OS encryption state on Windows and Mac devices, raises a Critical finding for any volume that isn't actively protected, and refreshes that view on each daily disk encryption collection. Use the finding list to drive a focused, defensible remediation sprint — and use judgment on hypervisor/VM findings where guest-visible encryption may not tell the whole story.
+Telivy reads native OS encryption state on Windows and Mac devices, raises a Critical finding for any volume that isn't actively protected, and refreshes that view on each daily disk encryption collection. Use the finding list to drive a focused, defensible remediation sprint, and use judgment on hypervisor/VM findings where guest-visible encryption may not tell the whole story.

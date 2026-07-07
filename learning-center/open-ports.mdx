@@ -4,7 +4,7 @@ description: 'A Guide to Identifying and Securing Open Ports'
 ---
 import {Frame} from 'mintlify/components'
 
-A port is a virtual or physical entry or exit point on a computer that allows communication or peripheral devices to connect. Ports are managed by a computer's operating system and are software based. Each port is associated with a specific process or service. To easily differentiate between different kinds of traffic computers use ports. The problem arises when ports are left exposed due to improper configuration or lack of protection.
+A port is a virtual or physical entry or exit point on a computer that allows communication or peripheral devices to connect. Ports are managed by a computer's operating system and are software based. Each port is associated with a specific process or service. To separate different kinds of traffic, computers use ports. The problem arises when ports are left exposed due to improper configuration or lack of protection.
 
 ## Threats
 
@@ -21,7 +21,7 @@ To mitigate the cyber risks associated with high severity open ports, organizati
 
 ## How can it be exploited?
 
-- Finding Weaknesses: Open ports are like unlocked doors in your network. Hackers use port scanning tools (Like NMap) to identify open ports and the services running on them. 
+- Finding Weaknesses: Open ports are like unlocked doors in your network. Hackers use port scanning tools (like Nmap) to identify open ports and the services running on them.
 - Exploiting Vulnerabilities: Once they discover an open port with a known vulnerability (unpatched software or misconfiguration), they can use that vulnerability to gain unauthorized access to your network.
 
 <Frame caption="Example of Port Scanning">
@@ -29,7 +29,7 @@ To mitigate the cyber risks associated with high severity open ports, organizati
 </Frame>
 
 ## Security Impact
-Having misconfigured open ports can have several security impacts, varying in severity. Here are some Implications: 
+Having misconfigured open ports can have several security impacts, varying in severity. Here are some implications:
 - Unauthorized Access
 - Increased Attack Surface
 - Malware Delivery
@@ -38,7 +38,7 @@ Having misconfigured open ports can have several security impacts, varying in se
 - Lateral Movement and Persistence
 
 ## Remediation Action Plan
-To mitigate the risk of having open ports, website owners and brands often employ the following strategies:
+To mitigate the risk of having open ports, network and system administrators often employ the following strategies:
 - **Discover Open Ports**: Access the list of open ports that are visible to the outside world by running a Telivy External Assessment or a Risk Assessment.
 - **Prioritize and Analyze Open Ports**: Review the list of open ports and identify the services associated with them. Prioritize the ports based on their criticality. Ports associated with essential services should be addressed first.
 - **Mitigate Risks**: Close unnecessary ports, update software, and restrict access
@@ -58,5 +58,5 @@ Remote Desktop (3389)
 
 SMTP (25)
 
-Database ports (MySQL - 3306, PostgreSQL - 5432 )
+Database ports (MySQL - 3306, PostgreSQL - 5432)
 ```

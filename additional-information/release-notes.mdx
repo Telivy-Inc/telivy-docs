@@ -1,103 +1,21 @@
 ---
 title: "Release Notes"
-description: "Get Notified of New Features"
+description: "See the latest Telivy features and fixes"
 ---
 
-<Update label="09-09-2025" description="One Item">
-  **Mac OS Scanner Upgrades**
+Telivy release notes now live on the Cytracom product updates feed. That page is the single
+source of truth and is updated with every release.
 
-  The latest Telivy macOS agent ships native builds for Apple Silicon and Intel, streamlines first-run with earlier consent prompts and a PII-first scan order, skips OneDrive cloud-only placeholders to avoid unnecessary downloads, adds richer diagnostics (API \+ local fallback logs), and delivers a much smaller installer for faster rollout.
+<Card
+  title="View the latest Telivy releases"
+  icon="rss"
+  href="https://releases.cytracom.com/label/90693"
+  horizontal
+>
+  Features, improvements, and fixes, newest first.
+</Card>
 
-  Users will see quicker installs and time-to-first-results, faster scans with lower bandwidth/storage use, and greater stability/coverage across all Macs, including devices that previously couldn’t run virtualized Intel builds. Troubleshooting is easier with improved logging, and overall user friction is reduced.
-</Update>
-
-<Update label="09-01-2025" description="Two Items">
-  **Risk Sorting Order**
-
-  Corrected the logic for sorting tables by “Risk.” Previously, results appeared in the order High → Low → Medium, which was unintuitive. The updated logic ensures risks are sorted as **High → Medium → Low**, aligning with expected severity prioritization.
-
-  **Dashboard Cards Link to Data Section**
-
-  Enhanced the Overview dashboard so summary cards (e.g., “2 Risky Applications”) are clickable and deep-link directly into the detailed findings in the Security tab. Includes micro-animation for smooth navigation and is feature-flagged with analytics to track Overview → Security.
-</Update>
-
-<Update label="08-25-2025" description="Two Items">
-  **Risk History Tab**
-
-  The Risk History Tab has been released to general availability. It gives users a centralized view of assessment results over time and shows which issues are new, resolved, regressed, or unchanged for each scan, making it easier to track security posture and remediation progress.
-
-  **Security Upgrades**
-
-  - Implement Authorization Checks on API Endpoints
-  - Enhance File Upload Restrictions for Logo Uploads
-  - Document Fix for Authorization Bypass in Telivy Admin Account Creation
-</Update>
-
-<Update label="07-30-2025" description="One Item">
-  **Default Alerts Turned on for Clients under Monitoring**
-
-  Default email / in‑app alerts are now automatically enabled for new and existing accounts, covering critical findings and major posture changes.
-</Update>
-
-<Update label="07-16-2025" description="One Item">
-  **Improved Password Breach Simulation**
-
-  Our password‑breach simulator just got smarter: it can now read the newest Chrome/Chromium “v20” password encryption instead of stopping at the older v10. That means more saved passwords are analyzed—from every browser profile, including Opera and other Chromium variants. Reports now show which encryption version each password uses and clearly explain any analysis failures, giving MSPs fuller visibility into real‑world password risk.
-</Update>
-
-<Update label="07-09-2025" description="Two Items">
-  **Analysis of**`p=`**Value in DMARC**
-
-  Inspects the `p=` tag in DMARC records to assess the enforcement level of email authentication policies (none, quarantine, or reject). This improves detection of overly permissive DMARC configurations (e.g., `p=`none), which may leave organizations vulnerable to spoofing and phishing. By highlighting weak enforcement, this feature empowers MSPs to help clients harden their email defenses and align with industry best practices, reducing reputational risk and enhancing email trustworthiness.
-
-  **Agent vs Agentless Deployment Method Differences**
-
-  Clearly shows the differences between agent-based scans and agentless deployment methods with an easy-to-understand model. This helps users understand what type of deployment is best for their client’s use case and which features can be enabled based on the type. This should reduce the support tickets created by educating the user from the platform itself.
-</Update>
-
-<Update label="07-01-2025" description="Four Items">
-  **PII Detection in OneDrive (Alpha)**
-
-  Telivy now supports PII scanning for files in OneDrive. This allows users to identify what types of sensitive data are being stored in the cloud — a big step toward deeper cloud compliance visibility.
-
-  **Application Security – "Last Visited"**
-
-  We’ve added a “Last Visited” timestamp for websites in Application Security scans. This helps teams investigate potential malicious activity and determine when users last accessed risky sites.
-
-  **UI Improvements**
-
-  Currency fields now respect custom formats everywhere, even in placeholders.
-
-  **Bug Fixes & Stability**
-
-  - PII scan crash fixed for inaccessible directories (network issues no longer block scans)
-  - Fixed network scan behavior when default gateways are missing or misconfigured
-  - Gateway detection is now more accurate, improving the reliability of network scans
-  - Increased webhook timeout to reduce timeouts on busy systems
-</Update>
-
-<Update label="06-05-2025" description="Seven Items">
-  **Cron Reliability**
-
-  Improved IP-to-City updater indexing to enhance cron job reliability.
-
-  **Status Migration**
-
-  Enabled automatic "Completed" status for non-agent scans.
-
-  **AI Upgrades**
-
-  Improved AI-based detection mapping logic.
-
-  **Lead Magnet**
-
-  Removed CORS restriction for Lead Magnet integration.
-
-  **Access Code**
-
-  Updated access code behavior
-
-  **Uninstall Messaging**
-
-  Improved uninstall messaging.
-</Update>
+<Note>
+  Want updates by email? Subscribe from the Cytracom feed to get notified when a new release
+  ships.
+</Note>
