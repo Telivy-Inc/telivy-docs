@@ -34,7 +34,8 @@
                   "getting-started/set-up-telivy-account/overview",
                   "getting-started/set-up-telivy-account/multi-factor-authentication"
                 ]
-              }
+              },
+              "getting-started/companies"
             ]
           },
           {
@@ -79,6 +80,7 @@
                   "products/risk-assessments/data-security",
                   "products/risk-assessments/microsoft-365-security",
                   "products/risk-assessments/google-workspace-security",
+                  "products/risk-assessments/compliance",
                   "products/risk-assessments/auto-update",
                   "products/risk-assessments/uninstall-telivy-agent-windows"
                 ]
@@ -119,7 +121,7 @@
               "scoring/ai-scoring",
               "scoring/m365",
               {
-                "group": "Legacy Scoring",
+                "group": "Report Grading",
                 "pages": [
                   "scoring/telivycriteria"
                 ]
@@ -130,6 +132,7 @@
             "group": "Integrations",
             "pages": [
               "integrations/nodeware",
+              "integrations/tentacle",
               "integrations/rewst",
               "integrations/connectwise",
               "integrations/autotask",

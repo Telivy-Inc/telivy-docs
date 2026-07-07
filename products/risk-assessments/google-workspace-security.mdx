@@ -3,6 +3,10 @@ title: Google Workspace Security
 description: 'Gain actionable Insights'
 ---
 
+## Requirements
+
+Connecting Google Workspace requires a Google Workspace **admin account** with API access enabled. If you run into an authorization or `Admin_Policy_Enforced` error while connecting, see the [Microsoft 365 and Google Workspace FAQ](/frequently-asked-questions/microsoft-365-and-google-workspace) for how to enable API access in the Google Admin Console.
+
 ## Configuration
 
 To configure the Google Workspace security, go to your Risk Assessment > Configuration > Configure Google Workspace and follow the steps to connect your Google admin account.
@@ -22,6 +26,14 @@ Telivy helps you manage your Google Workspace security posture with dashboards a
     Verify existing user accounts in Google Workspace to confirm they should still have access.
 
     <img src="/images/google-workspace-security/google-workspace-security-2.jpg" />
+  </Accordion>
+</AccordionGroup>
+
+## Login Monitoring
+
+<AccordionGroup>
+  <Accordion title="Tracking Sign-In Activity">
+    Telivy monitors Google Workspace sign-in activity, highlighting failed sign-in attempts so you can spot potential unauthorized access. Repeated failed logins on an account are a common early signal of a brute-force or credential-stuffing attempt.
   </Accordion>
 </AccordionGroup>
 

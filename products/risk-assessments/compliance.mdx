@@ -1,0 +1,41 @@
+---
+title: "Compliance"
+description: "Track a client's posture against the CIS Critical Security Controls, mapped automatically from Telivy scan findings."
+---
+
+## Overview
+
+The **Compliance** tab on a Risk Assessment tracks the client against the **CIS Critical Security Controls** (153 safeguards). Instead of filling in a compliance questionnaire from scratch, Telivy maps what it already found during the scan onto the CIS safeguards, so the assessment starts grounded in real endpoint and cloud evidence.
+
+## What you see
+
+Open the assessment and go to the **Compliance** tab. It shows the CIS controls with:
+
+- A per-control **status** and **severity**.
+- A **category filter** so you can focus on a specific CIS control group.
+- The overall CIS posture for the client.
+
+## Requirements
+
+Compliance is available on any Risk Assessment. Live CIS data is delivered through the **Tentacle** integration, which requires a linked Unity customer with an active Tentacle subscription. Until that is set up, the Compliance tab shows a setup prompt instead of live controls.
+
+See the [Tentacle](/integrations/tentacle) integration guide for the full setup steps.
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Which frameworks are supported?">
+    The CIS Critical Security Controls. It is the only framework covered today.
+  </Accordion>
+
+  <Accordion title="Why is the Compliance tab showing a setup prompt?">
+    Live CIS data requires the Tentacle integration (a linked Unity customer with an active
+    subscription and access granted). Complete the steps in the
+    [Tentacle](/integrations/tentacle) guide and the controls will appear.
+  </Accordion>
+
+  <Accordion title="Do the controls update when I rescan?">
+    Yes. Because safeguard answers are mapped from scan findings, refreshing the assessment
+    keeps the CIS view aligned with the latest scan results.
+  </Accordion>
+</AccordionGroup>

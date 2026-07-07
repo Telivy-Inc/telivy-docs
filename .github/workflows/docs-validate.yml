@@ -1,0 +1,23 @@
+name: Validate docs
+
+# main auto-deploys to production, so gate every PR before it can merge.
+on: pull_request
+
+concurrency:
+  group: validate-docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 20
+      - run: node scripts/validate-docs.mjs
+      - name: Mintlify broken-links
+        continue-on-error: true # advisory; the validator above is the gate
+        run: |
+          npm i -g mintlify
+          mintlify broken-links
