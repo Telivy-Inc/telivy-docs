@@ -1,32 +1,23 @@
 name: Validate docs
 
-# main auto-deploys to production via the Mintlify GitHub App, so validate
-# every PR and branch push before anything can reach main.
-on:
-  pull_request:
-  push:
-    branches-ignore:
-      - main
+# main auto-deploys to production, so gate every PR before it can merge.
+on: pull_request
+
+concurrency:
+  group: validate-docs-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      # Deterministic gate: repo authoring rules (frontmatter, no em dashes,
-      # docs.json <-> file consistency, internal links resolve).
-      - name: Validate authoring rules
-        run: node scripts/validate-docs.mjs
-
-      # Supplementary: Mintlify's own link checker (cross-page anchors, etc.).
-      # Advisory only; the step above is the hard gate.
+      - run: node scripts/validate-docs.mjs
       - name: Mintlify broken-links
-        continue-on-error: true
+        continue-on-error: true # advisory; the validator above is the gate
         run: |
           npm i -g mintlify
           mintlify broken-links
