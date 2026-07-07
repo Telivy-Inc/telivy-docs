@@ -9,11 +9,12 @@ Rescans tell you how a client's posture has shifted over a period. Alerts tell y
 
 When Telivy detects a specific security event (a new dark web breach, a string of M365 login failures, an admin account with MFA suddenly disabled), it fires a notification to whoever on your team needs to know. You define which events matter and which team members get notified.
 
-Alerts work across four coverage areas:
+Alerts work across these coverage areas:
 
 - **Internal Security**: vulnerability changes on managed endpoints
+- **Typosquatting**: newly registered look-alike domains impersonating the client
 - **Dark Web**: new breach and account exposures
-- **Microsoft 365**: identity, access, and policy events across connected tenants
+- **Microsoft 365**: identity and access events across connected tenants
 - **Google Workspace**: the same coverage for GWS environments
 
 ## Configuring Alert Policies
@@ -24,7 +25,7 @@ To add a new policy:
 
 1. Click **Add Policy**.
 2. In the **Configure Alert Policy** step, select the **Alert Category** you want to monitor.
-3. Set the condition that triggers the alert. For Internal Vulnerabilities, for example, you can trigger on severity level, CVSS score, EPSS score, or finding count above a threshold.
+3. Set the condition that triggers the alert. For Internal Vulnerabilities, for example, you can trigger on severity level, CVSS score, or EPSS score above a threshold.
 4. Click **Continue**.
 5. In the **Configure Alert Delivery** step, select which team members on your agency account should receive the notification.
 6. Click **Save**.
@@ -35,11 +36,24 @@ Alerts fire as soon as Telivy detects the triggering event: during a scheduled r
 
 ## Alert Categories
 
+<Note>
+  Internal Vulnerabilities, Typosquatting, and both Dark Web alerts are fully active. Microsoft
+  365 and Google Workspace event alert coverage is expanding: the cloud event alerts that fire
+  today are **No MFA User** and **Failed Logins**. More categories are rolling out (see
+  [Rolling out](#rolling-out) below).
+</Note>
+
 ### Internal Security
 
 | Alert | What triggers it |
 |---|---|
 | Internal Vulnerabilities | New CVEs discovered on managed endpoints during a scan |
+
+### Typosquatting
+
+| Alert | What triggers it |
+|---|---|
+| Typosquatting Domains | A newly registered look-alike domain impersonating the client is detected |
 
 ### Dark Web
 
@@ -53,43 +67,20 @@ Alerts fire as soon as Telivy detects the triggering event: during a scheduled r
 | Alert | What triggers it |
 |---|---|
 | Failed Logins | A user account records repeated failed sign-in attempts |
-| Authentication Token Revoked | An active session or refresh token is revoked |
-| Conditional Access Violation | A sign-in attempt is blocked by a Conditional Access policy |
-| MFA Failed | A user fails an MFA challenge |
-| MFA Disabled | MFA is turned off for a user account |
-| MFA Enabled | MFA is turned on for a user account |
 | No MFA User | A user account is detected without any MFA method enrolled |
-| Password Reset | A user password is reset |
-| Login Using Token | A sign-in occurs via token rather than interactive credential |
-| Login From Unapproved Location | A sign-in originates from a geography outside the client's approved list |
-| User Created | A new user account is added to the tenant |
-| User Deleted | A user account is removed from the tenant |
-| Registered Device | A new device is registered to the tenant |
-| Admin Role Assignment | A user is granted an admin role |
-| Group Membership Change | A user is added to or removed from a security group |
-| Admin Policy Change | A tenant-level security policy is modified by an admin |
 
 ### Google Workspace
 
-Google Workspace alerts mirror the M365 coverage for organizations running GWS instead of (or alongside) Microsoft 365.
+Google Workspace mirrors the Microsoft 365 coverage for organizations running GWS instead of (or alongside) Microsoft 365.
 
 | Alert | What triggers it |
 |---|---|
 | Failed Logins | Repeated failed sign-in attempts on a GWS account |
-| Authentication Token Revoked | An OAuth token or session is revoked |
-| MFA Failed | A user fails a GWS MFA challenge |
-| MFA Disabled | MFA is removed from a GWS account |
-| MFA Enabled | MFA is added to a GWS account |
 | No MFA User | A GWS account has no MFA enrolled |
-| Password Reset | A GWS user password is reset |
-| Login Using Token | A sign-in via token rather than interactive credential |
-| Login From Unapproved Location | Sign-in from outside an approved geography |
-| User Created | A new GWS user is provisioned |
-| User Deleted | A GWS user account is removed |
-| Registered Device | A new device is registered in GWS |
-| Admin Role Assignment | A user is granted admin privileges in GWS |
-| Group Membership Change | A user is added to or removed from a GWS group |
-| Admin Policy Change | A GWS admin-level policy is modified |
+
+### Rolling out
+
+More Microsoft 365 and Google Workspace event alerts are being rolled out. Planned categories include Authentication Token Revoked, MFA Failed, MFA Disabled, MFA Enabled, Password Reset, Login Using Token, Login From Unapproved Location, User Created, User Deleted, Registered Device, Admin Role Assignment, Group Membership Change, and Admin Policy Change. Conditional Access Violation is planned for Microsoft 365 only.
 
 ## FAQ
 
@@ -108,10 +99,6 @@ Google Workspace alerts mirror the M365 coverage for organizations running GWS i
 
   <Accordion title="Do alerts require Risk Monitoring to be enabled?">
     No. Alerts are available independently of the automated rescan feature. You can configure alerts on any eligible Risk Assessment without enabling the monitoring cadence.
-  </Accordion>
-
-  <Accordion title="What's the difference between 'Failed Logins' and 'Conditional Access Violation'?">
-    Failed Logins fire when a user fails to authenticate: wrong password, locked account, etc. Conditional Access Violation fires when the credentials are valid but the sign-in is blocked by a policy rule (e.g. the user is signing in from an unmanaged device or blocked location). Both matter; they indicate different threat patterns.
   </Accordion>
 
   <Accordion title="Can I use webhooks instead of email or SMS?">
