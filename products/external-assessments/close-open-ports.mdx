@@ -34,24 +34,12 @@ While necessary for certain functions, open ports present several security risks
 ## High-Risk Ports (Close Unless Absolutely Necessary)
 
 <AccordionGroup>
-  <Accordion title="FTP (20, 21)">
-    Used for file transfer, but known for security vulnerabilities and lack of encryption. Consider secure alternatives like SFTP (22) or FTPS (990).
-  </Accordion>
-
-  <Accordion title="Telnet (23)" >
-    Unencrypted remote access protocol, highly insecure. Use SSH (22) instead for secure remote access.
-  </Accordion>
-
-  <Accordion title="NetBIOS (135, 137, 139)" >
-    Used for file and printer sharing in older Windows systems. Often exploited by malware. Disable if not needed.
+  <Accordion title="RPC Endpoint Mapper / NetBIOS (135)">
+    Used by Windows for RPC service location and legacy NetBIOS name resolution. A common target for remote exploitation and worm propagation. Restrict to trusted networks or disable if not needed.
   </Accordion>
 
   <Accordion title="Remote Desktop (3389)" >
     Allows remote access to desktops, requires strong password and proper configuration. Consider alternative remote access solutions with better security practices.
-  </Accordion>
-
-  <Accordion title="SMTP (25)" >
-    Used for email sending, vulnerable to spam and phishing attacks. Implement strong spam filters and user education. Use SMTPS instead (587 or 465).
   </Accordion>
 
   <Accordion title="Database ports (MySQL 3306, PostgreSQL 5432)" >
@@ -62,22 +50,22 @@ Used for accessing a database. Make sure there are proper access controls and st
 ## Medium-Risk Ports (Use With Caution)
 
 <AccordionGroup>
-  <Accordion title="SSH (22)">
-    Secure shell access, essential for server administration but can be targeted by brute-force attacks. Use strong passwords and consider additional security measures.
-  </Accordion>
-
-  <Accordion title="DNS (53)" >
-   Used for domain name resolution, essential but can be exploited for DNS poisoning attacks. Keep DNS software updated and consider security measures like DNSSEC.
-  </Accordion>
-
-  <Accordion title="Web servers (80)" >
-    Essential for websites, but require strong security practices like HTTPS encryption, regular updates, and secure coding practices.
+  <Accordion title="NetBIOS / SMB (137, 139)">
+    Used for file and printer sharing in older Windows systems. Often exploited by malware for lateral movement. Disable if not needed, or restrict to trusted internal networks.
   </Accordion>
 </AccordionGroup>
 
-## Low-Risk Ports (Generally Safe To Leave Open)
+## Low-Risk Ports (Lower Priority, But Still Worth Reviewing)
 
 <AccordionGroup>
+  <Accordion title="FTP (21)">
+    Used for file transfer, but known for security vulnerabilities and lack of encryption. Telivy rates an open FTP port as low severity, but it's still worth replacing with secure alternatives like SFTP (22) or FTPS (990).
+  </Accordion>
+
+  <Accordion title="Telnet (23)" >
+    Unencrypted remote access protocol. Telivy rates it low severity, but SSH (22) is the safer choice for remote access.
+  </Accordion>
+
   <Accordion title="HTTPS (443)">
     Secure web browsing, essential for online transactions and secure communication.
   </Accordion>
@@ -90,6 +78,14 @@ Used for accessing a database. Make sure there are proper access controls and st
     Used for online gaming, often require specific ports open depending on the game. Research necessary ports before opening them.
   </Accordion>
 </AccordionGroup>
+
+## How Telivy Scores Open Ports
+
+When you run a Telivy External Assessment, each open port it finds is checked against the table above and assigned the matching severity (high, medium, or low) based on the service most commonly associated with that port.
+
+A Risk Assessment (device-based scan) works differently. Open ports found on a device are reported together as a single Device Open Ports Detected finding at one flat severity, rather than being broken out and scored port-by-port the way External Assessment results are.
+
+A few common ports aren't part of the open-port severity table at all. SSH (22), DNS (53), HTTP (80), and HTTPS (443) are expected to be open on most servers and aren't flagged as open-port findings on their own. SMTP (25) is evaluated separately: Telivy checks whether your mail service uses SSL/TLS encryption and reports missing encryption as its own finding, rather than treating an open SMTP port as a port-severity issue.
 
 ## How To Close Unused Ports
 
