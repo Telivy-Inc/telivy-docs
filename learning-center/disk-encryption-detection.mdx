@@ -62,9 +62,8 @@ One finding is created per non-encrypted volume per device. A laptop with an enc
     | `EncryptionPercentage` | How much of the volume has completed the encryption operation (0–100); interpret together with protection status |
     | `MountPoint` | Drive letter (e.g. `C:`, `D:`) |
     | `CapacityGB` | Volume size |
-    | `KeyProtector` | Array of protector objects for the volume (protector ID and type, e.g. TPM or Recovery Password) |
 
-    Telivy collects BitLocker **key protector** data as part of that raw volume record, and for a protector of type Recovery Password, the collected data includes the actual recovery password value, not just the protector type. That data is stored with the finding. It isn't part of the curated fields shown in the portal, which are limited to drive letter, capacity, encryption method, percentage, and protection status (see below).
+    Telivy does **not** collect or transmit BitLocker **key protector** details (for example which TPM or recovery key protectors are configured).
 
     **Encryption method representation**
 
