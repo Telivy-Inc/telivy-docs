@@ -35,6 +35,8 @@ Once Risk Monitoring is enabled on your account, each assessment gets a **Scan S
 
 Frequency is set per assessment, so each client can run on its own schedule. You can trigger a manual rescan at any time regardless of the cadence.
 
+This setting controls how often the client's computers are fully rescanned. Some checks run on their own schedule no matter what you pick here: everything Telivy checks from the outside is refreshed weekly, and connected Microsoft 365 and Google Workspace tenants are read daily. [Scanning Schedule](/products/risk-monitoring/scanning-schedule) explains what is checked when, and why findings sometimes change between rescans.
+
 ## FAQ
 
 <AccordionGroup>
@@ -48,6 +50,10 @@ Frequency is set per assessment, so each client can run on its own schedule. You
 
   <Accordion title="What gets rescanned: the full assessment or just selected checks?">
     A rescan runs the full suite of checks included in the original assessment. If the assessment has an agent deployed and cloud integrations connected (M365, Google Workspace), those are all included. Note that a rescan **replaces** the existing assessment data. It does not create a separate snapshot or historical record alongside the current one.
+  </Accordion>
+
+  <Accordion title="Why did findings change between rescans?">
+    Some checks run on their own schedule. The outside view of the client refreshes weekly, connected cloud tenants are read daily, and newly published vulnerabilities are compared against the software Telivy already knows about weekly, so findings can appear without any device being touched. [Scanning Schedule](/products/risk-monitoring/scanning-schedule) breaks it down.
   </Accordion>
 
   <Accordion title="Can I set different scan frequencies for different clients?">

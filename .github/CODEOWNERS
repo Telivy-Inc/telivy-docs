@@ -1,0 +1,7 @@
+# main deploys straight to production, so every change gets a review.
+*                       @Cytracom/telivy-team
+
+# Config and tooling changes affect the whole site.
+/docs.json              @Cytracom/telivy-team
+/.github/               @Cytracom/telivy-team
+/scripts/               @Cytracom/telivy-team

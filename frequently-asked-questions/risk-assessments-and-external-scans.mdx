@@ -77,6 +77,12 @@ description: "Common questions and answers"
     * External Attack Surface
 
     * Asset Inventory
+
+    Endpoint agents collect the rescan command on their next hourly check-in, so allow up to an hour for powered-on devices.
+  </Accordion>
+
+  <Accordion title="How Often Does Telivy Rescan Automatically?">
+    It depends on what is being checked. Computers are fully rescanned on the Risk Monitoring cadence you set for that client: weekly, monthly, or quarterly. Everything checked from the outside, including breached credentials and look-alike domains, is refreshed weekly. Microsoft 365 and Google Workspace settings are read daily. New vulnerability information arrives nightly and is compared against each client's known software weekly. [Scanning Schedule](/products/risk-monitoring/scanning-schedule) walks through all of it.
   </Accordion>
 
   <Accordion title="How Do I Add Multiple Domains To A Scan?">

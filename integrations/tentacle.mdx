@@ -1,0 +1,81 @@
+---
+title: "Tentacle"
+description: "Turn Telivy scan findings into a CIS Critical Security Controls compliance assessment, tracked and scored in Tentacle."
+---
+
+## Overview
+
+The Tentacle integration connects a Telivy Risk Assessment to a **CIS Critical Security Controls** compliance assessment. Telivy maps what it already found during a scan onto the CIS safeguards, so a compliance assessment that would normally be filled in by hand starts pre-populated from real endpoint and cloud evidence.
+
+Results flow back into the assessment's **Compliance** tab, where you can review each CIS control, its status, and the overall CIS posture for the client.
+
+<Note>
+  The Tentacle integration is delivered through Unity and requires an active Tentacle
+  subscription for the client. If you do not have Tentacle enabled, contact
+  [accounts@telivy.com](mailto:accounts@telivy.com).
+</Note>
+
+## What you get
+
+- A **CIS Critical Security Controls** assessment (153 safeguards) per client.
+- Safeguard answers **pre-populated from Telivy scan findings**, so the assessment reflects what was actually detected on the endpoints and connected cloud tenants.
+- A CIS posture score and a per-control breakdown surfaced in the assessment's **Compliance** tab.
+
+## Requirements
+
+| Requirement | Detail |
+|---|---|
+| Assessment type | Risk Assessment |
+| Unity customer | The Telivy client must be linked to a Unity customer |
+| Subscription | The linked Unity customer must have an active Tentacle subscription |
+| Access | Tentacle access must be granted for the assessment |
+
+## Setup
+
+Setup moves through a few states in order. Each step unlocks the next.
+
+<Steps>
+  <Step title="Link the client to a Unity customer">
+    Open the Risk Assessment and go to its integrations configuration. Link the client to the
+    matching Unity customer (or create one if it does not exist yet).
+  </Step>
+  <Step title="Confirm the Tentacle subscription">
+    Verify that the linked Unity customer has an active Tentacle subscription. If it does not,
+    the assessment shows a prompt to activate one.
+  </Step>
+  <Step title="Grant access">
+    Grant Tentacle access for the assessment. Once access is in place, the integration is
+    ready.
+  </Step>
+  <Step title="Populate from scan findings">
+    With the integration ready, Telivy maps the assessment's scan findings onto the CIS
+    safeguards. Review and adjust answers as needed.
+  </Step>
+</Steps>
+
+## Reviewing compliance
+
+Open the assessment's **Compliance** tab to see the CIS controls. You can filter by CIS
+category and review the status and severity of each safeguard, along with the overall posture.
+Until the Tentacle subscription and access are in place, the Compliance tab shows a setup
+prompt instead of live CIS data.
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Which compliance framework does this cover?">
+    The CIS Critical Security Controls (153 safeguards). It is the only framework this
+    integration covers today.
+  </Accordion>
+
+  <Accordion title="Do I have to answer every safeguard manually?">
+    No. Telivy pre-populates answers from the assessment's scan findings wherever it has
+    evidence. You review and complete the rest.
+  </Accordion>
+
+  <Accordion title="Why is my Compliance tab showing a setup prompt instead of controls?">
+    The tab is available for every Risk Assessment, but live CIS data requires a linked Unity
+    customer with an active Tentacle subscription and access granted. Complete the setup steps
+    above and the controls will appear.
+  </Accordion>
+</AccordionGroup>

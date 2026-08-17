@@ -1,0 +1,2 @@
+# Ingestion endpoint, not a page: the root path 404s by design.
+https://eu.i.posthog.com/

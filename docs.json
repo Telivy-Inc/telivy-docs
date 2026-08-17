@@ -2,10 +2,11 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Telivy",
+  "description": "Guides, FAQs, and integration docs for the Telivy security assessment platform.",
   "colors": {
-    "primary": "#516AE7",
-    "light": "#516AE7",
-    "dark": "#516AE7"
+    "primary": "#516AE6",
+    "light": "#8DA0F5",
+    "dark": "#3B51C7"
   },
   "favicon": "/logo/favicon.png",
   "navigation": {
@@ -15,6 +16,11 @@
           "anchor": "Website",
           "icon": "globe",
           "href": "https://www.telivy.com/"
+        },
+        {
+          "anchor": "Platform Status",
+          "icon": "heart-pulse",
+          "href": "https://status.telivy.com/"
         }
       ]
     },
@@ -34,7 +40,8 @@
                   "getting-started/set-up-telivy-account/overview",
                   "getting-started/set-up-telivy-account/multi-factor-authentication"
                 ]
-              }
+              },
+              "getting-started/companies"
             ]
           },
           {
@@ -79,6 +86,7 @@
                   "products/risk-assessments/data-security",
                   "products/risk-assessments/microsoft-365-security",
                   "products/risk-assessments/google-workspace-security",
+                  "products/risk-assessments/compliance",
                   "products/risk-assessments/auto-update",
                   "products/risk-assessments/uninstall-telivy-agent-windows"
                 ]
@@ -95,6 +103,7 @@
                 "group": "Risk Monitoring",
                 "pages": [
                   "products/risk-monitoring/overview",
+                  "products/risk-monitoring/scanning-schedule",
                   "products/risk-monitoring/alerts"
                 ]
               }
@@ -118,18 +127,14 @@
               "scoring/risk-scoring",
               "scoring/ai-scoring",
               "scoring/m365",
-              {
-                "group": "Legacy Scoring",
-                "pages": [
-                  "scoring/telivycriteria"
-                ]
-              }
+              "scoring/telivycriteria"
             ]
           },
           {
             "group": "Integrations",
             "pages": [
               "integrations/nodeware",
+              "integrations/tentacle",
               "integrations/rewst",
               "integrations/connectwise",
               "integrations/autotask",
@@ -148,7 +153,76 @@
   },
   "logo": {
     "light": "/logo/logo.svg",
-    "dark": "/logo/logo.svg"
+    "dark": "/logo/logo-dark.svg"
+  },
+  "search": {
+    "prompt": "Search the Telivy docs"
+  },
+  "contextual": {
+    "options": ["copy", "view", "chatgpt", "claude", "mcp"]
+  },
+  "seo": {
+    "indexing": "navigable",
+    "metatags": {
+      "og:site_name": "Telivy Documentation",
+      "og:type": "website",
+      "twitter:card": "summary_large_image"
+    }
+  },
+  "errors": {
+    "404": {
+      "redirect": false,
+      "title": "Page not found",
+      "description": "This page has moved or no longer exists. Use search, or start from the [documentation home](/getting-started/welcome)."
+    }
+  },
+  "redirects": [
+    {
+      "source": "/products/risk-assessments/ai-scoring",
+      "destination": "/scoring/ai-scoring",
+      "permanent": true
+    },
+    {
+      "source": "/products/risk-assessments/grading-criteria",
+      "destination": "/scoring/telivycriteria",
+      "permanent": true
+    },
+    {
+      "source": "/products/risk-assessments/what-happens-under-the-hood",
+      "destination": "/products/risk-assessments/whitelist-telivy-with-av-edr",
+      "permanent": true
+    },
+    {
+      "source": "/frequently-asked-questions/scores",
+      "destination": "/scoring/risk-scoring",
+      "permanent": true
+    },
+    {
+      "source": "/frequently-asked-questions/scoring",
+      "destination": "/scoring/risk-scoring",
+      "permanent": true
+    },
+    {
+      "source": "/frequently-asked-questions/integrations",
+      "destination": "/integrations/nodeware",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/nodware",
+      "destination": "/integrations/nodeware",
+      "permanent": true
+    },
+    {
+      "source": "/scoring/untitled-page",
+      "destination": "/scoring/risk-scoring",
+      "permanent": true
+    }
+  ],
+  "integrations": {
+    "posthog": {
+      "apiKey": "phc_mS6y6ZkHJ9hGBSBlyfz07B9k5J7Bg0b80OFRYdEAW1a",
+      "apiHost": "https://eu.i.posthog.com"
+    }
   },
   "navbar": {
     "links": [
