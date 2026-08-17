@@ -1,0 +1,40 @@
+name: External links
+
+# Outbound links rot silently (a hotlinked GIF host disappeared without anyone noticing),
+# so sweep them weekly as well as on PRs that touch content.
+on:
+  schedule:
+    - cron: '0 8 * * 1' # Mondays, 08:00 UTC
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '**.mdx'
+      - 'docs.json'
+      - '.lycheeignore'
+
+concurrency:
+  group: external-links-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Check external links
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          # --root-dir resolves the site's root-relative links so the scheme filter can
+          # drop them; internal links are already covered by scripts/validate-docs.mjs.
+          args: >-
+            --no-progress
+            --root-dir /github/workspace
+            --scheme https
+            --scheme http
+            --accept 200,206,403,429
+            --max-retries 2
+            --timeout 20
+            './**/*.mdx'
+            'docs.json'
+          fail: true
+          jobSummary: true

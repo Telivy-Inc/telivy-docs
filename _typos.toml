@@ -1,0 +1,14 @@
+# Spell check config for `typos`, run by .github/workflows/docs-validate.yml.
+# Add a word here only when the "typo" is a real product or industry term.
+
+[files]
+extend-exclude = ["images/", "logo/"]
+
+[default]
+# Analytics keys and other opaque identifiers are not prose.
+extend-ignore-re = ["phc_[A-Za-z0-9]+"]
+
+[default.extend-words]
+CNA = "CNA"              # CVE Numbering Authority
+NCE = "NCE"              # Microsoft New Commerce Experience
+Softwares = "Softwares"  # quoting the Telivy portal's own menu label

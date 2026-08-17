@@ -16,8 +16,14 @@ jobs:
         with:
           node-version: 20
       - run: node scripts/validate-docs.mjs
-      - name: Mintlify broken-links
-        continue-on-error: true # advisory; the validator above is the gate
+      - name: Mintlify build validation
         run: |
           npm i -g mint@4
+          mint validate
           mint broken-links
+
+  spelling:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: crate-ci/typos@8a48f81b6c64dcfea44b3633223084c4be58ac5f # v1.49.0
