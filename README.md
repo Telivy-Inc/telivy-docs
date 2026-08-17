@@ -56,7 +56,7 @@ mint broken-links                # advisory link check
 
 ## Authoring
 
-A few conventions the whole repo follows (see [`CLAUDE.md`](CLAUDE.md) for the full guide):
+A few conventions the whole repo follows (see [`.github/DOCS_AUTHORING.md`](.github/DOCS_AUTHORING.md) for the full guide):
 
 - **Every page needs frontmatter** with `title` and `description`.
 - **Adding a page is a two-file change** — create the `.mdx`, then register its path
