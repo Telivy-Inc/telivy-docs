@@ -1,6 +1,7 @@
-# CLAUDE.md
+# Docs authoring guide
 
-Guidance for working in the Telivy documentation repo.
+Guidance for working in the Telivy documentation repo. Imported by the root `CLAUDE.md`,
+which stays thin because Mintlify publishes every root-level Markdown file as a page.
 
 ## What this is
 
