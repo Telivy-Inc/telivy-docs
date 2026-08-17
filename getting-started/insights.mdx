@@ -1,0 +1,90 @@
+---
+title: Insights
+description: 'The portfolio view that tells you which client to work on next'
+---
+
+Insights is the first screen you land on after logging in. Where the Assessments list shows
+you everything, Insights answers a narrower question: across the whole book of clients,
+what needs your attention today?
+
+<Note>
+  Insights is currently labelled a preview in the portal, and the team is actively
+  collecting feedback on it.
+</Note>
+
+## Scope toggle
+
+Everything on the page respects the scope selector at the top: **All assessments**,
+**External scans**, or **Risk assessments**. One recommended action is the exception, noted
+below.
+
+## Security posture
+
+A status breakdown of the assessments in scope (complete, in progress, not started,
+archived) alongside coverage rows for the cloud connections that matter:
+
+- Microsoft 365 connected
+- M365 security policies configured
+- Google Workspace connected
+
+Coverage is the fastest way to spot clients where an assessment technically finished but is
+only telling you half the story because no cloud account was ever connected.
+
+## Recommended actions
+
+A ranked list of what to fix, ordered by how much it matters rather than by date. The
+actions Telivy can raise:
+
+| Action | Raised when |
+| --- | --- |
+| Reconnect cloud integrations | A Microsoft 365 or Google Workspace connection lost authorization and stopped collecting |
+| Configure Microsoft 365 security policies | M365 is connected but no policy baseline exists |
+| Review unread alerts | Any alert is unread |
+| Finish incomplete assessments | An assessment never got past setup |
+| Put more assessments into monitoring | Assessments exist that are not being re-scanned |
+
+Each one carries a count and a link that lands on the already-filtered list, so
+"Configure Microsoft 365 security policies" opens the assessments filtered to exactly those
+clients.
+
+<Note>
+  The monitoring action is an agency-wide total rather than a per-type one, so it only
+  appears while the scope is set to **All assessments**.
+</Note>
+
+## Top opportunities to improve security posture
+
+This section is about score movement rather than alerts. Telivy takes the remediation
+actions from each assessment, groups the same finding across clients, and ranks the groups
+by their combined projected score impact. The result reads as: fix this one thing, across
+these five clients, and this is roughly what the portfolio gains.
+
+<Warning>
+  This calculation runs on demand across your active assessments and is capped at the first
+  25, so on a large book it is a strong sample rather than a complete ranking.
+</Warning>
+
+## Needs attention, recent alerts, and recent activity
+
+The lower half is the working list: assessments flagged with a reason (cloud needs
+re-auth, no M365 policies) sorted with the most severe first, the latest alerts across all
+clients, and a recent activity feed.
+
+## Where to go next
+
+<CardGroup cols={2}>
+  <Card
+    title="Alerts"
+    icon="bell"
+    href="/products/risk-monitoring/alerts"
+  >
+    What each alert category means and who gets notified
+  </Card>
+  <Card
+    title="Risk Monitoring"
+    icon="repeat"
+    href="/products/risk-monitoring/overview"
+  >
+    Putting assessments on a recurring scan schedule
+  </Card>
+</CardGroup>

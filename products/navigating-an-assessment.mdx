@@ -1,0 +1,68 @@
+---
+title: Navigating an Assessment
+description: 'What each tab inside an assessment is for, and which ones you will see'
+---
+
+Open any assessment and a tab rail runs down the side. Which tabs appear depends on the
+assessment type, so an External Scan shows a deliberately shorter set than a Risk
+Assessment.
+
+## The tabs
+
+| Tab | What it is for |
+| --- | --- |
+| **Setup** | Deploy the agent, connect Microsoft 365 or Google Workspace, add targets, and configure the scan |
+| **Overview** | The headline result: score, top findings, and what changed |
+| **Inventory** | The assets Telivy discovered: devices, network targets, and installed software |
+| **Security** | The findings themselves, grouped by section, with evidence per finding |
+| **Cloud** | SaaS posture for connected Microsoft 365 and Google Workspace accounts |
+| **Compliance** | Findings mapped to the CIS Critical Security Controls |
+| **Register** | The risk register for the assessment |
+| **Reports** | Generate and download client-ready reports, or upload your own documents |
+| **Alerts** | Alerts raised for this client |
+| **Company** | Company details and contacts |
+| **Services** | Services offered to this client, unless your agency uses its own branding |
+
+**Risk** and **Priorities**, which chart risk over time and rank findings across
+severities, appear once prospect monitoring is available to your account. **Trends** shows
+up only while the assessment has monitoring enabled.
+
+## The Cloud tab
+
+The Cloud tab is Risk Assessment only. On an External Scan it shows "Not enabled" with a
+contact address, because there is no agent and no cloud connection to read from.
+
+Its sub-views appear as each connection is made, so an assessment with only Microsoft 365
+connected will not show Google Workspace at all:
+
+- **Microsoft 365**: secure score, MFA coverage, and login monitoring for the tenant
+- **M365 Policy Management**: the policy baseline and where the tenant deviates from it
+- **Sharing Risks**: Exchange, SharePoint, and OneDrive sharing exposure, where enabled for
+  your account
+- **Google Workspace**: the equivalent posture view for a connected Workspace domain
+
+If the tab is empty, nothing is connected yet. Connect an account under **Setup > Cloud**
+and the views appear on the next data refresh.
+
+<CardGroup cols={2}>
+  <Card
+    title="Microsoft 365 Security"
+    icon="microsoft"
+    href="/products/risk-assessments/microsoft-365-security"
+  >
+    Connecting M365 and reading the results
+  </Card>
+  <Card
+    title="Google Workspace Security"
+    icon="google"
+    href="/products/risk-assessments/google-workspace-security"
+  >
+    Connecting Workspace and reading the results
+  </Card>
+</CardGroup>
+
+## What an External Scan shows instead
+
+An External Scan has no endpoints, so it carries a reduced rail: Setup, Overview, Security,
+Company, Register, Reports, and Alerts. Everything that depends on the agent or a cloud
+connection is absent by design, not missing.

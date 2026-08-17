@@ -1,0 +1,70 @@
+---
+title: Billing, Usage, and Early Access
+description: 'Manage your subscription, check what is being billed, and opt into features early'
+---
+
+Alongside branding, users, and integrations, the Account area carries three settings pages
+that are easy to miss. Which of them you see depends on your role: billing and usage are
+restricted, and only account admins can change early access features.
+
+## Billing
+
+**Account > Billing** hands off to the **Stripe billing portal**, where you manage the
+subscription, update payment methods, and pull invoices. Telivy does not keep a second copy
+of that information in the portal.
+
+## Usage
+
+**Account > Usage** shows **Monitored Usage**: the active monitored endpoints and SaaS user
+accounts behind your bill, per assessment.
+
+| Column | What it counts |
+| --- | --- |
+| Account | The assessment the row belongs to |
+| Endpoints | Monitored endpoints reporting in |
+| M365 users | Microsoft 365 user accounts in the connected tenant |
+| M365 monitoring | Whether M365 monitoring is on for that assessment |
+| Workspace users | Google Workspace user accounts in the connected domain |
+| Workspace monitoring | Whether Workspace monitoring is on for that assessment |
+| Last refreshed | When those counts were last recalculated |
+
+This is the page to open before questioning an invoice. Turning Microsoft 365 or Google
+Workspace monitoring off for an assessment excludes those accounts from future billed
+counts, so the change shows up going forward rather than retroactively.
+
+## Early Access
+
+**Account > Early Access** lists features you can switch on before general release, grouped
+by how finished they are: **beta**, then **alpha**, then **concept**. Toggle one on and it
+applies to your agency.
+
+Two things to know:
+
+- Only account admins can toggle features. Everyone else sees the list read-only.
+- Some features are marked sensitive and ask you to acknowledge what enabling them means
+  before the toggle takes effect.
+
+Treat concept-stage features as exactly that. They are early, and they can change or
+disappear.
+
+## Unity
+
+If your account is linked to Unity, a **Unity** entry appears indented beneath
+Integrations, for syncing that connection.
+
+<CardGroup cols={2}>
+  <Card
+    title="Account overview"
+    icon="user-gear"
+    href="/getting-started/set-up-telivy-account/overview"
+  >
+    Branding, users, and assessment sharing
+  </Card>
+  <Card
+    title="Risk Monitoring"
+    icon="repeat"
+    href="/products/risk-monitoring/overview"
+  >
+    What monitoring does, and what it counts
+  </Card>
+</CardGroup>
