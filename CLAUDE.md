@@ -5,16 +5,17 @@ Guidance for working in the Telivy documentation repo.
 ## What this is
 
 Mintlify documentation site for the Telivy platform. Pages are `.mdx`; navigation and
-theming live in `docs.json` (the current Mintlify schema — **not** `mint.json`, despite
-what `README.md` says). Pushing to `main` auto-deploys to production via the Mintlify
-GitHub App, so treat `main` as live.
+theming live in `docs.json` (the current Mintlify schema, **not** `mint.json`). Pushing to
+`main` auto-deploys to https://support.telivy.com via the Mintlify GitHub App, so treat
+`main` as live. Each PR gets its own preview deployment posted as a check.
 
 ## Local preview
 
 ```
-npm i -g mintlify   # once
-mintlify dev        # run from repo root (where docs.json lives)
-mintlify broken-links   # validate internal links before opening a PR
+npm i -g mint              # once; package is `mint`, `mintlify` is the legacy name
+mint dev                   # run from repo root (where docs.json lives)
+node scripts/validate-docs.mjs   # the CI gate: frontmatter, em dashes, links, alt text
+mint broken-links          # advisory link check
 ```
 
 ## Structure
@@ -27,7 +28,7 @@ mintlify broken-links   # validate internal links before opening a PR
 - `integrations/` — nodeware, rewst, connectwise, autotask, webhooks
 - `additional-information/release-notes.mdx` — uses `<Update>` blocks
 - `images/`, `logo/` — assets referenced from pages
-- `snippets/` — reusable `.mdx` fragments imported into pages
+- `scripts/validate-docs.mjs` — authoring-rule validator, run by CI on every PR
 
 ## Authoring rules
 
@@ -51,17 +52,21 @@ mintlify broken-links   # validate internal links before opening a PR
 - Put images in `images/` and reference them with an absolute path (`/images/...`) — never
   at the repo root. Group per-page screenshots in a subfolder named after the page and number
   them: `images/<page-slug>/<page-slug>-N.png` (e.g. `images/nodeware/nodeware-1.png`).
-- Give every image meaningful alt text (`![what it shows](/images/...)`), not the
-  auto-generated filename. Optimize new screenshots before committing (cap width ~1600px,
-  strip metadata).
+- Give every image meaningful alt text, on both `![what it shows](/images/...)` and
+  `<img alt="what it shows" ...>`. CI fails on a bare image. Never hotlink an image from
+  another host (one such GIF already rotted away). Optimize new screenshots before
+  committing (cap width ~1600px, strip metadata).
+- **Renaming or deleting a page needs a `redirects` entry** in `docs.json` (`source`,
+  `destination`, `permanent: true`). Old URLs live on in bookmarks, Zendesk articles, and
+  search results.
 
 ## Gotchas / known cruft
 
-- `README.md` is unedited Mintlify starter boilerplate — do not trust it (it references
-  `mint.json`). `docs.json` is the source of truth.
-- `getting-started/introduction.mdx` still contains starter placeholder copy — clean it if
-  you touch that page.
-- Loose screenshot PNGs and `pic*.png` sit in the repo root; prefer `images/` for new assets.
+- `getting-started/introduction.mdx` and `getting-started/welcome.mdx` are two competing
+  card-wall landing pages that link to each other. They should be merged.
+- PRs have been stacked on each other in the past (`#15` and `#17` merged into another
+  feature branch, not `main`), which quietly kept finished pages off the live site. Base
+  every PR on `main`.
 
 ## PRs
 

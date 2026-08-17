@@ -19,5 +19,5 @@ jobs:
       - name: Mintlify broken-links
         continue-on-error: true # advisory; the validator above is the gate
         run: |
-          npm i -g mintlify
-          mintlify broken-links
+          npm i -g mint@4
+          mint broken-links

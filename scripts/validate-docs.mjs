@@ -66,8 +66,8 @@ for (const file of allMdx) {
   if (!navPages.has(slug)) warnings.push(`${rel(file)}: not referenced in docs.json (orphan page)`);
 }
 
-// Internal links resolve to an asset, section directory, or page
-const linkRe = /(?:\]\(|href=")(\/[^)"#\s]+)/g;
+// Internal links and image sources resolve to an asset, section directory, or page
+const linkRe = /(?:\]\(|(?:href|src)=")(\/[^)"#\s]+)/g;
 const resolves = (t) =>
   existsSync(join(ROOT, t.slice(1))) || existsSync(join(ROOT, `${t.slice(1)}.mdx`));
 for (const file of allMdx) {
@@ -76,6 +76,23 @@ for (const file of allMdx) {
   while ((m = linkRe.exec(text)) !== null) {
     if (!resolves(m[1])) errors.push(`${rel(file)}: internal link "${m[1]}" does not resolve`);
   }
+}
+
+// Every image needs alt text, and images are served from this repo, not a third party
+for (const file of allMdx) {
+  readFileSync(file, 'utf8')
+    .split('\n')
+    .forEach((line, i) => {
+      const where = `${rel(file)}:${i + 1}`;
+      for (const tag of line.match(/<img\s[^>]*>/g) ?? []) {
+        if (!/\salt="[^"]+"/.test(tag)) errors.push(`${where}: <img> without alt text`);
+        if (/\ssrc="https?:\/\//.test(tag)) errors.push(`${where}: <img> hotlinks an external host`);
+      }
+      for (const img of line.match(/!\[[^\]]*\]\([^)]+\)/g) ?? []) {
+        if (img.startsWith('![]')) errors.push(`${where}: image without alt text`);
+        if (/\((https?:\/\/)/.test(img)) errors.push(`${where}: image hotlinks an external host`);
+      }
+    });
 }
 
 for (const w of warnings) console.log(`warning: ${w}`);

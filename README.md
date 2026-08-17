@@ -20,22 +20,23 @@ configured in [`docs.json`](docs.json) (the current Mintlify schema, **not** `mi
 
 ## Quick start
 
-Install the Mintlify CLI once:
+Install the Mintlify CLI once (the package is `mint`; `mintlify` is the legacy name):
 
 ```bash
-npm i -g mintlify
+npm i -g mint
 ```
 
 Run the preview server from the repo root (the folder containing `docs.json`):
 
 ```bash
-mintlify dev
+mint dev
 ```
 
-Validate internal links before opening a PR:
+Validate before opening a PR:
 
 ```bash
-mintlify broken-links
+node scripts/validate-docs.mjs   # frontmatter, em dashes, links, alt text, docs.json consistency (CI gate)
+mint broken-links                # advisory link check
 ```
 
 ## Repository structure
@@ -51,7 +52,7 @@ mintlify broken-links
 | `integrations/` | Nodeware, Rewst, ConnectWise, Autotask, webhooks |
 | `additional-information/` | Release notes (`<Update>` blocks) |
 | `images/`, `logo/` | Assets referenced from pages |
-| `snippets/` | Reusable `.mdx` fragments imported into pages |
+| `scripts/validate-docs.mjs` | Authoring-rule validator run by CI on every PR |
 
 ## Authoring
 
@@ -63,17 +64,20 @@ A few conventions the whole repo follows (see [`CLAUDE.md`](CLAUDE.md) for the f
 - **No em dashes** in content. Use commas, parentheses, or restructure the sentence.
 - Internal links are root-relative and omit the extension: `/products/risk-assessments/overview`.
 - Put images in `images/` and reference them with an absolute path (`/images/...`), with
-  meaningful alt text.
+  meaningful alt text. Never hotlink an image from another host.
+- **Renaming or deleting a page needs a `redirects` entry** in `docs.json`, or the old URL
+  starts 404ing for everyone who bookmarked it.
 
 ## Publishing
 
-Changes merged to `main` deploy to production automatically via the Mintlify GitHub App.
-**Treat `main` as live.**
+Changes merged to `main` deploy to **https://support.telivy.com** automatically via the
+Mintlify GitHub App. **Treat `main` as live.** Every PR gets its own preview deployment,
+posted as a check on the PR.
 
 ## Troubleshooting
 
 | Symptom | Fix |
 | --- | --- |
-| `mintlify dev` won't start | Run `mintlify install` to reinstall dependencies |
+| `mint dev` won't start | Run `mint update` to refresh the CLI |
 | Page loads as a 404 | Make sure you are running from the folder containing `docs.json` |
 | New page not showing | Confirm its path is added to the correct `group` in `docs.json` |

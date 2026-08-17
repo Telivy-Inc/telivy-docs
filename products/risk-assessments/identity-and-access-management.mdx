@@ -15,7 +15,7 @@ To reduce any liability for you, we perform password analysis on the device and 
 
 If the executable is deployed as an admin, the executable will schedule password capture for most of the users that are present on the asset. The list of users is determined by the folder structure, Microsoft Azure AD user setup, local and global users configured on the system and a few different heuristics. In some cases, not all users are covered for password analysis. The assets table should show you the list of users the password analysis is scheduled for.
 
-<img src="/images/identity-and-access-management/identity-and-access-management-1.jpg" />
+<img alt="Assets table listing the users scheduled for password analysis" src="/images/identity-and-access-management/identity-and-access-management-1.jpg" />
 
 ## Why Analyze Passwords? It's More Than Just "123456"
 
@@ -27,7 +27,7 @@ Password analysis examines each password for weaknesses. Here's why it matters:
 
     For example, the first entry has been leaked 9.65 million times on the dark web. This includes the password "p******d", and the username cool_dude.
 
-    <img src="/images/identity-and-access-management/identity-and-access-management-2.jpg" />
+    <img alt="Password analysis table showing dark web hit counts per credential" src="/images/identity-and-access-management/identity-and-access-management-2.jpg" />
   </Accordion>
 
   <Accordion title="Unmasking Weak Links">
@@ -39,7 +39,7 @@ For example, **qwerty** is a Weak password. **G00dPassw0rd?!**  is a Moderate pa
   <Accordion title="Reused Passwords">
     We're creatures of habit, often recycling passwords across multiple accounts. This creates a domino effect: one compromised password could grant access to a multitude of accounts. Telivy's password analysis tool detects reused passwords so you can replace them with unique ones.
 
-    <img src="/images/identity-and-access-management/identity-and-access-management-3.jpg" />
+    <img alt="Password analysis table highlighting passwords reused across accounts" src="/images/identity-and-access-management/identity-and-access-management-3.jpg" />
 
     In the above table, click on the Show All and the previous table will filter to show the instances where the password has been used.
   </Accordion>
