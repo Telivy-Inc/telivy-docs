@@ -1,0 +1,191 @@
+---
+title: "Scanning Schedule"
+description: "What Telivy checks, how often each check runs, and why a client's findings can change even when you have not asked for a rescan."
+---
+
+Telivy does not run one big scan on one timer. It runs four different kinds of checking, and each one has its own rhythm.
+
+That is usually the answer when something looks confusing. A client set to monthly rescans still sees new findings in week two. A device that was clearly rescanned still shows last month's software list. Both make sense once you know which of the four is responsible.
+
+<CardGroup cols={2}>
+  <Card title="On the computers" icon="laptop">
+    The Telivy Agent, installed on each Windows and Mac device, looks at what is on that machine.
+  </Card>
+  <Card title="From the outside" icon="globe">
+    Everything visible to an attacker without touching a device: websites, mail records, exposed services, look-alike domains, breached credentials.
+  </Card>
+  <Card title="In the cloud" icon="cloud">
+    Microsoft 365 and Google Workspace accounts, permissions, and security settings.
+  </Card>
+  <Card title="Against threat data" icon="shield-halved">
+    New vulnerabilities published by the security community, compared against what Telivy already knows about the client.
+  </Card>
+</CardGroup>
+
+## The short version
+
+| How often | What happens |
+|---|---|
+| Every hour | Each installed agent checks in. Alert emails go out in one batch. Microsoft 365 sign-in and audit activity is collected, where that is switched on. |
+| Every day | Disk encryption is re-checked on every device. Microsoft 365 and Google Workspace settings are re-read. New vulnerability information is pulled in overnight. Cloud connections are tested to make sure they are still working. |
+| Every week | Everything visible from the outside is checked again, including breached credentials and look-alike domains. Known software on client machines is re-compared against the latest vulnerability data. Clients set to weekly get a full rescan. |
+| Every month | Clients set to monthly get a full rescan. |
+| Every quarter | Clients set to quarterly get a full rescan. |
+| Whenever you ask | A manual rescan runs the whole thing straight away. |
+
+## How the automatic schedule works
+
+Everything above runs on Telivy's own servers. There is nothing to install, schedule, or maintain on your side, and nothing that depends on someone being logged in.
+
+The runs are spread out on purpose. A weekly run covers a lot of clients, so Telivy works through them in a queue instead of firing everything off together, and a single run can take hours to reach everyone. That is normal, and a client near the back of the queue is not stuck.
+
+They also recover on their own. If a scan is interrupted, it gets picked up and retried without anyone having to notice.
+
+## On the computers: what the agent does
+
+The Telivy Agent runs quietly in the background on every device where it is installed, on both Windows and Mac. It wakes up roughly once an hour.
+
+Waking up hourly is not the same as scanning hourly, and this trips people up more than anything else on this page.
+
+On each hourly wake-up, the agent:
+
+<Steps>
+  <Step title="Says hello">
+    This is what keeps the device's online status and last seen time accurate in the portal.
+  </Step>
+  <Step title="Checks whether it should update itself">
+    See [Auto Update](/products/risk-assessments/auto-update) for how agent updates are handled.
+  </Step>
+  <Step title="Collects any instruction waiting for it">
+    A rescan you requested, or one triggered by the client's monitoring schedule, is picked up here. This is why a rescan reaches a switched-on device within about an hour rather than instantly.
+  </Step>
+  <Step title="Does any collection that is actually due">
+    Most of the time there is nothing due, and the agent goes back to sleep. The hourly cycle is deliberately light so nobody notices it on their machine.
+  </Step>
+</Steps>
+
+### How often each type of data is refreshed
+
+| What the agent looks at | How often it is collected again |
+|---|---|
+| Disk encryption status (BitLocker on Windows, FileVault on Mac) | Once a day on every device |
+| Installed software and versions | On rescan |
+| Operating system version and patch level | On rescan |
+| Passwords saved in browsers | On rescan |
+| Sensitive data (PII) in local files and OneDrive | On rescan |
+| Devices and equipment on the local network | On rescan |
+| Hardware and connected peripherals | On rescan |
+| Antivirus and endpoint protection status | On rescan |
+| Web activity | On rescan, with summaries rebuilt nightly |
+
+"On rescan" means the check runs when the agent is first installed, then again the next time a rescan happens, either because you asked for one or because the client's monitoring schedule came round.
+
+That is a deliberate choice. A full endpoint scan is heavy, and a laptop's installed software rarely changes hour to hour. Disk encryption is the exception because it can be switched off in a moment and it matters immediately, particularly for insurance and compliance evidence.
+
+<Warning>
+  A device that is switched off, asleep, or away from the network when a rescan is triggered simply collects the instruction the next time it comes online. Nothing is lost. That one device's data just arrives later than the rest.
+</Warning>
+
+## From the outside: what Telivy checks without touching a device
+
+These checks need no agent. They run against the client's domain, any extra domains you have added, and any IP addresses on the assessment.
+
+| Area | What Telivy is looking for |
+|---|---|
+| Websites and web servers | Certificate problems, weak or outdated encryption, insecure configuration, exposed admin interfaces |
+| Open ports and services | Anything reachable from the internet that should not be |
+| Email security records | Whether SPF, DKIM, and DMARC are set up correctly, and whether mail is protected in transit |
+| Domain and address reputation | Whether the client's domain or addresses appear on blocklists or have a poor reputation |
+| Look-alike domains | Newly registered domains that impersonate the client's brand. See [Typo-squatting](/learning-center/typo-squatting) |
+| Breached credentials | Client email addresses and passwords appearing in known data breaches. See [Dark Web Scans](/learning-center/dark-web-scans) |
+| Additional domains | Subdomains belonging to the client that you may not have listed yourself |
+
+All of this runs when an assessment is first created, again every week for any client with Risk Monitoring switched on, and any time a rescan happens.
+
+The weekly outside check does not depend on the cadence you picked. A client set to quarterly still gets their external picture, their breach exposure, and their look-alike domain check refreshed every week.
+
+<Note>
+  Breach results are reused for a short period rather than looked up from scratch on every single run. In practice this makes no visible difference, since new breaches surface within the same weekly rhythm.
+</Note>
+
+## In the cloud: Microsoft 365 and Google Workspace
+
+If the client has a connected Microsoft 365 or Google Workspace tenant, Telivy reads its security configuration daily. That covers user accounts, multi-factor authentication, admin roles, dormant accounts, sharing settings, and tenant policy.
+
+For Microsoft 365, sign-in and audit activity can also be collected every hour where that capability is enabled for your agency. That is what makes event-based alerts such as repeated failed logins possible.
+
+Telivy also checks every few hours that the connection itself is still healthy. Cloud connections expire or get revoked, usually when someone changes an admin password or adjusts consent. When that happens the assessment flags it so you can reconnect, instead of quietly collecting nothing.
+
+Daily cloud scanning applies to clients with Risk Monitoring switched on, and you can turn it off per client separately from endpoint scanning. Keeping daily Microsoft 365 coverage while endpoints rescan monthly is a perfectly normal setup.
+
+See [Microsoft 365 Security](/products/risk-assessments/microsoft-365-security) and [Google Workspace Security](/products/risk-assessments/google-workspace-security) for what is assessed.
+
+## Against threat data: why findings appear on their own
+
+This is the part that surprises people most, so it is worth saying plainly.
+
+New findings can appear without any device being scanned again.
+
+Telivy keeps a record of what software each machine had at its last scan. Separately, it pulls in new vulnerability information every night, along with which vulnerabilities are being actively exploited in the real world and how likely each one is to be attacked.
+
+Once a week, Telivy re-compares the software it already knows about against that updated information. If a serious vulnerability was published against a version of a browser your client was already running, it appears in that weekly comparison. Nobody had to touch the machine.
+
+This also works in the other direction. A finding's severity can rise or fall as the security community learns more about it, which is why a client's numbers can shift slightly between rescans.
+
+[Vulnerability Data Sources](/learning-center/vulnerability-data-sources) explains where this information comes from and how Telivy prioritizes it.
+
+## What you actually control
+
+Per client, from the assessment's scan settings, you choose:
+
+- how often endpoints are fully rescanned: weekly, monthly, quarterly, or off
+- whether Microsoft 365 monitoring is on
+- whether Google Workspace monitoring is on
+
+Everything else runs on the shared schedule described above and is the same for every partner.
+
+## What a scheduled rescan actually covers
+
+When a client's cadence comes round, Telivy saves a snapshot of where things stand so you can see what changed, then refreshes everything: the devices, the external picture, and any connected cloud tenant.
+
+A rescan replaces the current findings rather than sitting alongside them. The history is kept separately, so you can still show a client how their position has moved over time.
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="My client is set to monthly. Why did something change this week?">
+    Three things run regardless of the cadence you picked: the weekly outside check, including breaches and look-alike domains, the weekly comparison of known software against new vulnerability data, and the daily Microsoft 365 and Google Workspace scans. Your cadence controls how often the computers themselves are fully rescanned.
+  </Accordion>
+
+  <Accordion title="I clicked rescan. Why do some devices still show old data?">
+    Each agent collects new instructions on its hourly check-in, so give a switched-on machine up to an hour. Machines that are off, asleep, or away from the network will pick it up whenever they next come online, which is also why one or two devices often lag behind the rest.
+  </Accordion>
+
+  <Accordion title="Does the agent scan the computer every hour?">
+    No. It checks in every hour, which keeps online status current, handles updates, and collects any pending instruction. Only disk encryption is re-checked daily. Everything else, including installed software, saved passwords, and sensitive files, is collected on rescan.
+  </Accordion>
+
+  <Accordion title="How often is the dark web checked?">
+    Weekly for any client with Risk Monitoring switched on, and immediately whenever you run a rescan. New exposures also generate alerts if you have a dark web alert policy configured.
+  </Accordion>
+
+  <Accordion title="How often are look-alike domains checked?">
+    On the same weekly outside check. A newly registered domain impersonating your client typically surfaces within a week of registration, and can trigger an alert as soon as it is found.
+  </Accordion>
+
+  <Accordion title="A new vulnerability was announced for software my client runs. When will I see it?">
+    Vulnerability information reaches Telivy overnight. It is compared against your client's known software on the weekly pass, or straight away if you run a rescan before then.
+  </Accordion>
+
+  <Accordion title="Can I change the times these checks run?">
+    Not the platform-wide ones. You control each client's rescan cadence and their cloud monitoring settings. The rest runs on a shared schedule so that scanning load stays predictable for everyone.
+  </Accordion>
+
+  <Accordion title="Do scheduled rescans count against my assessment allowance?">
+    No. They update the existing assessment and do not create a new billable one.
+  </Accordion>
+
+  <Accordion title="What happens if a scan does not finish?">
+    Interrupted scans are detected and retried automatically. If an assessment stays stuck for longer than a day, contact [support@telivy.com](mailto:support@telivy.com).
+  </Accordion>
+</AccordionGroup>

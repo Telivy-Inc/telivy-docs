@@ -97,6 +97,7 @@
                 "group": "Risk Monitoring",
                 "pages": [
                   "products/risk-monitoring/overview",
+                  "products/risk-monitoring/scanning-schedule",
                   "products/risk-monitoring/alerts"
                 ]
               }

@@ -7,7 +7,7 @@ description: "Keep the Telivy agent up to date automatically, with account, asse
 
 ## How Auto-Update Works
 
-Each time an agent performs its hourly scan, before starting the scanner, it checks the update manifest. If an update is available, the system:
+On each hourly check-in, before starting the scanner, the agent checks the update manifest. If an update is available, the system:
 
 1. Downloads the MSI (Windows) or PKG (macOS) update.
 2. Runs validation: hash check, certificate verification, and installer size.
@@ -116,6 +116,6 @@ Select the release channel at whichever configuration level is appropriate for y
 
 **Q: What is the minimum agent version that supports auto-update?** Windows: **30.3.6.1** | macOS: **3.3.0**. Agents running older versions must be redeployed manually with a current installer.
 
-**Q: How often does the agent check for updates?** The agent checks the update manifest every hour, before each scheduled scan.
+**Q: How often does the agent check for updates?** Every hour, on the same check-in where it sends its heartbeat and picks up any pending instruction. See [Scanning Schedule](/products/risk-monitoring/scanning-schedule) for what else happens on that cycle.
 
 **Q: Can I mix Stable and Beta across my environment?** Yes. The priority hierarchy (Account \< Assessment \< Machine) allows you to run different channels at different levels. For example, you can keep your account on Stable while testing Beta on a specific assessment or individual machines.
