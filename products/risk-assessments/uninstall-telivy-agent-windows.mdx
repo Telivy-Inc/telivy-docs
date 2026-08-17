@@ -10,3 +10,35 @@ description: 'How to Uninstall Telivy on Windows'
 Uninstallation removes the Telivy scanner on the device but the *data gathered during the latest scan still remains on the portal* and is part of the Risk Assessment dashboard and any report generated.
 
 You can uninstall directly from the dashboard using the **Uninstall** button for *each asset* or you can *uninstall all the devices* at once by clicking on the **Uninstall All** button.
+
+<Warning>
+**Uninstall** and **Uninstall All** only work on devices that are currently online. Any device that is offline when you click the button is skipped, with no error or notification. The portal doesn't tell you it happened. If a device shows as offline, use the manual uninstall commands below instead.
+</Warning>
+
+### Uninstalling an offline device
+
+For a device that's offline (or for any device where you'd rather not wait for the portal action), run the uninstall command directly on the machine, either at the terminal or pushed through your RMM. There are two options, and they have very different effects on the data already collected from that device, so pick deliberately.
+
+#### Option 1: Standard Uninstall (Recommended)
+
+Best for routine removal. This preserves the device's local PII database, so if Telivy is reinstalled later the next scan is faster. Usable since agent version 30.0.0.0.
+
+Run the following command as Administrator:
+
+```powershell
+& "C:\Program Files (x86)\Telivy\Telivy Agent\Telivy.Scanner.Windows.exe" --IsUninstallMode=true
+```
+
+#### Option 2: Full Wipe
+
+Use this for complete data removal, or to uninstall legacy agent versions (below 20.0.0.0).
+
+<Warning>
+This action is destructive. It removes all Telivy history **and the PII database** from the local machine. Only use Full Wipe if you want to get rid of Telivy entirely or you're fixing a corrupted installation. If you might reinstall later and want to keep the existing PII data, use Standard Uninstall instead.
+</Warning>
+
+Run the following in PowerShell as Administrator, replacing `<DEEPSCAN_ID>` with the assessment's Deep Scan ID (found on the assessment's configuration page):
+
+```powershell
+Invoke-Command -ScriptBlock ([scriptblock]::Create([System.Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://install.telivy.com/uninstall-all.ps1')))) -ArgumentList @('<DEEPSCAN_ID>', '')
+```

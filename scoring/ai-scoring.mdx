@@ -7,10 +7,13 @@ description: "A guide to how Telivy grades AI usage"
   <Accordion title="How is the AI Exposure Score Calculated?">
     The score is based on two factors detected across the assessed environment:
 
-    - Tool Usage Volume: how many distinct AI applications are in use. The more AI tools detected, the higher the exposure.
-    - Adoption Rate: the share of users using AI tools. The more widely AI is adopted across the workforce, the higher the exposure.
+    - Tool Usage Volume: how many distinct AI applications are in use. Detecting any AI tool
+      starts the count, and more than two, then more than five, each raise the exposure.
+    - Adoption Rate: the share of users using AI tools. Adoption above 5%, 25%, and 50% of
+      users each raise the exposure.
 
-    Both factors are combined and normalized to a 0-100 scale, where a higher score means greater AI exposure.
+    Tool Usage Volume carries the heavier weight of the two. The combined result is
+    normalized to a 0-100 scale, where a higher score means greater AI exposure.
   </Accordion>
 
   <Accordion title="How to Interpret the Score">

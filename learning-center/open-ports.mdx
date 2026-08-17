@@ -44,18 +44,30 @@ To mitigate the risk of having open ports, network and system administrators oft
 - **Verification and Documentation**: After implementing mitigation strategies, re-scan your system or network to verify that unnecessary ports are closed and security measures are functioning properly. Document the process, including the identified open ports, actions taken, and the rationale behind them. This documentation will be helpful for future reference and security audits.
 - **Continuous Monitoring and Improvement**: Regularly review open ports and update your mitigation strategies as needed. Stay informed about new vulnerabilities and emerging threats related to open ports.
 
-**Note: Here is a list of some common high-risk ports** (close unless absolutely necessary)
+**Note: Telivy groups the open ports it finds into three risk tiers**
+
+High-risk (close unless absolutely necessary):
 
 ```
-FTP (20, 21)
-
-Telnet (23)
-
-NetBIOS (135, 137, 139)
+RPC Endpoint Mapper / NetBIOS (135)
 
 Remote Desktop (3389)
 
-SMTP (25)
-
 Database ports (MySQL - 3306, PostgreSQL - 5432)
 ```
+
+Medium-risk (restrict access, use with caution):
+
+```
+NetBIOS / SMB (137, 139)
+```
+
+Low-risk (lower priority, but still worth reviewing):
+
+```
+FTP (21)
+
+Telnet (23)
+```
+
+Common service ports like SSH (22), DNS (53), HTTP (80), and HTTPS (443) aren't flagged as open-port findings on their own. They're expected to be open on most servers. SMTP (25) is evaluated separately: Telivy checks whether your mail service uses SSL/TLS encryption and reports missing encryption as its own finding, rather than as an open-port severity issue.

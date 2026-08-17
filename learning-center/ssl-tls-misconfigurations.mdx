@@ -7,37 +7,33 @@ SSL/TLS misconfiguration refers to errors or mistakes in the setup and configura
 
 ## Risks
 
-1. Data Interception: Without SSL/TLS encryption, email messages transmitted over the internet are susceptible to interception by unauthorized parties. This means that sensitive information, such as login credentials, personal data, or confidential business communications, could be intercepted and potentially exploited by cybercriminals or eavesdroppers. This interception can occur at various points along the email transmission path, including network connections, email servers, or wireless networks, especially on public Wi-Fi networks where security is typically weaker.
-2. Data Tampering: In addition to interception, email messages transmitted without SSL/TLS encryption are vulnerable to tampering or modification by malicious actors. Attackers could intercept emails in transit and alter the content, attachments, or metadata before forwarding them to the intended recipients. This could lead to the insertion of malicious links or attachments, the modification of transaction details, or the impersonation of legitimate senders, resulting in financial fraud, data manipulation, or reputational damage.
-3. Compliance Violations: Many regulatory frameworks, industry standards, and data protection laws require organizations to implement encryption and secure communication protocols to protect sensitive information. Failure to use SSL/TLS encryption for email transmission may result in non-compliance with regulations such as the General Data Protection Regulation (GDPR), the Health Insurance Portability and Accountability Act (HIPAA), or the Payment Card Industry Data Security Standard (PCI DSS). Non-compliance with these regulations can lead to regulatory fines, legal liabilities, and reputational damage for organizations.
+1. Data Interception: Without properly configured SSL/TLS on a website, traffic exchanged between a browser and the server is susceptible to interception by unauthorized parties. This means that sensitive information, such as login credentials, session tokens, or form submissions, could be intercepted and potentially exploited by cybercriminals or eavesdroppers. This interception can occur at various points along the connection, including network hops, proxies, or wireless networks, especially on public Wi-Fi where security is typically weaker.
+2. Data Tampering: In addition to interception, web traffic sent without enforced HTTPS or without protections like HSTS is vulnerable to tampering or modification by malicious actors. Attackers could intercept a connection and alter page content, inject scripts, or redirect users to malicious destinations before the response reaches the browser. This could lead to the insertion of malicious links or scripts, the modification of transaction details, or the impersonation of a legitimate site, resulting in financial fraud, data manipulation, or reputational damage.
+3. Compliance Violations: Many regulatory frameworks, industry standards, and data protection laws require organizations to implement encryption and secure communication protocols to protect sensitive information exchanged over the web. Failure to properly configure SSL/TLS, HSTS, and related security headers on customer-facing sites may result in non-compliance with regulations such as the General Data Protection Regulation (GDPR), the Health Insurance Portability and Accountability Act (HIPAA), or the Payment Card Industry Data Security Standard (PCI DSS). Non-compliance with these regulations can lead to regulatory fines, legal liabilities, and reputational damage for organizations.
 
-Overall, the absence of SSL/TLS encryption in email transmission raises significant concerns about data security, privacy, and regulatory compliance. To mitigate these risks, organizations should prioritize the implementation of SSL/TLS encryption for email communication to ensure the confidentiality, integrity, and authenticity of sensitive information exchanged via email. Additionally, users should be educated about the importance of encryption and best practices for secure email communication to minimize the risk of data breaches and unauthorized access.
+Overall, SSL/TLS misconfigurations on a website raise significant concerns about data security, privacy, and regulatory compliance. To mitigate these risks, organizations should prioritize valid, properly maintained certificates, enforced HTTPS, and the security headers covered below to ensure the confidentiality and integrity of information exchanged with their site. Email transmission security is evaluated separately as part of Telivy's mail authentication checks, which look for mail servers that don't support STARTTLS.
 
 ## Determining Severity
 The severity of an SSL/TLS misconfiguration depends on various factors, including the specific vulnerability, the context in which it is used, and the potential for exploitation.
 
-1. **Critical Severity:**
+1. **High Severity:**
 
-- Server Misconfigurations: Critical server misconfigurations, such as incorrect virtual host settings or improper SSL/TLS directive configurations, can result in severe vulnerabilities, including man-in-the-middle attacks or complete service disruptions.
-- Security Header Omissions: Missing critical security headers like Content Security Policy (CSP) or Strict-Transport-Security (HSTS) can expose a website to serious security threats and exploitation.
+- Certificate Not Found or No Issuer: When a domain has no valid certificate or the certificate has no identifiable issuer, secure connections cannot be established or trusted, exposing the site to man-in-the-middle attacks.
+- Revoked Certificates: A certificate that has been revoked by its certificate authority should no longer be trusted, and continuing to serve it puts visitors at risk.
+- HTTPS Not Enforced: When a site doesn't redirect HTTP traffic to HTTPS, connections can be made or downgraded to an unencrypted channel, exposing data in transit.
 
-2. **High Severity:**
+2. **Medium Severity:**
 
-- Expired or Invalid Certificates: Expired or invalid certificates can disrupt secure connections, leading to potential security issues and a loss of trust from users.
-- Self-Signed Certificates: Using self-signed certificates in production environments can result in security warnings and significant trust issues for users, potentially discouraging them from using the service.
-- Insecure Protocols: Enabling outdated or insecure SSL/TLS protocols (e.g., SSLv2 or SSLv3) can be highly severe, as they are vulnerable to known attacks and should be disabled immediately.
-- Weak Key Lengths: Using weak cryptographic key lengths can be highly severe, especially in the case of public-key infrastructure (PKI) misconfigurations, as it can lead to the compromise of private keys.
+- Expired or Soon-to-Expire Certificates: Certificates that have expired, or that are within 30 days of expiring, disrupt secure connections and erode user trust.
+- Self-Signed Certificates: Using self-signed certificates in production environments results in browser security warnings and trust issues for users.
+- Weak Certificate Signing Algorithm: Certificates signed with outdated hashing algorithms (weaker than SHA-256) are more susceptible to forgery.
+- Missing Content Security Policy (CSP): A missing CSP header leaves a site without a key defense against cross-site scripting and data injection attacks.
+- Missing or Misconfigured HSTS: Absent, low-expiry, or improperly scoped Strict-Transport-Security headers leave a site exposed to protocol downgrade and cookie hijacking attacks.
 
-3. **Moderate Severity:**
+3. **Low Severity:**
 
-- Incomplete Security Headers: Misconfigurations in security headers like Content Security Policy (CSP) and X-Content-Type-Options can expose a website to certain types of attacks. The impact depends on the specific header and the associated misconfiguration.
-- Incorrect Certificate Chain: A misconfigured certificate chain can result in connection failures and security warnings for users, impacting the trustworthiness of the site.
-- Missing HTTP Strict Transport Security (HSTS) Headers: While not a direct SSL/TLS misconfiguration, missing HSTS headers can expose a site to downgrade attacks, which can be moderately severe.
-
-4. **Low Severity:**
-
-- Weak Cipher Suites: While weak cipher suites are a concern, their impact may be low if stronger ciphers are still available and enabled. However, they can pose a risk if used in combination with other vulnerabilities.
-- Mixed Content: Mixing secure (HTTPS) and non-secure (HTTP) content on a web page may lead to warnings in web browsers but may not directly compromise the SSL/TLS connection itself.
+- Overly Broad CSP Directives: A Content Security Policy that relies on wildcard directives provides much weaker protection than a tightly scoped policy, even though a policy is technically present.
+- Excessive Certificate Validity Period: Certificates issued for longer than the industry-standard 398-day maximum lifetime increase the window of exposure if a key is ever compromised.
 
 ## How Can It Be Exploited
 
