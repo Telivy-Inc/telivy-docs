@@ -86,7 +86,7 @@ More Microsoft 365 and Google Workspace event alerts are being rolled out. Plann
 
 <AccordionGroup>
   <Accordion title="How quickly does an alert fire after an event is detected?">
-    Cloud events (M365, Google Workspace) are evaluated on each sync cycle. Endpoint-based alerts (Internal Vulnerabilities) are evaluated after each completed agent scan. Manual rescans trigger alert evaluation immediately.
+    Cloud events (M365, Google Workspace) are evaluated on each sync cycle. Endpoint-based alerts (Internal Vulnerabilities) are evaluated after each completed agent scan. Manual rescans trigger alert evaluation immediately. Notification emails are then batched and sent hourly, so you receive one grouped message rather than one per finding. See [Scanning Schedule](/products/risk-monitoring/scanning-schedule) for when each type of data is collected.
   </Accordion>
 
   <Accordion title="Can I notify multiple team members from the same policy?">
