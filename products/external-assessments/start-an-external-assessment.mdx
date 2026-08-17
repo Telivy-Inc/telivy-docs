@@ -1,8 +1,52 @@
 ---
 title: Start an External Assessment
-description: 'Simple steps to start an external assessment'
+description: 'Create a domain-only scan that finishes in about ten minutes'
 ---
 
-## Add a New External Assessment
+An External Assessment looks at a company from the public internet only. Nothing is
+installed, so it needs no cooperation from the prospect: setup takes under a minute and
+the scan typically finishes in about ten minutes.
 
-To create an external scan from the portal itself, click the **Create Assessment** button in the top right corner. Then, select **External Assessment** from the list of options. You will be prompted to enter the company name and website. Once you have done so, click **Create** to proceed to the assessment page.
+It covers dark web exposure, external network vulnerabilities, DNS evaluation, and website
+vulnerability checks.
+
+<Steps>
+  <Step title="Open the assessment picker">
+    Click **Create Assessment** in the top right corner of the portal, then choose
+    **External Scan**.
+  </Step>
+  <Step title="Enter the company details">
+    Fill in **Company Name** and **Domain**, and set **Company Status** to record whether
+    this is a prospect or an existing client.
+
+    Tick **Notify me via email when external scan completes** if you would rather not
+    watch the assessment page.
+  </Step>
+  <Step title="Create the assessment">
+    Click **Create**. The scan starts immediately and findings appear as they land.
+  </Step>
+</Steps>
+
+<Note>
+  Scanning many prospects at once? Upload a CSV instead of creating them one by one. See
+  [Create and Export in Bulk](/products/external-assessments/unsecured-emails/create-and-export-in-bulk).
+</Note>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Add Domains and IPs"
+    icon="plus"
+    href="/products/external-assessments/add-domains-and-ips"
+  >
+    Scan additional domains, subdomains, and addresses
+  </Card>
+  <Card
+    title="What the scan reports"
+    icon="list-check"
+    href="/products/external-assessments/overview"
+  >
+    Open ports, certificates, and unsecured email findings
+  </Card>
+</CardGroup>

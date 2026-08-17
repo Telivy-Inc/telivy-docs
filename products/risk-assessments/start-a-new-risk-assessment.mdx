@@ -1,8 +1,66 @@
 ---
 title: Start a New Risk Assessment
-description: 'Simple steps to start an assessment'
+description: 'Create a risk assessment and choose the options that shape the scan'
 ---
 
-## Add a New Risk Assessment
+A Risk Assessment covers everything an External Assessment does, then adds internal
+vulnerability analysis, sensitive data identification, browser credential analysis, and
+ongoing risk monitoring. Setup takes a few minutes; the scan itself typically runs for
+about 24 hours once agents are deployed.
 
-To create a risk assessment scan from the portal itself, click the **Create Assessment** button in the top right corner. Then, select **Risk Assessment** from the list of options. You will be prompted to enter the company name and website. Once you have done so, click **Create** to proceed to the assessment configuration page.
+<Steps>
+  <Step title="Open the assessment picker">
+    Click **Create Assessment** in the top right corner of the portal, then choose
+    **Risk Assessment**. Each card lists its setup time, typical scan duration, and what
+    the scan includes.
+  </Step>
+  <Step title="Enter the company details">
+    **Company Name** and **Domain** are required. If the company has no domain of its own,
+    tick **Skip domain for external scan** and Telivy records `nodomain.local` instead,
+    which runs the assessment without the external portion.
+
+    You also set **Country**, **Company Status** (prospect or client), and the
+    **Anti Virus** the company runs, so the agent guidance matches their environment.
+  </Step>
+  <Step title="Schedule recurring scans (clients only)">
+    When **Company Status** is set to client, a **Recurring Scans** section appears.
+    Tick **Schedule Recurring Scans** and pick a **Scan Frequency** to keep the assessment
+    refreshed automatically. See [Risk Monitoring](/products/risk-monitoring/overview) for
+    what changes once monitoring is on.
+  </Step>
+  <Step title="Decide how PII is handled">
+    Under **Configure Compliance**, **Mask PII data** stores only masked evidence of the
+    sensitive data Telivy finds. Partners working with HIPAA-regulated clients usually
+    want this on. See [Data Security](/products/risk-assessments/data-security) for what
+    the platform stores either way.
+  </Step>
+  <Step title="Create and configure">
+    Click **Create** to land on the assessment's configuration page, where you deploy the
+    agent and connect Microsoft 365 or Google Workspace.
+  </Step>
+</Steps>
+
+<Warning>
+  Whitelist the Telivy agent in the client's AV or EDR before deploying it, or scans will
+  be blocked or quarantined. See
+  [Whitelist Telivy with AV/EDR](/products/risk-assessments/whitelist-telivy-with-av-edr).
+</Warning>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Install the Telivy Agent"
+    icon="download"
+    href="/products/risk-assessments/install-telivy-agent-windows"
+  >
+    Deploy to Windows endpoints and start collecting data
+  </Card>
+  <Card
+    title="What gets scanned, and when"
+    icon="clock"
+    href="/products/risk-monitoring/scanning-schedule"
+  >
+    The cadence behind each check in the assessment
+  </Card>
+</CardGroup>

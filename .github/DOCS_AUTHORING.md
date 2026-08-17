@@ -64,8 +64,9 @@ mint broken-links          # advisory link check
 
 ## Gotchas / known cruft
 
-- `getting-started/introduction.mdx` and `getting-started/welcome.mdx` are two competing
-  card-wall landing pages that link to each other. They should be merged.
+- `getting-started/welcome.mdx` is the site's home: it is the first page in `docs.json`, so
+  the root URL redirects to it. Keep it first, and keep it a signpost rather than a page
+  that explains things itself.
 - PRs have been stacked on each other in the past (`#15` and `#17` merged into another
   feature branch, not `main`), which quietly kept finished pages off the live site. Base
   every PR on `main`.

@@ -32,7 +32,6 @@
           {
             "group": "Getting Started",
             "pages": [
-              "getting-started/introduction",
               "getting-started/welcome",
               {
                 "group": "Set Up Telivy Account",
@@ -159,14 +158,22 @@
     "prompt": "Search the Telivy docs"
   },
   "contextual": {
-    "options": ["copy", "view", "chatgpt", "claude", "mcp"]
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "mcp"
+    ]
   },
   "seo": {
     "indexing": "navigable",
     "metatags": {
       "og:site_name": "Telivy Documentation",
       "og:type": "website",
-      "twitter:card": "summary_large_image"
+      "og:image": "/images/og-image.png",
+      "twitter:card": "summary_large_image",
+      "twitter:image": "/images/og-image.png"
     }
   },
   "errors": {
@@ -177,6 +184,11 @@
     }
   },
   "redirects": [
+    {
+      "source": "/getting-started/introduction",
+      "destination": "/getting-started/welcome",
+      "permanent": true
+    },
     {
       "source": "/products/risk-assessments/ai-scoring",
       "destination": "/scoring/ai-scoring",
