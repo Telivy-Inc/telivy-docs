@@ -30,6 +30,7 @@ mint broken-links          # advisory link check
 - `additional-information/release-notes.mdx` — uses `<Update>` blocks
 - `images/`, `logo/` — assets referenced from pages
 - `scripts/validate-docs.mjs` — authoring-rule validator, run by CI on every PR
+- `scripts/report-stale.mjs` — weekly report of pages nobody has touched in a year
 
 ## Authoring rules
 

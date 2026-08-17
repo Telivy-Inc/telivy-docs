@@ -16,6 +16,11 @@
           "anchor": "Website",
           "icon": "globe",
           "href": "https://www.telivy.com/"
+        },
+        {
+          "anchor": "Platform Status",
+          "icon": "heart-pulse",
+          "href": "https://status.telivy.com/"
         }
       ]
     },

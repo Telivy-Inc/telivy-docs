@@ -53,6 +53,7 @@ mint broken-links                # advisory link check
 | `additional-information/` | Release notes (`<Update>` blocks) |
 | `images/`, `logo/` | Assets referenced from pages |
 | `scripts/validate-docs.mjs` | Authoring-rule validator run by CI on every PR |
+| `scripts/report-stale.mjs` | Weekly report of pages that have gone a year without an update |
 
 ## Authoring
 

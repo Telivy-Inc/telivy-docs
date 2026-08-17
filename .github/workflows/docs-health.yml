@@ -1,4 +1,4 @@
-name: External links
+name: Docs health
 
 # Outbound links rot silently (a hotlinked GIF host disappeared without anyone noticing),
 # so sweep them weekly as well as on PRs that touch content.
@@ -13,10 +13,23 @@ on:
       - '.lycheeignore'
 
 concurrency:
-  group: external-links-${{ github.ref }}
+  group: docs-health-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  stale-pages:
+    # Reports only, in the run summary. Weekly, not on every PR.
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0 # report-stale.mjs reads each page's last commit date
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 20
+      - run: node scripts/report-stale.mjs
+
   lychee:
     runs-on: ubuntu-latest
     steps:
