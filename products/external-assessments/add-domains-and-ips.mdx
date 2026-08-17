@@ -1,8 +1,47 @@
 ---
 title: Add Domains and IPs
-description: 'Simple steps to add more targets'
+description: 'Scan additional domains, subdomains, and IP addresses in an assessment'
 ---
 
-## Add More Domains and IP Addresses
+An assessment starts with the single domain you entered when you created it. Most
+companies have more exposure than that: a marketing site on another domain, a VPN
+endpoint, a mail gateway, a block of static IPs. Add them as targets and they are scanned
+alongside the original domain.
 
-To add more domains, go to **Targets** > **Add Target** > **Other Domain or IP** to add additional endpoints to scan.
+## Add a target
+
+<Steps>
+  <Step title="Open the assessment's Targets view">
+    In the assessment, go to **Targets**. The table lists every target with its type,
+    scanning status, when it was last scanned, and how many findings it has.
+  </Step>
+  <Step title="Click Add Target">
+    Choose the target type: **IP Address**, **Domain**, or **Subdomain**.
+  </Step>
+  <Step title="Enter the values">
+    Type the value into **Value**. To add several at once, separate them with commas.
+    Telivy validates the format, so an IP address that is not a valid address, or a domain
+    that is not a valid domain, is rejected before it is saved.
+  </Step>
+  <Step title="Click Add Target to save">
+    The new targets appear in the table and are picked up by the next scan.
+  </Step>
+</Steps>
+
+<Note>
+  Adding a target that is already on the assessment is a no-op, and the portal tells you
+  the target is already added. Nothing is duplicated.
+</Note>
+
+If the **Add Target** button is unavailable, the account needs upgrading for additional
+targets. Contact [accounts@telivy.com](mailto:accounts@telivy.com).
+
+## What to add
+
+- Every domain the company owns, including ones that only redirect
+- Subdomains that resolve to something reachable: `vpn.`, `mail.`, `remote.`, `portal.`
+- Static IP addresses for on-premise firewalls, VPN concentrators, and mail servers
+
+Each target is scanned for the same things as the primary domain, so open ports and
+certificate problems on a forgotten subdomain show up in
+[the same findings](/products/external-assessments/overview).
