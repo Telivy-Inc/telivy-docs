@@ -11,13 +11,21 @@ Uninstallation removes the Telivy scanner on the device but the *data gathered d
 
 You can uninstall directly from the dashboard using the **Uninstall** button for *each asset* or you can *uninstall all the devices* at once by clicking on the **Uninstall All** button.
 
+### What happens when you click Uninstall
+
+Uninstalling is scheduled, not instant. Clicking **Uninstall** flags the device for uninstall, and the agent applies that flag the next time it runs. The device does not need to be online at the moment you click.
+
+While the flag is waiting to be picked up, the device shows a status of **Uninstall Scheduled**. That status is your notification: it means the instruction is set but the device has not acted on it yet.
+
+The agent runs its cycle roughly every hour, so a device that is reachable should move off **Uninstall Scheduled** within about an hour of coming back online.
+
 <Warning>
-**Uninstall** and **Uninstall All** only work on devices that are currently online. Any device that is offline when you click the button is skipped, with no error or notification. The portal doesn't tell you it happened. If a device shows as offline, use the manual uninstall commands below instead.
+A device stuck on **Uninstall Scheduled** for much longer than that, say a few hours to a day, usually means the flag is never reaching the machine: the Telivy Agent Service is not running, or the device cannot connect to Telivy. Uninstall those manually using the commands below.
 </Warning>
 
-### Uninstalling an offline device
+### Uninstalling a device manually
 
-For a device that's offline (or for any device where you'd rather not wait for the portal action), run the uninstall command directly on the machine, either at the terminal or pushed through your RMM. There are two options, and they have very different effects on the data already collected from that device, so pick deliberately.
+For a device that never picks up the scheduled uninstall (or any device where you would rather not wait), run the uninstall command directly on the machine, either at the terminal or pushed through your RMM. There are two options, and they have very different effects on the data already collected from that device, so pick deliberately.
 
 #### Option 1: Standard Uninstall (Recommended)
 
