@@ -3,37 +3,37 @@ title: Insights
 description: 'The portfolio view that tells you which client to work on next'
 ---
 
-Insights is the first screen you land on after logging in. Where the Assessments list shows
-you everything, Insights answers a narrower question: across the whole book of clients,
-what needs your attention today?
+Insights is the first screen you land on after logging in. The Assessments list shows you
+everything; Insights answers a narrower question. Across the whole book of clients, what
+needs you today?
 
 <Note>
-  Insights is currently labelled a preview in the portal, and the team is actively
-  collecting feedback on it.
+  Insights is marked as a preview in the portal, and the team is still collecting feedback
+  on it.
 </Note>
 
 ## Scope toggle
 
-Everything on the page respects the scope selector at the top: **All assessments**,
-**External scans**, or **Risk assessments**. One recommended action is the exception, noted
+The selector at the top switches everything on the page between **All assessments**,
+**External scans**, and **Risk assessments**. One recommended action ignores it, noted
 below.
 
 ## Security posture
 
 A status breakdown of the assessments in scope (complete, in progress, not started,
-archived) alongside coverage rows for the cloud connections that matter:
+archived), plus coverage rows for the cloud connections that matter:
 
 - Microsoft 365 connected
 - M365 security policies configured
 - Google Workspace connected
 
-Coverage is the fastest way to spot clients where an assessment technically finished but is
-only telling you half the story because no cloud account was ever connected.
+Coverage is how you catch the client whose assessment finished but only tells half the
+story, because nobody ever connected a cloud account.
 
 ## Recommended actions
 
-A ranked list of what to fix, ordered by how much it matters rather than by date. The
-actions Telivy can raise:
+What to fix, ranked by how much it matters rather than by when it happened. Telivy raises
+five:
 
 | Action | Raised when |
 | --- | --- |
@@ -41,34 +41,33 @@ actions Telivy can raise:
 | Configure Microsoft 365 security policies | M365 is connected but no policy baseline exists |
 | Review unread alerts | Any alert is unread |
 | Finish incomplete assessments | An assessment never got past setup |
-| Put more assessments into monitoring | Assessments exist that are not being re-scanned |
+| Put more assessments into monitoring | Assessments exist that aren't being re-scanned |
 
-Each one carries a count and a link that lands on the already-filtered list, so
-"Configure Microsoft 365 security policies" opens the assessments filtered to exactly those
-clients.
+Each carries a count and a link into the already-filtered list, so "Configure Microsoft 365
+security policies" opens the assessments narrowed to exactly those clients.
 
 <Note>
-  The monitoring action is an agency-wide total rather than a per-type one, so it only
-  appears while the scope is set to **All assessments**.
+  The monitoring action counts across the whole agency rather than per type, so it only
+  shows up while the scope is **All assessments**.
 </Note>
 
 ## Top opportunities to improve security posture
 
-This section is about score movement rather than alerts. Telivy takes the remediation
-actions from each assessment, groups the same finding across clients, and ranks the groups
-by their combined projected score impact. The result reads as: fix this one thing, across
-these five clients, and this is roughly what the portfolio gains.
+This one is about score movement, not alerts. Telivy takes the remediation actions from
+each assessment, groups the same finding across clients, and ranks those groups by combined
+projected impact. It reads as: fix this, at these five clients, and the portfolio gains
+roughly this much.
 
 <Warning>
-  This calculation runs on demand across your active assessments and is capped at the first
-  25, so on a large book it is a strong sample rather than a complete ranking.
+  The calculation runs on demand across your active assessments and stops at the first 25.
+  On a large book, treat it as a strong sample rather than a complete ranking.
 </Warning>
 
 ## Needs attention, recent alerts, and recent activity
 
-The lower half is the working list: assessments flagged with a reason (cloud needs
-re-auth, no M365 policies) sorted with the most severe first, the latest alerts across all
-clients, and a recent activity feed.
+The lower half is the working list. Assessments flagged with a reason (cloud needs re-auth,
+no M365 policies) come first, worst first, followed by the latest alerts across all clients
+and a feed of recent activity.
 
 ## Where to go next
 
