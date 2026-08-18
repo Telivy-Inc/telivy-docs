@@ -1,0 +1,67 @@
+---
+title: Billing, Usage, and Early Access
+description: 'Manage your subscription, check what is being billed, and opt into features early'
+---
+
+The Account area has three pages that are easy to walk past. What you see depends on your
+role: billing and usage are restricted, and only account admins can change early access
+features.
+
+## Billing
+
+**Account > Billing** hands off to the **Stripe billing portal**, where you manage the
+subscription, update payment methods, and pull invoices. Telivy doesn't keep a second copy
+of any of that.
+
+## Usage
+
+**Account > Usage** shows **Monitored Usage**: the active monitored endpoints and SaaS user
+accounts behind your bill, per assessment.
+
+| Column | What it counts |
+| --- | --- |
+| Account | The assessment the row belongs to |
+| Endpoints | Monitored endpoints reporting in |
+| M365 users | Microsoft 365 user accounts in the connected tenant |
+| M365 monitoring | Whether M365 monitoring is on for that assessment |
+| Workspace users | Google Workspace user accounts in the connected domain |
+| Workspace monitoring | Whether Workspace monitoring is on for that assessment |
+| Last refreshed | When those counts were last recalculated |
+
+Open this before you query an invoice. Turning Microsoft 365 or Google Workspace monitoring
+off for an assessment takes those accounts out of future billed counts, so the change shows
+up going forward, not retroactively.
+
+## Early Access
+
+**Account > Early Access** lists features you can switch on ahead of general release,
+grouped by how finished they are: **beta** first, then **alpha**, then **concept**. Toggle
+one on and it applies to your whole agency.
+
+Two things to know. Only account admins can flip a toggle, so everyone else sees the list
+read-only. And some features are marked sensitive, which means you acknowledge what
+enabling them does before the toggle takes effect.
+
+Concept-stage features are exactly that. They change, and sometimes they disappear.
+
+## Unity
+
+Accounts linked to Unity get a **Unity** entry indented under Integrations, for syncing
+that connection.
+
+<CardGroup cols={2}>
+  <Card
+    title="Account overview"
+    icon="user-gear"
+    href="/getting-started/set-up-telivy-account/overview"
+  >
+    Branding, users, and assessment sharing
+  </Card>
+  <Card
+    title="Risk Monitoring"
+    icon="repeat"
+    href="/products/risk-monitoring/overview"
+  >
+    What monitoring does, and what it counts
+  </Card>
+</CardGroup>

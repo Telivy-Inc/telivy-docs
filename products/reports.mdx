@@ -1,0 +1,87 @@
+---
+title: Reports
+description: 'Generate client-ready reports from an assessment, or upload your own documents'
+---
+
+Every assessment has a **Reports** tab. It's where a finished scan becomes something you
+can hand to a client, and where you park any other document that belongs with the
+assessment.
+
+## Generating a report
+
+Pick a report type in **Reports** and generate it. What's on offer depends on the
+assessment type, since most reports need data an External Scan never collects.
+
+### From an External Scan
+
+- External Scan Executive Report (PDF)
+- External Scan Detailed Report (PDF)
+- Questionnaire Report (PDF)
+- Progress Report (PDF and DOCX)
+
+### From a Risk Assessment
+
+Everything above, plus the reports built on agent and cloud data:
+
+| Report | Format |
+| --- | --- |
+| Complete Report | PDF |
+| Executive Summary | PDF |
+| Vulnerabilities Report | CSV |
+| Internal Vulnerabilities Executive Report | PDF |
+| Internal Vulnerabilities Network Report | PDF |
+| Top Internal Vulnerabilities Report | PDF |
+| Passwords Report | CSV |
+| Passwords Reuse Report | CSV |
+| Dark Web Data Report | CSV |
+| Network Inventory Report | CSV |
+| Applications Security Overview Report | CSV |
+| Applications Security Detailed Report | CSV |
+| Data Security Sensitive Documents Report | CSV |
+| Data Security Detailed Risk Report | XLSX |
+| Microsoft 365 Security Report | PDF |
+| Microsoft 365 Security Data Report | XLSX |
+| Google Workspace Security Report | PDF |
+| Google Workspace Security Data Report | XLSX |
+
+<Note>
+  **Executive Summary (PDF)** only appears once the assessment has an AI-generated executive
+  summary. If it's missing from the list, that summary hasn't been produced yet.
+</Note>
+
+The **Complete Report (PDF)** asks for contact details first, so the finished report carries
+the right name and contact for whoever receives it.
+
+## Uploading your own documents
+
+The same tab takes uploads. That's where a signed questionnaire, a client's own policy
+document, or a screenshot goes, so it lives with the assessment instead of in someone's
+drive. Images for the security report have to be JPEG or PNG.
+
+## Which report to send
+
+For a prospect who hasn't bought anything yet, the External Scan Executive Report does the
+job: short, findings-led, no agent required. Once they're a client and the first full scan
+lands, send the Complete Report, and pair it with the Executive Summary for anyone who
+won't read 40 pages.
+
+Monitoring reviews want the Progress Report instead, because it's built to show movement
+since the last scan rather than restate the whole posture. And when the conversation moves
+to their IT team, send the CSV exports. Those belong in a spreadsheet, not a slide deck.
+
+<CardGroup cols={2}>
+  <Card
+    title="Understand the scoring"
+    icon="gauge-high"
+    href="/scoring/risk-scoring"
+  >
+    What the score in the report actually measures
+  </Card>
+  <Card
+    title="Report grading criteria"
+    icon="clipboard-check"
+    href="/scoring/telivycriteria"
+  >
+    How each section of the report earns its grade
+  </Card>
+</CardGroup>
