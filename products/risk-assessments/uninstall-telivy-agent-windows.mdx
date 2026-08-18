@@ -11,13 +11,19 @@ Uninstallation removes the Telivy scanner on the device but the *data gathered d
 
 You can uninstall directly from the dashboard using the **Uninstall** button for *each asset* or you can *uninstall all the devices* at once by clicking on the **Uninstall All** button.
 
+### What happens when you click Uninstall
+
+Uninstalling is scheduled, not instant. Clicking **Uninstall** flags the device, and the agent acts on that flag the next time it runs. The device doesn't have to be online when you click.
+
+Until the flag is picked up, the device sits at **Uninstall Scheduled**. That status is the notification: the instruction is set, the device hasn't acted on it yet. A machine that's reachable usually clears it within an hour, since that's roughly how often the agent runs.
+
 <Warning>
-**Uninstall** and **Uninstall All** only work on devices that are currently online. Any device that is offline when you click the button is skipped, with no error or notification. The portal doesn't tell you it happened. If a device shows as offline, use the manual uninstall commands below instead.
+Stuck at **Uninstall Scheduled** for hours, or a whole day? The flag isn't reaching the machine. Either the Telivy Agent Service isn't running or the device can't connect to Telivy. Uninstall those manually with the commands below.
 </Warning>
 
-### Uninstalling an offline device
+### Uninstalling a device manually
 
-For a device that's offline (or for any device where you'd rather not wait for the portal action), run the uninstall command directly on the machine, either at the terminal or pushed through your RMM. There are two options, and they have very different effects on the data already collected from that device, so pick deliberately.
+Run the uninstall command on the machine itself, at the terminal or pushed through your RMM. Do this for anything that never picks up its scheduled uninstall, or when you'd rather not wait for it. There are two options, and they treat the data already collected from that device very differently, so pick deliberately.
 
 #### Option 1: Standard Uninstall (Recommended)
 
