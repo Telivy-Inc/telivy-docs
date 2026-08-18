@@ -3,10 +3,9 @@ title: Start a New Risk Assessment
 description: 'Create a risk assessment and choose the options that shape the scan'
 ---
 
-A Risk Assessment covers everything an External Assessment does, then adds internal
-vulnerability analysis, sensitive data identification, browser credential analysis, and
-ongoing risk monitoring. Setup takes a few minutes; the scan itself typically runs for
-about 24 hours once agents are deployed.
+A Risk Assessment does everything an External Assessment does, then goes inside: internal
+vulnerability analysis, sensitive data, browser credentials, and ongoing monitoring. Setup
+takes a few minutes. The scan usually runs about 24 hours once agents are out.
 
 <Steps>
   <Step title="Open the assessment picker">
@@ -15,12 +14,12 @@ about 24 hours once agents are deployed.
     the scan includes.
   </Step>
   <Step title="Enter the company details">
-    **Company Name** and **Domain** are required. If the company has no domain of its own,
-    tick **Skip domain for external scan** and Telivy records `nodomain.local` instead,
-    which runs the assessment without the external portion.
+    **Company Name** and **Domain** are required. No domain of their own? Tick **Skip domain
+    for external scan** and Telivy records `nodomain.local`, which runs the assessment
+    without the external portion.
 
-    You also set **Country**, **Company Status** (prospect or client), and the
-    **Anti Virus** the company runs, so the agent guidance matches their environment.
+    You also set **Country**, **Company Status** (prospect or client), and the **Anti Virus**
+    they run, which is what tailors the agent guidance to their environment.
   </Step>
   <Step title="Schedule recurring scans (clients only)">
     When **Company Status** is set to client, a **Recurring Scans** section appears.
